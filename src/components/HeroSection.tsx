@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/button';
 import ParticleBackground from './ParticleBackground';
@@ -7,7 +6,7 @@ import GradientBackground from './GradientBackground';
 const roles = [
   "Data Scientist",
   "Power BI Expert",
-  "Analytics Specialist",
+  "Analytics Specialist", 
   "Data Visualizer"
 ];
 
@@ -41,7 +40,7 @@ const HeroSection = () => {
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h1 
               ref={titleRef}
-              className="text-5xl md:text-7xl font-playfair font-bold mb-6 opacity-0 transition-all duration-1000 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] text-left text-white animate-fade-in"
+              className="text-5xl md:text-7xl font-playfair font-bold mb-6 opacity-0 transition-all duration-1000 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r from-portfolio-accent1 via-portfolio-accent2 to-portfolio-purple text-left text-white animate-fade-in hover:scale-[1.02] transform-gpu"
             >
               Simon Asnake
             </h1>
