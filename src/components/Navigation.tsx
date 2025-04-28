@@ -40,28 +40,22 @@ const Navigation = ({ sections }: NavigationProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [sections]);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMobileMenuOpen(false);
-  };
-
   return (
     <nav 
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4',
-        isScrolled ? 'bg-black/70 backdrop-blur-md' : 'bg-transparent'
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        isScrolled 
+          ? 'py-4 backdrop-blur-xl bg-black/30 border-b border-white/10 shadow-lg'
+          : 'py-6 bg-transparent'
       )}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <a 
           href="#hero" 
-          className="font-montserrat font-semibold text-xl text-white transition-all duration-300"
+          className="font-montserrat font-semibold text-xl text-white transition-all duration-300 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r from-[#9b87f5] to-[#7E69AB]"
           onClick={(e) => {
             e.preventDefault();
-            scrollToSection('hero');
+            document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
           }}
         >
           SA
@@ -71,21 +65,26 @@ const Navigation = ({ sections }: NavigationProps) => {
           {sections.map(section => (
             <button
               key={section.id}
-              onClick={() => scrollToSection(section.id)}
+              onClick={() => {
+                document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' });
+              }}
               className={cn(
-                'px-2 py-1 text-sm font-medium transition-colors duration-300 relative',
+                'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-white/10 relative',
                 activeSection === section.id
-                  ? 'text-white'
+                  ? 'text-white bg-white/5 backdrop-blur-lg'
                   : 'text-gray-400 hover:text-white'
               )}
             >
               {section.title}
+              {activeSection === section.id && (
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] transform scale-x-100 transition-transform duration-300" />
+              )}
             </button>
           ))}
         </div>
 
         <button 
-          className="md:hidden text-gray-400 hover:text-white transition-colors"
+          className="md:hidden text-gray-400 hover:text-white transition-colors bg-white/5 backdrop-blur-lg p-2 rounded-lg"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -93,16 +92,19 @@ const Navigation = ({ sections }: NavigationProps) => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-black/90 backdrop-blur-md py-4 px-4 flex flex-col space-y-4 border-t border-neutral-800">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-black/90 backdrop-blur-xl py-4 px-4 flex flex-col space-y-4 border-t border-white/10">
           {sections.map(section => (
             <button
               key={section.id}
-              onClick={() => scrollToSection(section.id)}
+              onClick={() => {
+                document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' });
+                setIsMobileMenuOpen(false);
+              }}
               className={cn(
-                'px-2 py-2 text-left transition-colors duration-300',
+                'px-4 py-2 text-left transition-all duration-300 rounded-lg',
                 activeSection === section.id
-                  ? 'text-white font-medium'
-                  : 'text-gray-400'
+                  ? 'text-white bg-white/10 backdrop-blur-lg'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
               )}
             >
               {section.title}
