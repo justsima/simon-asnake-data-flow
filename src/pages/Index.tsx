@@ -24,6 +24,8 @@ const sections = [
 const Index = () => {
   useEffect(() => {
     document.title = 'Simon Asnake | Data Scientist & Power BI Expert';
+    document.documentElement.classList.add('dark');
+    document.body.classList.add('bg-portfolio-darkBg', 'text-portfolio-darkText');
     
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -31,10 +33,15 @@ const Index = () => {
     if (prefersReducedMotion) {
       console.log('Reduced motion preference detected. Simplified animations will be used.');
     }
+    
+    return () => {
+      document.documentElement.classList.remove('dark');
+      document.body.classList.remove('bg-portfolio-darkBg', 'text-portfolio-darkText');
+    };
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-portfolio-darkBg">
       <Navigation sections={sections} />
       
       <main>
