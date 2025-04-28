@@ -14,6 +14,9 @@ const PyramidBackground = () => {
     // Create grid of pyramids
     const pyramidCount = window.innerWidth < 768 ? 20 : 50;
     
+    // Store rotations for each pyramid
+    const rotations: number[] = [];
+    
     for (let i = 0; i < pyramidCount; i++) {
       const pyramid = document.createElement('div');
       pyramid.className = 'pyramid';
@@ -25,6 +28,8 @@ const PyramidBackground = () => {
       const opacity = Math.random() * 0.08 + 0.01;
       const rotation = Math.random() * 360;
       const delay = Math.random() * 5;
+      
+      rotations.push(rotation);
       
       pyramid.style.cssText = `
         left: ${x}%;
@@ -49,19 +54,9 @@ const PyramidBackground = () => {
         const rotateValue = scrollY * speed;
         const translateValue = scrollY * speed * 0.2;
         
-        (pyramid as HTMLElement).style.transform = `rotateX(60deg) rotateZ(${rotation + rotateValue}deg) translateY(${translateValue}px)`;
+        (pyramid as HTMLElement).style.transform = `rotateX(60deg) rotateZ(${rotations[index] + rotateValue}deg) translateY(${translateValue}px)`;
       });
     };
-
-    // Initial rotation for each pyramid
-    const pyramids = container.querySelectorAll('.pyramid');
-    const rotations: number[] = [];
-    
-    pyramids.forEach((pyramid) => {
-      const rotation = Math.random() * 360;
-      rotations.push(rotation);
-      (pyramid as HTMLElement).style.transform = `rotateX(60deg) rotateZ(${rotation}deg)`;
-    });
 
     if (!prefersReducedMotion) {
       window.addEventListener('scroll', handleScroll);
@@ -83,7 +78,7 @@ const PyramidBackground = () => {
         perspectiveOrigin: 'center center',
       }}
     >
-      <style jsx global>{`
+      <style>{`
         .pyramid {
           position: absolute;
           transform-style: preserve-3d;

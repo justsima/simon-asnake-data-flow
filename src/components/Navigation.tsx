@@ -73,7 +73,7 @@ const Navigation = ({ sections }: NavigationProps) => {
         <a 
           ref={logoRef}
           href="#hero" 
-          className="logo font-playfair font-semibold text-2xl text-white transition-all duration-500 hover:opacity-90"
+          className="logo pt-1 font-playfair font-semibold text-2xl text-white transition-all duration-500 hover:opacity-90"
           onClick={(e) => {
             e.preventDefault();
             handleNavigation('hero');

@@ -78,13 +78,20 @@
       scroll-behavior: auto !important;
     }
   }
+
+  /* Add proper word spacing to paragraphs */
+  p {
+    word-spacing: 0.05rem;
+    letter-spacing: 0.01rem;
+  }
 }
 
-/* Logo styling with improved semibold weight */
+/* Logo styling with improved semibold weight and fixed positioning */
 .logo {
   position: relative;
   font-size: 2rem;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-top: 5px; /* Add padding to ensure logo is fully visible */
 }
 
 .logo-inner {
@@ -103,7 +110,7 @@
   display: inline-block;
   transform: scale(1.2);
   transition: all 0.5s ease;
-  letter-spacing: 1px;
+  letter-spacing: 2px; /* Increased letter spacing */
 }
 
 .logo-scrolled {
@@ -407,5 +414,11 @@
   
   .perspective-1000 {
     perspective: 1000px;
+  }
+
+  /* Added proper word spacing and letter spacing */
+  .proper-spacing {
+    word-spacing: 0.1em;
+    letter-spacing: 0.01em;
   }
 }

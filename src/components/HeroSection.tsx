@@ -4,7 +4,6 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 import ParticleBackground from './ParticleBackground';
 import GradientBackground from './GradientBackground';
-import PyramidBackground from './PyramidBackground';
 
 const roles = [
   "Data Analyst",
@@ -69,13 +68,14 @@ const HeroSection = () => {
       
       // Animate intro paragraph word by word with proper spacing
       if (textRef.current) {
-        const words = "Empowering businesses with data-driven insights through advanced visualization and analytics, transforming complex datasets into strategic business intelligence.".split(' ');
+        const text = "Empowering businesses with data-driven insights through advanced visualization and analytics, transforming complex datasets into strategic business intelligence.";
+        const words = text.split(' ');
         textRef.current.innerHTML = '';
         
         words.forEach((word, index) => {
           const span = document.createElement('span');
           span.textContent = word;
-          span.className = 'inline-block opacity-0 translate-y-3 transition-all duration-300';
+          span.className = 'inline-block opacity-0 translate-y-3 transition-all duration-300 proper-spacing';
           span.style.transitionDelay = `${800 + index * 50}ms`;
           
           setTimeout(() => {
@@ -107,8 +107,6 @@ const HeroSection = () => {
   return (
     <section id="hero" className="relative min-h-screen flex items-center">
       <GradientBackground />
-      <ParticleBackground />
-      <PyramidBackground />
       
       <div className="container mx-auto px-4 z-10">
         <div className="max-w-3xl ml-8 md:ml-12">
@@ -133,7 +131,7 @@ const HeroSection = () => {
             
             <p 
               ref={textRef}
-              className="text-lg text-gray-300 mb-12 font-inter max-w-2xl text-left leading-relaxed"
+              className="text-lg text-gray-300 mb-12 font-inter max-w-2xl text-left leading-relaxed proper-spacing"
             >
               {/* Text content will be dynamically populated with proper spacing */}
             </p>
