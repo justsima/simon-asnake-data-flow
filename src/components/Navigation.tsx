@@ -65,7 +65,7 @@ const Navigation = ({ sections }: NavigationProps) => {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
         isScrolled 
-          ? 'py-3 backdrop-blur-xl bg-black/40 border-b border-white/10 shadow-lg'
+          ? 'py-3 backdrop-blur-xl bg-black/30 border-b border-white/5 shadow-lg'
           : 'py-6 bg-transparent'
       )}
     >
@@ -73,14 +73,14 @@ const Navigation = ({ sections }: NavigationProps) => {
         <a 
           ref={logoRef}
           href="#hero" 
-          className="logo font-playfair font-bold text-2xl text-white transition-all duration-500 hover:opacity-90"
+          className="logo font-playfair font-semibold text-2xl text-white transition-all duration-500 hover:opacity-90"
           onClick={(e) => {
             e.preventDefault();
             handleNavigation('hero');
           }}
         >
           <div className="logo-inner">
-            <span className="logo-text">SA</span>
+            <span className="logo-text" style={{ letterSpacing: "1px" }}>SA</span>
           </div>
         </a>
 
@@ -116,7 +116,7 @@ const Navigation = ({ sections }: NavigationProps) => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-black/90 backdrop-blur-xl py-4 px-4 flex flex-col space-y-4 border-t border-white/10">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-black/80 backdrop-blur-xl py-4 px-4 flex flex-col space-y-4 border-t border-white/5">
           {sections.map(section => (
             <button
               key={section.id}
@@ -124,7 +124,7 @@ const Navigation = ({ sections }: NavigationProps) => {
               className={cn(
                 'px-4 py-2 text-left transition-all duration-300 rounded-lg',
                 activeSection === section.id
-                  ? 'text-white bg-white/10 backdrop-blur-lg'
+                  ? 'text-white bg-white/5 backdrop-blur-lg'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
               )}
             >

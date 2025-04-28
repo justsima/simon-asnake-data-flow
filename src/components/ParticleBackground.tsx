@@ -23,8 +23,8 @@ const ParticleBackground = () => {
     if (!ctx) return;
 
     const particles: Particle[] = [];
-    const particleCount = window.innerWidth < 768 ? 30 : 70; // Fewer particles on mobile
-    const connectionDistance = 150; // Max distance for drawing connections
+    const particleCount = window.innerWidth < 768 ? 30 : 50; // Reduced particle count
+    const connectionDistance = 120; // Reduced connection distance
 
     // Track mouse position for interactive particles
     const handleMouseMove = (e: MouseEvent) => {
@@ -50,10 +50,10 @@ const ParticleBackground = () => {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 0.5,
-        speedX: (Math.random() - 0.5) * 0.6, 
-        speedY: (Math.random() - 0.5) * 0.6,
-        opacity: Math.random() * 0.5 + 0.2,
+        size: Math.random() * 1.5 + 0.5, // Smaller particles
+        speedX: (Math.random() - 0.5) * 0.3, // Slower speed
+        speedY: (Math.random() - 0.5) * 0.3, // Slower speed
+        opacity: Math.random() * 0.4 + 0.1, // Lower opacity
         connections: []
       });
     }
@@ -79,8 +79,8 @@ const ParticleBackground = () => {
 
     // Animation loop
     const animate = () => {
-      // Semi-transparent background for trail effect
-      ctx.fillStyle = 'rgba(13, 17, 23, 0.1)';
+      // Semi-transparent background for trail effect - more transparent now
+      ctx.fillStyle = 'rgba(13, 17, 23, 0.08)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       // Update connections
@@ -96,8 +96,8 @@ const ParticleBackground = () => {
           const opacity = 1 - (distance / connectionDistance);
           
           ctx.beginPath();
-          ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.15})`;
-          ctx.lineWidth = 0.3;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.08})`; // More subtle connections
+          ctx.lineWidth = 0.2; // Thinner lines
           ctx.moveTo(particle.x, particle.y);
           ctx.lineTo(connectedParticle.x, connectedParticle.y);
           ctx.stroke();
@@ -106,21 +106,21 @@ const ParticleBackground = () => {
         // Draw particle
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity * 0.6})`; // More subtle particles
         ctx.fill();
 
         // Move particle
         particle.x += particle.speedX;
         particle.y += particle.speedY;
 
-        // Mouse interaction - particles gently move away from cursor
+        // Mouse interaction - gentler movement
         const dx = particle.x - mousePosition.current.x;
         const dy = particle.y - mousePosition.current.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        if (distance < 100) {
+        if (distance < 80) { // Smaller interaction radius
           const angle = Math.atan2(dy, dx);
-          const force = 0.2 * (1 - distance / 100);
+          const force = 0.1 * (1 - distance / 80); // Gentler force
           particle.x += Math.cos(angle) * force;
           particle.y += Math.sin(angle) * force;
         }
@@ -146,7 +146,7 @@ const ParticleBackground = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full pointer-events-none"
+      className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
     />
   );
 };

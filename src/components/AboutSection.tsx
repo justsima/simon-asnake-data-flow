@@ -1,12 +1,92 @@
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import ParticleBackground from './ParticleBackground';
+
+// 3D icon component with tilt effect
+const Icon3D = ({ icon, title, description }: { icon: string, title: string, description: string }) => {
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const iconRef = useRef<HTMLDivElement>(null);
+  
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!iconRef.current) return;
+    
+    const rect = iconRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const tiltX = (y - centerY) / 10;
+    const tiltY = (centerX - x) / 10;
+    
+    setTilt({ x: tiltX, y: tiltY });
+  };
+  
+  const resetTilt = () => {
+    setTilt({ x: 0, y: 0 });
+  };
+  
+  return (
+    <HoverCard>
+      <HoverCardTrigger asChild>
+        <div
+          ref={iconRef}
+          className="w-12 h-12 bg-white/5 backdrop-blur-md rounded-lg flex items-center justify-center transform transition-all duration-300 hover:scale-110 cursor-pointer glass-layer-1"
+          style={{ 
+            transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+            boxShadow: '0 10px 30px -15px rgba(0, 0, 0, 0.3)'
+          }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={resetTilt}
+        >
+          <span className="text-2xl">{icon}</span>
+        </div>
+      </HoverCardTrigger>
+      <HoverCardContent className="glass-layer-3">
+        <div className="flex justify-between space-x-4">
+          <div className="space-y-1">
+            <h4 className="text-sm font-semibold">{title}</h4>
+            <p className="text-xs text-muted-foreground">
+              {description}
+            </p>
+          </div>
+        </div>
+      </HoverCardContent>
+    </HoverCard>
+  );
+};
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const listRefs = useRef<(HTMLLIElement | null)[]>([]);
+
+  // Tilt effect for image container
+  const [imageTilt, setImageTilt] = useState({ x: 0, y: 0 });
+  
+  const handleImageContainerMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!imageContainerRef.current) return;
+    
+    const rect = imageContainerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const tiltX = (y - centerY) / 20;
+    const tiltY = (centerX - x) / 20;
+    
+    setImageTilt({ x: tiltX, y: tiltY });
+  };
+  
+  const resetImageTilt = () => {
+    setImageTilt({ x: 0, y: 0 });
+  };
 
   useEffect(() => {
     // Store list items in the ref array when the component mounts
@@ -17,17 +97,17 @@ const AboutSection = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            if (imageRef.current) {
-              imageRef.current.classList.add('opacity-100');
-              imageRef.current.classList.remove('translate-y-10', 'opacity-0');
+            if (imageContainerRef.current) {
+              imageContainerRef.current.classList.add('opacity-100');
+              imageContainerRef.current.classList.remove('translate-y-10', 'opacity-0');
             }
             
-            if (textRef.current) {
-              const paragraphs = textRef.current.querySelectorAll('p, h2, h3');
-              paragraphs.forEach((p, index) => {
+            if (contentRef.current) {
+              const elements = contentRef.current.querySelectorAll('p, h2, h3');
+              elements.forEach((element, index) => {
                 setTimeout(() => {
-                  p.classList.add('opacity-100');
-                  p.classList.remove('translate-y-10', 'opacity-0');
+                  element.classList.add('opacity-100');
+                  element.classList.remove('translate-y-10', 'opacity-0');
                 }, 200 * (index + 1));
               });
               
@@ -68,61 +148,93 @@ const AboutSection = () => {
     >
       <ParticleBackground />
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col md:flex-row items-center gap-12">
-          <div 
-            ref={imageRef}
-            className="w-full md:w-2/5 transition-all duration-700 transform translate-y-10 opacity-0"
-          >
-            <div className="glass-layer-3 h-[450px] rounded-lg overflow-hidden relative">
-              <div className="glass-layer-2 m-2 h-[calc(100%-16px)] rounded-lg overflow-hidden">
-                <div className="glass-layer-1 m-2 h-[calc(100%-16px)] rounded-lg overflow-hidden flex items-center justify-center">
-                  <div className="text-gray-300 text-center p-4">
-                    <p className="text-sm font-inter">Professional headshot placeholder</p>
+        <div className="glass-layer-3 rounded-xl overflow-hidden">
+          {/* Main content container */}
+          <div className="flex flex-col lg:flex-row">
+            {/* Left column - Image and main text */}
+            <div 
+              ref={imageContainerRef}
+              onMouseMove={handleImageContainerMouseMove}
+              onMouseLeave={resetImageTilt}
+              className="w-full lg:w-1/2 p-8 transition-all duration-700 transform translate-y-10 opacity-0"
+              style={{ 
+                transform: `perspective(1000px) rotateX(${imageTilt.x}deg) rotateY(${imageTilt.y}deg) translateY(-10px)`,
+                transformStyle: 'preserve-3d'
+              }}
+            >
+              {/* Image with 3D layered glass effect */}
+              <div className="rounded-lg overflow-hidden relative mb-8 shadow-xl transform transition-all duration-500 hover:scale-[1.02]">
+                <div className="glass-layer-2 p-1 rounded-lg">
+                  <div className="glass-layer-1 p-1 rounded-lg">
+                    <div className="bg-[#161B22]/70 rounded-lg aspect-[4/3] flex items-center justify-center">
+                      <p className="text-gray-400 text-center">Professional headshot placeholder</p>
+                    </div>
                   </div>
                 </div>
               </div>
+              
+              {/* Main introduction text */}
+              <div ref={contentRef} className="space-y-6">
+                <h2 className="text-3xl md:text-4xl font-playfair font-semibold text-white transition-all duration-500 transform translate-y-10 opacity-0">
+                  About Me
+                </h2>
+                
+                <p className="text-lg transition-all duration-500 transform translate-y-10 opacity-0 text-gray-300 font-inter">
+                  As a Data Scientist and Power BI Expert, I specialize in transforming complex data into strategic business insights. With extensive experience across multiple industries, I've helped organizations leverage their data for informed decision-making.
+                </p>
+
+                <div className="flex flex-wrap gap-4 pt-4">
+                  <Icon3D 
+                    icon="📊" 
+                    title="Data Visualization" 
+                    description="Creating interactive dashboards that translate complex data into actionable insights" 
+                  />
+                  <Icon3D 
+                    icon="🧠" 
+                    title="Machine Learning" 
+                    description="Building predictive models that anticipate business trends and customer behaviors" 
+                  />
+                  <Icon3D 
+                    icon="⚙️" 
+                    title="ETL Pipelines" 
+                    description="Streamlining data flow from diverse sources for real-time analytics" 
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-          
-          <div 
-            ref={textRef}
-            className="w-full md:w-3/5 glass-layer-3 p-8 rounded-lg"
-          >
-            <h2 className="text-3xl md:text-4xl font-playfair font-semibold text-white mb-6 transition-all duration-500 transform translate-y-10 opacity-0">About Me</h2>
             
-            <p className="text-lg mb-4 transition-all duration-500 transform translate-y-10 opacity-0 text-gray-300 font-inter">
-              As a Data Scientist and Power BI Expert, I specialize in transforming complex data into strategic business insights. With extensive experience across insurance, healthcare, fintech, automotive, and government sectors, I've helped Fortune 500 companies and public sector organizations leverage their data for informed decision-making.
-            </p>
-            
-            <h3 className="text-xl font-medium text-[#9b87f5] mt-8 mb-4 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat">
-              Core Focus Areas
-            </h3>
-            
-            <ul className="space-y-4">
-              <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
-                <div>
-                  <p className="font-medium text-white font-montserrat">Data Visualization</p>
-                  <p className="text-gray-300 font-inter">Creating intuitive, interactive dashboards that translate complex data into actionable insights</p>
-                </div>
-              </li>
+            {/* Right column - Bullet points */}
+            <div className="w-full lg:w-1/2 bg-white/[0.01] backdrop-blur-sm p-8">
+              <h3 className="text-xl font-medium text-[#9b87f5] mb-6 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat">
+                Core Focus Areas
+              </h3>
               
-              <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
-                <div>
-                  <p className="font-medium text-white font-montserrat">Predictive Analytics</p>
-                  <p className="text-gray-300 font-inter">Building machine learning models that anticipate business trends and customer behaviors</p>
-                </div>
-              </li>
-              
-              <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
-                <div>
-                  <p className="font-medium text-white font-montserrat">Data Pipeline Development</p>
-                  <p className="text-gray-300 font-inter">Streamlining data flow from diverse sources to enable real-time analytics</p>
-                </div>
-              </li>
-            </ul>
+              <ul className="space-y-6">
+                <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
+                  <div className="glass-layer-1 p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
+                    <p className="font-medium text-white font-montserrat">Data Visualization</p>
+                    <p className="text-gray-300 font-inter">Creating intuitive, interactive dashboards that translate complex data into actionable insights. Specializing in Power BI, Tableau, and custom visualization libraries.</p>
+                  </div>
+                </li>
+                
+                <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
+                  <div className="glass-layer-1 p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
+                    <p className="font-medium text-white font-montserrat">Predictive Analytics</p>
+                    <p className="text-gray-300 font-inter">Building machine learning models that anticipate business trends and customer behaviors. Using advanced algorithms to forecast market changes and identify opportunities.</p>
+                  </div>
+                </li>
+                
+                <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
+                  <div className="glass-layer-1 p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
+                    <p className="font-medium text-white font-montserrat">Data Pipeline Development</p>
+                    <p className="text-gray-300 font-inter">Streamlining data flow from diverse sources to enable real-time analytics. Creating robust ETL processes that ensure data quality and accessibility.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 import ParticleBackground from './ParticleBackground';
 import GradientBackground from './GradientBackground';
+import PyramidBackground from './PyramidBackground';
 
 const roles = [
   "Data Analyst",
@@ -24,8 +25,39 @@ const HeroSection = () => {
   const [currentGradient, setCurrentGradient] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [showArrow, setShowArrow] = useState({ projects: false, contact: false });
+  const [buttonTilt, setButtonTilt] = useState({ projects: { x: 0, y: 0 }, contact: { x: 0, y: 0 } });
   const titleRef = useRef<HTMLHeadingElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
+  const projectsButtonRef = useRef<HTMLButtonElement>(null);
+  const contactButtonRef = useRef<HTMLButtonElement>(null);
+  
+  const handleButtonMouseMove = (e: React.MouseEvent, buttonType: 'projects' | 'contact') => {
+    const buttonRef = buttonType === 'projects' ? projectsButtonRef : contactButtonRef;
+    
+    if (!buttonRef.current) return;
+    
+    const rect = buttonRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const tiltX = (y - centerY) / 10;
+    const tiltY = (centerX - x) / 10;
+    
+    setButtonTilt(prev => ({
+      ...prev,
+      [buttonType]: { x: tiltX, y: tiltY }
+    }));
+  };
+  
+  const resetButtonTilt = (buttonType: 'projects' | 'contact') => {
+    setButtonTilt(prev => ({
+      ...prev,
+      [buttonType]: { x: 0, y: 0 }
+    }));
+  };
   
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,14 +67,14 @@ const HeroSection = () => {
         titleRef.current.classList.remove('opacity-0');
       }
       
-      // Animate intro paragraph word by word
+      // Animate intro paragraph word by word with proper spacing
       if (textRef.current) {
-        const words = textRef.current.innerText.split(' ');
+        const words = "Empowering businesses with data-driven insights through advanced visualization and analytics, transforming complex datasets into strategic business intelligence.".split(' ');
         textRef.current.innerHTML = '';
         
         words.forEach((word, index) => {
           const span = document.createElement('span');
-          span.textContent = word + ' ';
+          span.textContent = word;
           span.className = 'inline-block opacity-0 translate-y-3 transition-all duration-300';
           span.style.transitionDelay = `${800 + index * 50}ms`;
           
@@ -51,6 +83,12 @@ const HeroSection = () => {
           }, 800 + index * 50);
           
           textRef.current?.appendChild(span);
+          
+          // Add space after each word except the last one
+          if (index < words.length - 1) {
+            const space = document.createTextNode(' ');
+            textRef.current?.appendChild(space);
+          }
         });
       }
     }, 500);
@@ -70,6 +108,7 @@ const HeroSection = () => {
     <section id="hero" className="relative min-h-screen flex items-center">
       <GradientBackground />
       <ParticleBackground />
+      <PyramidBackground />
       
       <div className="container mx-auto px-4 z-10">
         <div className="max-w-3xl ml-8 md:ml-12">
@@ -94,18 +133,27 @@ const HeroSection = () => {
             
             <p 
               ref={textRef}
-              className="text-lg text-gray-300 mb-12 font-inter max-w-2xl text-left"
+              className="text-lg text-gray-300 mb-12 font-inter max-w-2xl text-left leading-relaxed"
             >
-              Empowering businesses with data-driven insights through advanced visualization and analytics, transforming complex datasets into strategic business intelligence.
+              {/* Text content will be dynamically populated with proper spacing */}
             </p>
             
             <div className="flex gap-4 mb-16 text-left">
               <Button
+                ref={projectsButtonRef}
                 variant="outline"
                 className="glass-button group relative overflow-hidden bg-white/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-300 text-white px-6 py-3"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, projects: true}))}
-                onMouseLeave={() => setShowArrow(prev => ({...prev, projects: false}))}
+                onMouseLeave={() => {
+                  setShowArrow(prev => ({...prev, projects: false}));
+                  resetButtonTilt('projects');
+                }}
+                onMouseMove={(e) => handleButtonMouseMove(e, 'projects')}
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                style={{ 
+                  transform: `perspective(1000px) rotateX(${buttonTilt.projects.x}deg) rotateY(${buttonTilt.projects.y}deg)`,
+                  transformStyle: 'preserve-3d'
+                }}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   View Projects
@@ -117,11 +165,20 @@ const HeroSection = () => {
               </Button>
               
               <Button
+                ref={contactButtonRef}
                 variant="outline"
                 className="glass-button group relative overflow-hidden bg-white/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-300 text-white px-6 py-3"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, contact: true}))}
-                onMouseLeave={() => setShowArrow(prev => ({...prev, contact: false}))}
+                onMouseLeave={() => {
+                  setShowArrow(prev => ({...prev, contact: false}));
+                  resetButtonTilt('contact');
+                }}
+                onMouseMove={(e) => handleButtonMouseMove(e, 'contact')}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                style={{ 
+                  transform: `perspective(1000px) rotateX(${buttonTilt.contact.x}deg) rotateY(${buttonTilt.contact.y}deg)`,
+                  transformStyle: 'preserve-3d'
+                }}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   Get in touch

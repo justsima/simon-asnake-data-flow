@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 
 import Navigation from '@/components/Navigation';
@@ -30,11 +31,12 @@ const Index = () => {
     
     if (prefersReducedMotion) {
       console.log('Reduced motion preference detected. Simplified animations will be used.');
+      document.body.classList.add('reduced-motion');
     }
     
     return () => {
       document.documentElement.classList.remove('dark');
-      document.body.classList.remove('bg-[#0D1117]', 'text-white');
+      document.body.classList.remove('bg-[#0D1117]', 'text-white', 'reduced-motion');
     };
   }, []);
 
