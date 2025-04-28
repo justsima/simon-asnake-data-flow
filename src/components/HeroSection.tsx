@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/button';
 import ParticleBackground from './ParticleBackground';
@@ -10,8 +11,16 @@ const roles = [
   "Data Visualizer"
 ];
 
+const gradients = [
+  "from-portfolio-accent1 via-portfolio-accent2 to-portfolio-purple",
+  "from-portfolio-purple via-portfolio-teal to-portfolio-accent1",
+  "from-portfolio-teal via-portfolio-purple to-portfolio-accent2",
+  "from-portfolio-accent2 via-portfolio-accent1 to-portfolio-teal"
+];
+
 const HeroSection = () => {
   const [currentRole, setCurrentRole] = useState(0);
+  const [currentGradient, setCurrentGradient] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   
@@ -22,6 +31,7 @@ const HeroSection = () => {
 
     const roleInterval = setInterval(() => {
       setCurrentRole(prev => (prev + 1) % roles.length);
+      setCurrentGradient(prev => (prev + 1) % gradients.length);
     }, 3000);
 
     return () => {
@@ -47,7 +57,12 @@ const HeroSection = () => {
             
             <h2 className="text-2xl md:text-3xl mb-8 font-montserrat text-left">
               <span className="text-gray-300">I'm a </span>
-              <span className="animate-text-shimmer bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent font-bold">
+              <span 
+                className={`animate-text-shimmer bg-gradient-to-r ${gradients[currentGradient]} bg-clip-text text-transparent font-bold transition-all duration-700 transform hover:scale-105`}
+                style={{
+                  animation: 'text-slide-up 0.5s ease-out'
+                }}
+              >
                 {roles[currentRole]}
               </span>
             </h2>
