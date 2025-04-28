@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
@@ -82,30 +83,21 @@
   p {
     word-spacing: 0.05rem;
     letter-spacing: 0.01rem;
-    line-height: 1.7;
-  }
-
-  /* Ensure smooth animations */
-  button, a {
-    transition: all 0.3s ease;
   }
 }
 
 /* Logo styling with improved semibold weight and fixed positioning */
 .logo {
   position: relative;
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 2rem;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  padding-top: 0;
-  overflow: visible;
+  padding-top: 5px; /* Add padding to ensure logo is fully visible */
 }
 
 .logo-inner {
   position: relative;
   display: inline-block;
   transition: all 0.5s ease;
-  overflow: visible;
 }
 
 .logo-text {
@@ -122,7 +114,7 @@
 }
 
 .logo-scrolled {
-  transform: scale(0.9);
+  transform: scale(0.8);
 }
 
 .logo-scrolled .logo-text {
@@ -429,64 +421,4 @@
     word-spacing: 0.1em;
     letter-spacing: 0.01em;
   }
-}
-
-/* Card hover effects with 3D tilt */
-.preserve-3d {
-  transform-style: preserve-3d;
-  transition: transform 0.4s ease-out;
-}
-
-.preserve-3d:hover {
-  transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
-}
-
-/* Button 3D effect */
-.button-3d {
-  position: relative;
-  transition: transform 0.3s ease;
-  transform-style: preserve-3d;
-}
-
-.button-3d::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background: rgba(155, 135, 245, 0.3);
-  transform: translateZ(-5px);
-  border-radius: inherit;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.button-3d:hover {
-  transform: translateY(-2px) translateZ(10px);
-}
-
-.button-3d:hover::after {
-  transform: translateZ(-10px);
-  opacity: 1;
-}
-
-/* Modal styling */
-.modal-content {
-  backdrop-filter: blur(12px);
-  background: rgba(11, 12, 15, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Card and element transitions */
-.fade-in-slide-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  transition-delay: var(--delay, 0ms);
-}
-
-.fade-in-slide-up.visible {
-  opacity: 1;
-  transform: translateY(0);
 }
