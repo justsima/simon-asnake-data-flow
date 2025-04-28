@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
@@ -30,7 +29,7 @@
     --muted-foreground: 240 5% 64.9%;
 
     --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent-foreground: 240 4.8% 95.9%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
@@ -89,7 +88,7 @@
 /* Logo styling with improved semibold weight and fixed positioning */
 .logo {
   position: relative;
-  font-size: 2rem;
+  font-size: 2.25rem; /* Increased from 2rem */
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   padding-top: 5px; /* Add padding to ensure logo is fully visible */
 }
@@ -102,7 +101,7 @@
 
 .logo-text {
   font-family: 'Great Vibes', cursive;
-  font-weight: 600;
+  font-weight: 700; /* Increased from 600 */
   background: linear-gradient(to right, #9b87f5, #7E69AB);
   -webkit-background-clip: text;
   background-clip: text;
@@ -384,6 +383,19 @@
     transform: none !important;
     transition: none !important;
   }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
 }
 
 @layer utilities {

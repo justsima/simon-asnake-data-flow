@@ -2,9 +2,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import ParticleBackground from './ParticleBackground';
+import GradientBackground from './GradientBackground';
 
-// 3D icon component with tilt effect
+// Simplified icon component with subtle 3D effect
 const Icon3D = ({ icon, title, description }: { icon: string, title: string, description: string }) => {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const iconRef = useRef<HTMLDivElement>(null);
@@ -19,8 +19,9 @@ const Icon3D = ({ icon, title, description }: { icon: string, title: string, des
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    const tiltX = (y - centerY) / 10;
-    const tiltY = (centerX - x) / 10;
+    // Reduce tilt effect significantly for subtlety
+    const tiltX = (y - centerY) / 25;
+    const tiltY = (centerX - x) / 25;
     
     setTilt({ x: tiltX, y: tiltY });
   };
@@ -34,10 +35,10 @@ const Icon3D = ({ icon, title, description }: { icon: string, title: string, des
       <HoverCardTrigger asChild>
         <div
           ref={iconRef}
-          className="w-12 h-12 bg-white/5 backdrop-blur-md rounded-lg flex items-center justify-center transform transition-all duration-300 hover:scale-110 cursor-pointer glass-layer-1"
+          className="w-12 h-12 bg-white/5 backdrop-blur-md rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer glass-layer-1"
           style={{ 
             transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-            boxShadow: '0 10px 30px -15px rgba(0, 0, 0, 0.3)'
+            boxShadow: '0 8px 20px -12px rgba(0, 0, 0, 0.3)'
           }}
           onMouseMove={handleMouseMove}
           onMouseLeave={resetTilt}
@@ -65,7 +66,7 @@ const AboutSection = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const listRefs = useRef<(HTMLLIElement | null)[]>([]);
 
-  // Tilt effect for image container
+  // Simplified subtle tilt effect for image container
   const [imageTilt, setImageTilt] = useState({ x: 0, y: 0 });
   
   const handleImageContainerMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -78,8 +79,9 @@ const AboutSection = () => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    const tiltX = (y - centerY) / 20;
-    const tiltY = (centerX - x) / 20;
+    // Significantly reduce tilt for subtlety
+    const tiltX = (y - centerY) / 40;
+    const tiltY = (centerX - x) / 40;
     
     setImageTilt({ x: tiltX, y: tiltY });
   };
@@ -144,9 +146,10 @@ const AboutSection = () => {
     <section 
       id="about" 
       ref={sectionRef}
-      className="py-20 relative bg-[#0D1117]"
+      className="py-20 relative"
     >
-      <ParticleBackground />
+      <GradientBackground />
+      
       <div className="container mx-auto px-4 relative z-10">
         <div className="glass-layer-3 rounded-xl overflow-hidden">
           {/* Main content container */}
@@ -162,13 +165,11 @@ const AboutSection = () => {
                 transformStyle: 'preserve-3d'
               }}
             >
-              {/* Image with 3D layered glass effect */}
-              <div className="rounded-lg overflow-hidden relative mb-8 shadow-xl transform transition-all duration-500 hover:scale-[1.02]">
+              {/* Image with simplified 3D layered glass effect */}
+              <div className="rounded-lg overflow-hidden relative mb-8 shadow-xl transform transition-all duration-500 hover:scale-[1.01]">
                 <div className="glass-layer-2 p-1 rounded-lg">
-                  <div className="glass-layer-1 p-1 rounded-lg">
-                    <div className="bg-[#161B22]/70 rounded-lg aspect-[4/3] flex items-center justify-center">
-                      <p className="text-gray-400 text-center">Professional headshot placeholder</p>
-                    </div>
+                  <div className="bg-[#161B22]/70 rounded-lg aspect-[4/3] flex items-center justify-center">
+                    <p className="text-gray-400 text-center">Professional headshot placeholder</p>
                   </div>
                 </div>
               </div>
