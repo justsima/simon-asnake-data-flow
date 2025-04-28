@@ -32,21 +32,32 @@ const ParticleBackground = () => {
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
+    // Create gradient background
+    const createGradient = () => {
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, 'rgba(22, 27, 34, 0.8)');
+      gradient.addColorStop(0.5, 'rgba(26, 31, 44, 0.8)');
+      gradient.addColorStop(1, 'rgba(22, 27, 34, 0.8)');
+      return gradient;
+    };
+
     // Create particles
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         size: Math.random() * 2,
-        speedX: (Math.random() - 0.5) * 0.2,
-        speedY: (Math.random() - 0.5) * 0.2,
+        speedX: (Math.random() - 0.5) * 0.8, // Increased speed
+        speedY: (Math.random() - 0.5) * 0.8, // Increased speed
         opacity: Math.random() * 0.5 + 0.2,
       });
     }
 
     // Animation loop
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Clear canvas with gradient background
+      ctx.fillStyle = createGradient();
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach((particle) => {
         ctx.beginPath();

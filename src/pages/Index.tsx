@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 
 import Navigation from '@/components/Navigation';
@@ -25,9 +24,8 @@ const Index = () => {
   useEffect(() => {
     document.title = 'Simon Asnake | Data Scientist & Power BI Expert';
     document.documentElement.classList.add('dark');
-    document.body.classList.add('bg-portfolio-darkBg', 'text-portfolio-darkText');
+    document.body.classList.add('bg-[#0D1117]', 'text-white');
     
-    // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
     if (prefersReducedMotion) {
@@ -36,12 +34,12 @@ const Index = () => {
     
     return () => {
       document.documentElement.classList.remove('dark');
-      document.body.classList.remove('bg-portfolio-darkBg', 'text-portfolio-darkText');
+      document.body.classList.remove('bg-[#0D1117]', 'text-white');
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-portfolio-darkBg">
+    <div className="min-h-screen bg-[#0D1117]">
       <Navigation sections={sections} />
       
       <main>

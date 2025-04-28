@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 
 const AboutSection = () => {
@@ -26,7 +25,6 @@ const AboutSection = () => {
               });
             }
             
-            // Unobserve after animation
             observer.unobserve(entry.target);
           }
         });
@@ -49,51 +47,50 @@ const AboutSection = () => {
     <section 
       id="about" 
       ref={sectionRef}
-      className="py-20 bg-portfolio-gray"
+      className="py-20 relative bg-[#0D1117]"
     >
-      <div className="container mx-auto px-4">
+      <ParticleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-12">
-          {/* Image column */}
           <div 
             ref={imageRef}
             className="w-full md:w-2/5 transition-all duration-700 transform translate-y-10 opacity-0"
           >
-            <div className="bg-portfolio-navy/10 h-[450px] rounded-lg overflow-hidden relative">
-              <div className="absolute inset-0 flex items-center justify-center text-portfolio-navy">
-                <p className="text-sm">Professional headshot placeholder</p>
+            <div className="bg-white/5 backdrop-blur-lg border border-white/10 h-[450px] rounded-lg overflow-hidden relative">
+              <div className="absolute inset-0 flex items-center justify-center text-gray-300">
+                <p className="text-sm font-inter">Professional headshot placeholder</p>
               </div>
             </div>
           </div>
           
-          {/* Text column */}
           <div 
             ref={textRef}
-            className="w-full md:w-3/5"
+            className="w-full md:w-3/5 bg-white/5 backdrop-blur-lg border border-white/10 p-8 rounded-lg"
           >
-            <h2 className="text-3xl md:text-4xl font-semibold text-portfolio-navy mb-6">About Me</h2>
+            <h2 className="text-3xl md:text-4xl font-playfair font-semibold text-white mb-6">About Me</h2>
             
-            <p className="text-lg mb-4 transition-all duration-500 transform translate-y-10 opacity-0">
-              As a Data Scientist and Power BI Expert, I specialize in transforming complex data into strategic business insights. With extensive experience across insurance, healthcare, fintech, automotive, and government sectors, I've helped Fortune 500 companies and public sector organizations leverage their data for informed decision-making. My expertise spans custom dashboard development, machine learning implementation, and ETL pipeline optimization using Azure-based solutions.
+            <p className="text-lg mb-4 transition-all duration-500 transform translate-y-10 opacity-0 text-gray-300 font-inter">
+              As a Data Scientist and Power BI Expert, I specialize in transforming complex data into strategic business insights. With extensive experience across insurance, healthcare, fintech, automotive, and government sectors, I've helped Fortune 500 companies and public sector organizations leverage their data for informed decision-making.
             </p>
             
-            <h3 className="text-xl font-medium text-portfolio-purple mt-8 mb-4 transition-all duration-500 transform translate-y-10 opacity-0">
+            <h3 className="text-xl font-medium text-[#9b87f5] mt-8 mb-4 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat">
               Core Focus Areas
             </h3>
             
             <ul className="space-y-4">
               <li className="transition-all duration-500 transform translate-y-10 opacity-0">
-                <p className="font-medium text-portfolio-navy">Data Visualization</p>
-                <p className="text-gray-600">Creating intuitive, interactive dashboards that translate complex data into actionable insights</p>
+                <p className="font-medium text-white font-montserrat">Data Visualization</p>
+                <p className="text-gray-300 font-inter">Creating intuitive, interactive dashboards that translate complex data into actionable insights</p>
               </li>
               
               <li className="transition-all duration-500 transform translate-y-10 opacity-0">
-                <p className="font-medium text-portfolio-navy">Predictive Analytics</p>
-                <p className="text-gray-600">Building machine learning models that anticipate business trends and customer behaviors</p>
+                <p className="font-medium text-white font-montserrat">Predictive Analytics</p>
+                <p className="text-gray-300 font-inter">Building machine learning models that anticipate business trends and customer behaviors</p>
               </li>
               
               <li className="transition-all duration-500 transform translate-y-10 opacity-0">
-                <p className="font-medium text-portfolio-navy">Data Pipeline Development</p>
-                <p className="text-gray-600">Streamlining data flow from diverse sources to enable real-time analytics</p>
+                <p className="font-medium text-white font-montserrat">Data Pipeline Development</p>
+                <p className="text-gray-300 font-inter">Streamlining data flow from diverse sources to enable real-time analytics</p>
               </li>
             </ul>
           </div>
