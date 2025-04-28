@@ -66,14 +66,15 @@ const Navigation = ({ sections }: NavigationProps) => {
         'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
         isScrolled 
           ? 'py-3 backdrop-blur-xl bg-black/30 border-b border-white/5 shadow-lg'
-          : 'py-6 bg-transparent'
+          : 'py-5 bg-transparent'
       )}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <a 
           ref={logoRef}
           href="#hero" 
-          className="logo pt-1 font-playfair font-semibold text-2xl text-white transition-all duration-500 hover:opacity-90"
+          className="logo overflow-visible font-playfair font-semibold text-2xl text-white transition-all duration-500 hover:opacity-90"
+          style={{ fontWeight: 600, fontSize: '1.5rem' }}
           onClick={(e) => {
             e.preventDefault();
             handleNavigation('hero');
@@ -84,13 +85,13 @@ const Navigation = ({ sections }: NavigationProps) => {
           </div>
         </a>
 
-        <div className="hidden md:flex space-x-6">
+        <div className="hidden md:flex backdrop-blur-md bg-white/5 rounded-full px-2 py-1 border border-white/10">
           {sections.map(section => (
             <button
               key={section.id}
               onClick={() => handleNavigation(section.id)}
               className={cn(
-                'nav-link px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 relative overflow-hidden',
+                'nav-link relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 overflow-hidden',
                 activeSection === section.id
                   ? 'text-white'
                   : 'text-gray-400 hover:text-white'
@@ -99,7 +100,7 @@ const Navigation = ({ sections }: NavigationProps) => {
               {section.title}
               <span 
                 className={cn(
-                  "absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] transform scale-x-0 transition-transform duration-300 origin-left",
+                  "absolute bottom-0 left-0 w-full h-full bg-portfolio-accent1/20 transform scale-x-0 transition-transform duration-300 origin-left -z-10 rounded-full",
                   activeSection === section.id && "scale-x-100"
                 )}
               />
@@ -108,7 +109,7 @@ const Navigation = ({ sections }: NavigationProps) => {
         </div>
 
         <button 
-          className="md:hidden text-gray-400 hover:text-white transition-colors bg-white/5 backdrop-blur-lg p-2 rounded-lg"
+          className="md:hidden text-gray-400 hover:text-white transition-colors bg-white/10 backdrop-blur-lg p-2 rounded-lg"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -116,19 +117,26 @@ const Navigation = ({ sections }: NavigationProps) => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-black/80 backdrop-blur-xl py-4 px-4 flex flex-col space-y-4 border-t border-white/5">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-black/80 backdrop-blur-xl py-4 px-4 flex flex-col space-y-2 border-t border-white/5">
           {sections.map(section => (
             <button
               key={section.id}
               onClick={() => handleNavigation(section.id)}
               className={cn(
-                'px-4 py-2 text-left transition-all duration-300 rounded-lg',
+                'px-4 py-2 text-left transition-all duration-300 rounded-lg relative overflow-hidden',
                 activeSection === section.id
-                  ? 'text-white bg-white/5 backdrop-blur-lg'
+                  ? 'text-white bg-portfolio-accent1/20'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
               )}
             >
               {section.title}
+              <span 
+                className={cn(
+                  "absolute bottom-0 left-0 w-0 h-full bg-portfolio-accent1/10 transition-all duration-300",
+                  activeSection === section.id && "w-full"
+                )}
+                style={{ zIndex: -1 }}
+              />
             </button>
           ))}
         </div>
