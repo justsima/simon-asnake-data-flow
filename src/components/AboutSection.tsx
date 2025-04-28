@@ -1,4 +1,6 @@
+
 import { useEffect, useRef } from 'react';
+import ParticleBackground from './ParticleBackground';
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
