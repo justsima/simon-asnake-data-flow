@@ -1,12 +1,53 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useEffect } from 'react';
+
+import Navigation from '@/components/Navigation';
+import HeroSection from '@/components/HeroSection';
+import AboutSection from '@/components/AboutSection';
+import SkillsSection from '@/components/SkillsSection';
+import ProjectsSection from '@/components/ProjectsSection';
+import ExperienceSection from '@/components/ExperienceSection';
+import CertificationsSection from '@/components/CertificationsSection';
+import ContactSection from '@/components/ContactSection';
+import Footer from '@/components/Footer';
+
+const sections = [
+  { id: 'hero', title: 'Home' },
+  { id: 'about', title: 'About' },
+  { id: 'skills', title: 'Skills' },
+  { id: 'projects', title: 'Projects' },
+  { id: 'experience', title: 'Experience' },
+  { id: 'certifications', title: 'Certifications' },
+  { id: 'contact', title: 'Contact' },
+];
 
 const Index = () => {
+  useEffect(() => {
+    document.title = 'Simon Asnake | Data Scientist & Power BI Expert';
+    
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (prefersReducedMotion) {
+      console.log('Reduced motion preference detected. Simplified animations will be used.');
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-white">
+      <Navigation sections={sections} />
+      
+      <main>
+        <HeroSection />
+        <AboutSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <ExperienceSection />
+        <CertificationsSection />
+        <ContactSection />
+      </main>
+      
+      <Footer />
     </div>
   );
 };

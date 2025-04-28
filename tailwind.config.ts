@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,17 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom portfolio colors
+				portfolio: {
+					navy: '#162447',
+					purple: '#6A4C93',
+					teal: '#1A7F8C',
+					gray: '#F5F5F7',
+					darkText: '#1D1D1F',
+					mediumBlue: '#2A4073',
+					lavender: '#8B7AAF',
+					deepTeal: '#15697A',
 				}
 			},
 			borderRadius: {
@@ -84,12 +96,156 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'fade-in-delay': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'50%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'fade-in-longer-delay': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'70%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'scale-in': {
+					'0%': {
+						transform: 'scale(0.95)',
+						opacity: '0'
+					},
+					'100%': {
+						transform: 'scale(1)',
+						opacity: '1'
+					}
+				},
+				'draw-line': {
+					'0%': {
+						height: '0%'
+					},
+					'100%': {
+						height: '100%'
+					}
+				},
+				'blob-morph-1': {
+					'0%, 100%': {
+						borderRadius: '60% 40% 30% 70%/60% 30% 70% 40%'
+					},
+					'25%': {
+						borderRadius: '30% 60% 70% 40%/50% 60% 30% 60%'
+					},
+					'50%': {
+						borderRadius: '30% 60% 70% 40%/50% 60% 30% 60%'
+					},
+					'75%': {
+						borderRadius: '60% 40% 30% 70%/60% 30% 70% 40%'
+					}
+				},
+				'blob-morph-2': {
+					'0%, 100%': {
+						borderRadius: '40% 60% 70% 30%/40% 40% 60% 60%'
+					},
+					'25%': {
+						borderRadius: '40% 60% 70% 30%/60% 30% 70% 40%'
+					},
+					'50%': {
+						borderRadius: '40% 60% 70% 30%/60% 30% 70% 40%'
+					},
+					'75%': {
+						borderRadius: '40% 60% 70% 30%/40% 40% 60% 60%'
+					}
+				},
+				'blob-move-1': {
+					'0%, 100%': {
+						transform: 'translate(0, 0) scale(1)'
+					},
+					'25%': {
+						transform: 'translate(5%, 10%) scale(1.05)'
+					},
+					'50%': {
+						transform: 'translate(10%, 5%) scale(1.1)'
+					},
+					'75%': {
+						transform: 'translate(5%, 0%) scale(1.05)'
+					}
+				},
+				'blob-move-2': {
+					'0%, 100%': {
+						transform: 'translate(0, 0) scale(1)'
+					},
+					'25%': {
+						transform: 'translate(-10%, 5%) scale(1.05)'
+					},
+					'50%': {
+						transform: 'translate(-5%, 10%) scale(1.1)'
+					},
+					'75%': {
+						transform: 'translate(-2%, 5%) scale(1.05)'
+					}
+				},
+				'progress-fill': {
+					'0%': {
+						width: '0%'
+					},
+					'100%': {
+						width: 'var(--progress-width)'
+					}
+				},
+				'character-reveal': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(20px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.8s ease-out forwards',
+				'fade-in-delay': 'fade-in-delay 1.2s ease-out forwards',
+				'fade-in-longer-delay': 'fade-in-longer-delay 1.5s ease-out forwards',
+				'scale-in': 'scale-in 0.5s ease-out forwards',
+				'draw-line': 'draw-line 1s ease-out forwards',
+				'blob-morph-1': 'blob-morph-1 25s ease-in-out infinite',
+				'blob-morph-2': 'blob-morph-2 30s ease-in-out infinite',
+				'blob-move-1': 'blob-move-1 25s ease-in-out infinite',
+				'blob-move-2': 'blob-move-2 30s ease-in-out infinite',
+				'progress-fill': 'progress-fill 1.5s ease-out forwards',
+				'character-reveal': 'character-reveal 0.5s ease-out forwards',
+			},
+			fontFamily: {
+				'inter': ['Inter', 'sans-serif'],
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
