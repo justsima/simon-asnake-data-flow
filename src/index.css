@@ -1,7 +1,9 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -64,6 +66,83 @@
   }
 }
 
+/* Logo styling */
+.logo {
+  position: relative;
+  font-size: 2rem;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-inner {
+  position: relative;
+  display: inline-block;
+  transition: all 0.5s ease;
+}
+
+.logo-text {
+  font-family: 'Great Vibes', cursive;
+  background: linear-gradient(to right, #9b87f5, #7E69AB);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  transform: scale(1.2);
+  transition: all 0.5s ease;
+}
+
+.logo-scrolled {
+  transform: scale(0.8);
+}
+
+.logo-scrolled .logo-text {
+  transform: scale(1);
+}
+
+/* Navigation link animations */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0.5px;
+  background: linear-gradient(to right, #9b87f5, #7E69AB);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::before {
+  transform: scaleX(1);
+}
+
+/* Glass button effects */
+.glass-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: left 0.5s ease;
+}
+
+.glass-button:hover::before {
+  left: 100%;
+}
+
 /* Character Animation for the hero section */
 .animate-character {
   opacity: 0;
@@ -72,6 +151,44 @@
 
 .character-visible {
   animation: character-reveal 0.5s ease-out forwards;
+}
+
+/* Text morphing animation */
+@keyframes text-morph {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Text slide up animation */
+@keyframes text-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Multiline text reveal animation */
+@keyframes reveal-line {
+  0% {
+    transform: translateY(1em);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Fancy text animations */
@@ -106,109 +223,7 @@
   background-size: 200% auto;
 }
 
-/* Blob Animation Styles */
-.blob-container {
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
-.blob {
-  position: absolute;
-  filter: blur(60px);
-  opacity: 0;
-  transition: opacity 3s ease;
-}
-
-.blob.visible {
-  opacity: 0.12;
-}
-
-/* Progress Bar Animations */
-.progress-bar {
-  position: relative;
-  height: 6px;
-  width: 100%;
-  background-color: rgba(30, 30, 36, 1);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.progress-bar-fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  border-radius: 3px;
-}
-
-.visible .progress-bar-fill {
-  animation: progress-fill 1.5s ease-out forwards;
-}
-
-@keyframes progress-fill {
-  from {
-    width: 0;
-  }
-  to {
-    width: var(--progress-width);
-  }
-}
-
-/* Timeline animation */
-.timeline-line {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 2px;
-  background-color: #30363D;
-  transform: translateX(-50%);
-}
-
-.timeline-line-progress {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: linear-gradient(to bottom, #6A4C93, #1A7F8C);
-  height: 0;
-  transition: height 1.5s ease-out;
-}
-
-.timeline-visible .timeline-line-progress {
-  height: 100%;
-}
-
-.timeline-dot {
-  position: absolute;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  background-color: #0D1117;
-  border: 3px solid #6A4C93;
-  border-radius: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-}
-
-.timeline-content {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.timeline-item-visible .timeline-content {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Glass Card */
+/* Glass card */
 .glass-card {
   background: rgba(22, 27, 34, 0.6);
   backdrop-filter: blur(8px);
@@ -216,17 +231,29 @@
   border-radius: var(--radius);
 }
 
-@keyframes text-slide-up {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Multi-layered glassmorphism */
+.glass-layer-1 {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius);
 }
 
+.glass-layer-2 {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius);
+}
+
+.glass-layer-3 {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+}
+
+/* Reduced motion preferences */
 @media (prefers-reduced-motion) {
   .blob {
     animation: none !important;
