@@ -23,11 +23,17 @@ const Navigation = ({ sections }: NavigationProps) => {
         element: document.getElementById(section.id),
       }));
 
-      const currentSection = sectionElements.findLast(section => {
-        if (!section.element) return false;
+      // Find the last section that is above the viewport threshold
+      let currentSection = null;
+      for (let i = sectionElements.length - 1; i >= 0; i--) {
+        const section = sectionElements[i];
+        if (!section.element) continue;
         const rect = section.element.getBoundingClientRect();
-        return rect.top <= 100;
-      });
+        if (rect.top <= 100) {
+          currentSection = section;
+          break;
+        }
+      }
 
       if (currentSection) {
         setActiveSection(currentSection.id);
