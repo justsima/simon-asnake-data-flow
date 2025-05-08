@@ -10,7 +10,7 @@ import ExperienceSection from '@/components/ExperienceSection';
 import CertificationsSection from '@/components/CertificationsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
-import ParticleBackground from '@/components/ParticleBackground';
+import FlowingDotsBackground from '@/components/FlowingDotsBackground';
 
 const sections = [
   { id: 'hero', title: 'Home' },
@@ -43,7 +43,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#0D1117]">
-      <ParticleBackground />
+      <FlowingDotsBackground />
       <Navigation sections={sections} />
       
       <main>

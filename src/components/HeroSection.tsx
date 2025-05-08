@@ -1,9 +1,6 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
-import ParticleBackground from './ParticleBackground';
-import GradientBackground from './GradientBackground';
 
 const roles = [
   "Data Analyst",
@@ -106,8 +103,6 @@ const HeroSection = () => {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center">
-      <GradientBackground />
-      
       <div className="container mx-auto px-4 z-10">
         <div className="max-w-3xl ml-8 md:ml-12">
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
