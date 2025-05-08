@@ -84,9 +84,9 @@ const SkillCard = ({ title, icon, skills, delay }: SkillCardProps) => {
         <div 
           className="w-12 h-12 rounded-full flex items-center justify-center mr-4 transform transition-transform hover:scale-110"
           style={{
-            background: 'rgba(26, 127, 140, 0.1)',
+            background: 'rgba(138, 137, 255, 0.1)',
             backdropFilter: 'blur(8px)',
-            border: '1px solid rgba(26, 127, 140, 0.3)',
+            border: '1px solid rgba(138, 137, 255, 0.3)',
           }}
         >
           <span className="text-2xl">{icon}</span>
@@ -99,7 +99,7 @@ const SkillCard = ({ title, icon, skills, delay }: SkillCardProps) => {
           <div key={skill.name} className="mb-2">
             <div className="flex justify-between mb-1">
               <p className="text-sm font-medium text-gray-300">{skill.name}</p>
-              <p className="text-sm font-medium text-[#1A7F8C]">{skill.percentage}%</p>
+              <p className="text-sm font-medium text-[#8A89FF]">{skill.percentage}%</p>
             </div>
             <div className="progress-bar">
               <div 

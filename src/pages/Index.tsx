@@ -10,8 +10,7 @@ import ExperienceSection from '@/components/ExperienceSection';
 import CertificationsSection from '@/components/CertificationsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
-import ParticleBackground from '@/components/ParticleBackground';
-import PyramidBackground from '@/components/PyramidBackground';
+import WaveDotBackground from '@/components/WaveDotBackground';
 
 const sections = [
   { id: 'hero', title: 'Home' },
@@ -43,8 +42,8 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black">
-      <PyramidBackground />
+    <div className="min-h-screen bg-[#08080D]">
+      <WaveDotBackground />
       <Navigation sections={sections} />
       
       <main>
