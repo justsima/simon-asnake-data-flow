@@ -1,7 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { ProjectCard } from './projects/ProjectCard';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Pagination,
   PaginationContent,
@@ -205,6 +204,8 @@ const ProjectsSection = () => {
   const [isPageChanging, setIsPageChanging] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>('all');
+  const tabsRef = useRef<HTMLDivElement>(null);
 
   // Filter projects based on selected category
   const filteredProjects = projects.filter(
@@ -224,6 +225,16 @@ const ProjectsSection = () => {
     setIsPageChanging(true);
     setCurrentCategory(category);
     setCurrentPage(1);
+    setActiveTab(category);
+    
+    // Add animation to the tab indicator
+    if (tabsRef.current) {
+      tabsRef.current.classList.add('tab-transitioning');
+      setTimeout(() => {
+        tabsRef.current?.classList.remove('tab-transitioning');
+      }, 300);
+    }
+    
     setTimeout(() => setIsPageChanging(false), 300);
   };
 
@@ -286,6 +297,13 @@ const ProjectsSection = () => {
     return pageNumbers;
   };
 
+  const categories = [
+    { id: 'all', name: 'All Projects' },
+    { id: 'Power BI', name: 'Power BI' },
+    { id: 'Machine Learning', name: 'ML' },
+    { id: 'Data Engineering', name: 'Data Eng' }
+  ];
+
   return (
     <section id="projects" className="py-20 relative overflow-hidden">
       <GradientBackground />
@@ -299,52 +317,72 @@ const ProjectsSection = () => {
           Innovative solutions driving measurable business impact through data science and visualization
         </p>
 
-        <Tabs defaultValue="all" className="mb-8" onValueChange={handleCategoryChange}>
-          <TabsList className="grid w-full grid-cols-4 max-w-[600px] mx-auto bg-portfolio-darkCard/50 backdrop-blur-sm border border-white/10">
-            <TabsTrigger 
-              value="all" 
-              className="data-[state=active]:bg-portfolio-accent1/20 data-[state=active]:text-portfolio-accent1 transition-all duration-300"
+        {/* Redesigned category tabs with enhanced glassmorphism and animations */}
+        <div className="mb-10 relative">
+          <div 
+            ref={tabsRef}
+            className="flex justify-center items-center mb-2 relative overflow-hidden"
+          >
+            <div className="glass-effect rounded-xl p-1 flex space-x-1 relative overflow-hidden transition-all duration-300"
+                style={{
+                  background: 'rgba(22, 27, 34, 0.4)',
+                  backdropFilter: 'blur(12px)',
+                  border: '1px solid rgba(48, 54, 61, 0.6)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
+                }}
             >
-              All Projects
-            </TabsTrigger>
-            <TabsTrigger 
-              value="Power BI" 
-              className="data-[state=active]:bg-portfolio-accent1/20 data-[state=active]:text-portfolio-accent1 transition-all duration-300"
-            >
-              Power BI
-            </TabsTrigger>
-            <TabsTrigger 
-              value="Machine Learning" 
-              className="data-[state=active]:bg-portfolio-accent1/20 data-[state=active]:text-portfolio-accent1 transition-all duration-300"
-            >
-              ML
-            </TabsTrigger>
-            <TabsTrigger 
-              value="Data Engineering" 
-              className="data-[state=active]:bg-portfolio-accent1/20 data-[state=active]:text-portfolio-accent1 transition-all duration-300"
-            >
-              Data Eng
-            </TabsTrigger>
-          </TabsList>
-
-          {['all', 'Power BI', 'Machine Learning', 'Data Engineering'].map((category) => (
-            <TabsContent 
-              key={category} 
-              value={category} 
-              className={`mt-6 transition-all duration-300 ${isPageChanging ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'}`}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {visibleProjects.map((project) => (
-                  <ProjectCard
-                    key={project.id}
-                    project={project}
-                    onClick={() => handleProjectClick(project)}
-                  />
-                ))}
-              </div>
-            </TabsContent>
-          ))}
-        </Tabs>
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => handleCategoryChange(category.id)}
+                  className={`relative z-10 px-5 py-2.5 rounded-lg font-medium transition-all duration-300 min-w-[120px] ${
+                    activeTab === category.id
+                      ? 'text-white'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  {/* Active tab indicator with purple gradient */}
+                  {activeTab === category.id && (
+                    <span 
+                      className="absolute inset-0 bg-gradient-to-r from-[#9b87f5]/60 to-[#7E69AB]/60 rounded-lg transition-all duration-300 backdrop-blur-sm animate-pulse"
+                      style={{
+                        boxShadow: '0 4px 12px rgba(155, 135, 245, 0.3)',
+                      }}
+                    ></span>
+                  )}
+                  <span className="relative z-10">{category.name}</span>
+                </button>
+              ))}
+              
+              {/* Animated underline that moves with tab changes */}
+              <div 
+                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] transition-all duration-500"
+                style={{ 
+                  width: `${100 / categories.length}%`,
+                  transform: `translateX(${categories.findIndex(c => c.id === activeTab) * 100}%)`,
+                }}
+              ></div>
+            </div>
+          </div>
+          
+          <div 
+            className={`mt-6 transition-all duration-500 ${
+              isPageChanging 
+                ? 'opacity-0 transform translate-y-4' 
+                : 'opacity-100 transform translate-y-0'
+            }`}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {visibleProjects.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  onClick={() => handleProjectClick(project)}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* Enhanced pagination with number indicators */}
         {totalPages > 1 && (
@@ -353,7 +391,7 @@ const ProjectsSection = () => {
               <PaginationItem>
                 <PaginationPrevious 
                   onClick={() => handlePageChange(currentPage - 1)}
-                  className={`border-portfolio-darkBorder bg-portfolio-darkCard/50 backdrop-blur-sm hover:bg-portfolio-accent1/10 transition-colors ${
+                  className={`border-portfolio-darkBorder bg-portfolio-darkCard/50 backdrop-blur-sm hover:bg-[#9b87f5]/10 transition-colors ${
                     currentPage === 1 ? 'pointer-events-none opacity-50' : ''
                   }`}
                 />
@@ -371,8 +409,8 @@ const ProjectsSection = () => {
                       isActive={currentPage === page}
                       className={`border-portfolio-darkBorder ${
                         currentPage === page 
-                          ? 'bg-portfolio-accent1/20 text-portfolio-accent1' 
-                          : 'bg-portfolio-darkCard/50 backdrop-blur-sm hover:bg-portfolio-accent1/10 text-gray-300 hover:text-white'
+                          ? 'bg-[#9b87f5]/20 text-[#9b87f5]' 
+                          : 'bg-portfolio-darkCard/50 backdrop-blur-sm hover:bg-[#9b87f5]/10 text-gray-300 hover:text-white'
                       } transition-colors`}
                     >
                       {page}
@@ -384,7 +422,7 @@ const ProjectsSection = () => {
               <PaginationItem>
                 <PaginationNext
                   onClick={() => handlePageChange(currentPage + 1)}
-                  className={`border-portfolio-darkBorder bg-portfolio-darkCard/50 backdrop-blur-sm hover:bg-portfolio-accent1/10 transition-colors ${
+                  className={`border-portfolio-darkBorder bg-portfolio-darkCard/50 backdrop-blur-sm hover:bg-[#9b87f5]/10 transition-colors ${
                     currentPage === totalPages ? 'pointer-events-none opacity-50' : ''
                   }`}
                 />
@@ -396,7 +434,7 @@ const ProjectsSection = () => {
 
       {/* Project details dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[700px] bg-portfolio-darkCard border-portfolio-darkBorder">
+        <DialogContent className="sm:max-w-[700px] bg-portfolio-darkCard border-portfolio-darkBorder glass-effect">
           {selectedProject && (
             <>
               <DialogHeader>
@@ -426,24 +464,24 @@ const ProjectsSection = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
+                  <div className="glass-effect p-4 rounded-lg">
                     <h3 className="text-white font-semibold mb-2">Challenge</h3>
                     <p className="text-gray-300 text-sm">{selectedProject.challenge}</p>
                   </div>
-                  <div>
+                  <div className="glass-effect p-4 rounded-lg">
                     <h3 className="text-white font-semibold mb-2">Solution</h3>
                     <p className="text-gray-300 text-sm">{selectedProject.solution}</p>
                   </div>
                 </div>
 
-                <div>
+                <div className="glass-effect p-4 rounded-lg">
                   <h3 className="text-white font-semibold mb-2">Impact</h3>
                   <p className="text-gray-300 text-sm">{selectedProject.impact}</p>
                 </div>
 
                 {selectedProject.liveUrl && (
                   <Button 
-                    className="w-full glass-button bg-portfolio-accent1 hover:bg-portfolio-accent1/80 text-white transition-all duration-500"
+                    className="w-full glass-button bg-[#9b87f5] hover:bg-[#7E69AB]/80 text-white transition-all duration-500"
                     onClick={() => window.open(selectedProject.liveUrl, '_blank')}
                   >
                     <span className="flex items-center">
@@ -455,7 +493,7 @@ const ProjectsSection = () => {
 
                 {selectedProject.videoUrl && !selectedProject.liveUrl && (
                   <Button 
-                    className="w-full glass-button bg-portfolio-accent1 hover:bg-portfolio-accent1/80 text-white transition-all duration-500"
+                    className="w-full glass-button bg-[#9b87f5] hover:bg-[#7E69AB]/80 text-white transition-all duration-500"
                     onClick={() => window.open(selectedProject.videoUrl, '_blank')}
                   >
                     <span className="flex items-center">

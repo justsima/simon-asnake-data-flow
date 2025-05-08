@@ -42,7 +42,7 @@
   color: #888;
 }
 
-/* Custom glassmorphism styles */
+/* Custom glassmorphism styles with purple accents */
 .glass-effect {
   background: rgba(22, 27, 34, 0.5);
   backdrop-filter: blur(8px);
@@ -50,11 +50,13 @@
   border: 1px solid rgba(48, 54, 61, 0.6);
   border-radius: var(--radius);
   transition: all 0.5s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .glass-effect:hover {
   background: rgba(22, 27, 34, 0.6);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(155, 135, 245, 0.3);
 }
 
 .glass-effect-light {
@@ -69,4 +71,70 @@
 .glass-effect-light:hover {
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(155, 135, 245, 0.2);
+}
+
+/* Tab transition effects */
+.tab-transitioning {
+  animation: tab-pulse 0.3s ease;
+}
+
+@keyframes tab-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Purple shimmer animation for active elements */
+.purple-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.purple-shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(155, 135, 245, 0.3),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+/* Project card hover animation */
+@keyframes card-glow {
+  0% {
+    box-shadow: 0 0 5px rgba(155, 135, 245, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(155, 135, 245, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(155, 135, 245, 0.3);
+  }
+}
+
+.hover-glow:hover {
+  animation: card-glow 2s infinite;
 }
