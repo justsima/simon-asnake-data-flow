@@ -1,98 +1,170 @@
 
 import { Vector } from '@/types/vector';
 
-// Colors for the gradient effect
-export const dotColors = [
-  { r: 83, g: 36, b: 118, a: 0.8 },    // Deep purple
-  { r: 130, g: 60, b: 180, a: 0.8 },   // Medium purple
-  { r: 180, g: 70, b: 170, a: 0.8 },   // Pink-purple
-  { r: 200, g: 80, b: 192, a: 0.7 },   // Bright pink
-  { r: 120, g: 40, b: 170, a: 0.9 },   // Vibrant purple
-  { r: 90, g: 30, b: 150, a: 0.85 }    // Rich purple
-];
-
-// Configuration
-export const dotConfig = {
-  spacing: 25,      // Space between dots
-  amplitude: 30,    // Wave height
-  frequency: 0.02,  // Wave frequency
-  waveSpeed: 0.03,  // Wave movement speed
+// Configuration for the flowing dots
+const config = {
+  dotSize: 2,
+  dotSpacing: 30,
+  dotColor: '#1A7F8C', // Teal color from original theme
+  accentColor: '#6A4C93', // Purple for accent
+  dotOpacityFactor: 0.7,
+  lineMaxLength: 150,
+  lineOpacityFactor: 0.15,
+  waveSpeed: 0.02,
+  waveAmplitude: 20,
+  mouseInfluenceRadius: 200,
+  mouseForce: 0.15,
 };
 
-// Draw background
-export const drawBackground = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
-  // Create a dark purple gradient background
-  const gradient = ctx.createLinearGradient(0, 0, width, height);
-  gradient.addColorStop(0, '#170926');
-  gradient.addColorStop(1, '#1d0a30');
-  
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, width, height);
+export const createDotGrid = (canvas: HTMLCanvasElement) => {
+  const { dotSpacing } = config;
+  const dots = [];
+
+  // Calculate grid dimensions based on canvas size
+  const cols = Math.ceil(canvas.width / dotSpacing) + 2;
+  const rows = Math.ceil(canvas.height / dotSpacing) + 2;
+
+  // Create grid of dots with initial positions and properties
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      const x = i * dotSpacing;
+      const y = j * dotSpacing;
+      const baseY = y;
+
+      dots.push({
+        x,
+        y,
+        baseY,
+        size: config.dotSize,
+        color: i % 5 === 0 && j % 5 === 0 ? config.accentColor : config.dotColor,
+        vx: 0,
+        vy: 0,
+      });
+    }
+  }
+
+  return dots;
 };
 
-// Set up grid of dots
-export const createGrid = (width: number, height: number, spacing: number) => {
-  const cols = Math.floor(width / spacing) + 2;
-  const rows = Math.floor(height / spacing) + 2;
-  
-  return { cols, rows };
+export const animate = (
+  canvas: HTMLCanvasElement,
+  ctx: CanvasRenderingContext2D,
+  dots: any[],
+  mousePosition: Vector | null
+) => {
+  // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Set up dark background
+  ctx.fillStyle = 'rgba(13, 17, 23, 0.01)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Update and draw connecting lines first (so they appear behind dots)
+  drawConnectingLines(ctx, dots);
+
+  // Update and draw each dot
+  dots.forEach((dot, index) => {
+    updateDotPosition(dot, canvas, mousePosition);
+    drawDot(ctx, dot);
+  });
 };
 
-// Calculate wave height at a given position and time
-export const calculateWaveHeight = (x: number, y: number, time: number, frequency: number, amplitude: number, waveSpeed: number) => {
-  // Multiple wave frequencies for more organic look
-  const wave1 = Math.sin(x * frequency * 0.5 + time * waveSpeed) * amplitude * 0.5;
-  const wave2 = Math.sin(y * frequency * 0.3 + time * waveSpeed * 0.7) * amplitude * 0.3;
-  const wave3 = Math.sin((x + y) * frequency * 0.2 + time * waveSpeed * 0.5) * amplitude * 0.7;
-  const wave4 = Math.cos(x * frequency * 0.4 - y * frequency * 0.3 + time * waveSpeed * 0.8) * amplitude * 0.4;
+const updateDotPosition = (dot: any, canvas: HTMLCanvasElement, mousePosition: Vector | null) => {
+  const { waveSpeed, waveAmplitude, mouseInfluenceRadius, mouseForce } = config;
+
+  // Calculate wave motion
+  const time = Date.now() * waveSpeed;
+  const waveOffset = Math.sin(time + dot.x * 0.02) * waveAmplitude;
   
-  // Combine waves
-  return wave1 + wave2 + wave3 + wave4;
+  // Target position includes wave motion
+  let targetY = dot.baseY + waveOffset;
+
+  // Add mouse influence if mouse is present
+  if (mousePosition) {
+    const dx = mousePosition.x - dot.x;
+    const dy = mousePosition.y - dot.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < mouseInfluenceRadius) {
+      // Calculate force based on distance (closer = stronger)
+      const force = (1 - distance / mouseInfluenceRadius) * mouseForce;
+      
+      // Apply force vector away from mouse
+      const angle = Math.atan2(dy, dx);
+      const forceX = Math.cos(angle) * force;
+      const forceY = Math.sin(angle) * force;
+      
+      dot.vx -= forceX;
+      dot.vy -= forceY;
+    }
+  }
+
+  // Apply velocity with damping
+  dot.vy = (dot.vy * 0.9) + ((targetY - dot.y) * 0.1);
+  dot.vx = dot.vx * 0.9;
+  
+  // Update position
+  dot.y += dot.vy;
+  dot.x += dot.vx;
+
+  // Handle edges of screen
+  if (dot.x < 0) dot.x = canvas.width;
+  if (dot.x > canvas.width) dot.x = 0;
+  if (dot.y < 0) dot.y = 0;
+  if (dot.y > canvas.height) dot.y = canvas.height;
 };
 
-// Calculate dot size based on wave position
-export const calculateDotSize = (waveHeight: number, amplitude: number) => {
-  const baseSize = 2;
-  const variableSize = 1.5;
+const drawDot = (ctx: CanvasRenderingContext2D, dot: any) => {
+  const { dotOpacityFactor } = config;
   
-  // Dots at wave peaks or troughs appear larger
-  return baseSize + variableSize * Math.abs(waveHeight / amplitude);
+  // Draw dot with subtle glow effect
+  ctx.beginPath();
+  ctx.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2);
+  ctx.fillStyle = dot.color;
+  ctx.globalAlpha = dotOpacityFactor;
+  ctx.fill();
+  ctx.closePath();
+
+  // Reset global alpha
+  ctx.globalAlpha = 1;
 };
 
-// Calculate dot opacity based on wave position and mouse distance
-export const calculateDotOpacity = (x: number, y: number, waveHeight: number, amplitude: number, mousePosition: Vector) => {
-  // Base opacity
-  let opacity = 0.3 + (Math.abs(waveHeight) / amplitude) * 0.7;
+const drawConnectingLines = (ctx: CanvasRenderingContext2D, dots: any[]) => {
+  const { lineMaxLength, lineOpacityFactor } = config;
+
+  ctx.beginPath();
   
-  // Distance from mouse for interactivity
-  const dx = x - mousePosition.x;
-  const dy = y - mousePosition.y;
-  const distance = Math.sqrt(dx * dx + dy * dy);
-  
-  if (distance < 200) {
-    opacity += (1 - distance / 200) * 0.5;
+  // Draw lines between nearby dots
+  for (let i = 0; i < dots.length; i++) {
+    const dot1 = dots[i];
+    
+    // Only check a subset of dots for performance
+    for (let j = i + 1; j < dots.length; j += 3) {
+      const dot2 = dots[j];
+      
+      const dx = dot1.x - dot2.x;
+      const dy = dot1.y - dot2.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      if (distance < lineMaxLength) {
+        // Make line opacity proportional to distance
+        const opacity = (1 - distance / lineMaxLength) * lineOpacityFactor;
+        
+        ctx.moveTo(dot1.x, dot1.y);
+        ctx.lineTo(dot2.x, dot2.y);
+        
+        // Change line color based on dot colors
+        if (dot1.color === config.accentColor || dot2.color === config.accentColor) {
+          ctx.strokeStyle = `rgba(106, 76, 147, ${opacity})`; // Purple with opacity
+        } else {
+          ctx.strokeStyle = `rgba(26, 127, 140, ${opacity})`; // Teal with opacity
+        }
+        
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
   }
   
-  return Math.min(opacity, 1);
-};
-
-// Get color based on position and wave height
-export const getColorAtPosition = (x: number, y: number, waveHeight: number, amplitude: number, colors: typeof dotColors) => {
-  // Use wave height to determine color index
-  const normalizedHeight = (waveHeight + amplitude) / (amplitude * 2); // 0 to 1
-  const colorIndex = Math.floor(normalizedHeight * (colors.length - 1));
-  const nextColorIndex = Math.min(colorIndex + 1, colors.length - 1);
-  
-  // Interpolate between two colors
-  const colorRatio = (normalizedHeight * (colors.length - 1)) - colorIndex;
-  
-  const color1 = colors[colorIndex];
-  const color2 = colors[nextColorIndex];
-  
-  return {
-    r: Math.floor(color1.r * (1 - colorRatio) + color2.r * colorRatio),
-    g: Math.floor(color1.g * (1 - colorRatio) + color2.g * colorRatio),
-    b: Math.floor(color1.b * (1 - colorRatio) + color2.b * colorRatio),
-    a: color1.a * (1 - colorRatio) + color2.a * colorRatio
-  };
+  ctx.closePath();
 };

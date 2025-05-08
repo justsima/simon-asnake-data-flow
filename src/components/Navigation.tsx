@@ -73,24 +73,24 @@ const Navigation = ({ sections }: NavigationProps) => {
         <a 
           ref={logoRef}
           href="#hero" 
-          className="logo pt-1 font-playfair font-semibold text-3xl text-white transition-all duration-500 hover:opacity-90"
+          className="logo pt-2 font-playfair font-semibold text-3xl text-white transition-all duration-500 hover:opacity-90"
           onClick={(e) => {
             e.preventDefault();
             handleNavigation('hero');
           }}
         >
           <div className="logo-inner">
-            <span className="logo-text" style={{ fontWeight: 600, letterSpacing: "1px" }}>SA</span>
+            <span className="logo-text" style={{ fontWeight: 700, letterSpacing: "1px" }}>SA</span>
           </div>
         </a>
 
-        <div className="hidden md:flex space-x-4">
+        <div className="hidden md:flex space-x-6">
           {sections.map(section => (
             <button
               key={section.id}
               onClick={() => handleNavigation(section.id)}
               className={cn(
-                'nav-link px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 relative overflow-hidden',
+                'nav-link nav-hover-effect px-5 py-2 rounded-lg text-sm font-medium transition-all duration-500 relative overflow-hidden',
                 activeSection === section.id
                   ? 'text-white'
                   : 'text-gray-400 hover:text-white'
@@ -99,12 +99,12 @@ const Navigation = ({ sections }: NavigationProps) => {
               {section.title}
               <span 
                 className={cn(
-                  "absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] transform scale-x-0 transition-transform duration-300 origin-left",
+                  "absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#1A7F8C] to-[#15697A] transform scale-x-0 transition-transform duration-500 origin-left",
                   activeSection === section.id && "scale-x-100"
                 )}
               />
               {/* Glassmorphism hover effect */}
-              <span className="absolute inset-0 rounded-lg bg-white/5 backdrop-blur-sm opacity-0 transition-opacity duration-300 hover:opacity-100 -z-10"></span>
+              <span className="absolute inset-0 rounded-lg bg-white/5 backdrop-blur-sm opacity-0 transition-opacity duration-500 hover:opacity-100 -z-10"></span>
             </button>
           ))}
         </div>
@@ -124,14 +124,14 @@ const Navigation = ({ sections }: NavigationProps) => {
               key={section.id}
               onClick={() => handleNavigation(section.id)}
               className={cn(
-                'px-4 py-2 text-left transition-all duration-300 rounded-lg',
+                'px-4 py-2 text-left transition-all duration-500 rounded-lg nav-hover-effect',
                 activeSection === section.id
                   ? 'text-white bg-white/5 backdrop-blur-lg'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
               )}
             >
               {section.title}
-              <span className="absolute inset-0 rounded-lg bg-white/5 backdrop-blur-sm opacity-0 transition-opacity duration-300 hover:opacity-100"></span>
+              <span className="absolute inset-0 rounded-lg bg-white/5 backdrop-blur-sm opacity-0 transition-opacity duration-500 hover:opacity-100"></span>
             </button>
           ))}
         </div>

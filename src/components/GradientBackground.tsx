@@ -11,17 +11,17 @@ const GradientBackground = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Dark, subtle colors inspired by kidus.engineer
+    // Dark, subtle colors inspired by original theme
     const colors = [
       { r: 13, g: 17, b: 23, a: 0.95 }, // Very dark blue-black (#0D1117)
       { r: 22, g: 27, b: 34, a: 0.95 }, // Dark navy (#161B22)
       { r: 17, g: 22, b: 29, a: 0.95 }, // In between
     ];
 
-    // Create very subtle accent layers
+    // Create very subtle accent layers with teal instead of purple
     const accentLayers = [
-      { x: 0.2, y: 0.2, radius: canvas.width * 0.3, color: { r: 155, g: 135, b: 245, a: 0.01 } }, // Purple (accent1)
-      { x: 0.8, y: 0.8, radius: canvas.width * 0.4, color: { r: 126, g: 105, b: 171, a: 0.01 } }, // Purple (accent2)
+      { x: 0.2, y: 0.2, radius: canvas.width * 0.3, color: { r: 26, g: 127, b: 140, a: 0.01 } }, // Teal
+      { x: 0.8, y: 0.8, radius: canvas.width * 0.4, color: { r: 21, g: 105, b: 122, a: 0.01 } }, // Darker teal
       { x: 0.5, y: 0.3, radius: canvas.width * 0.5, color: { r: 30, g: 31, b: 44, a: 0.015 } }, // Dark accent
     ];
 
