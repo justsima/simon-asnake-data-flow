@@ -26,7 +26,7 @@ const Index = () => {
   useEffect(() => {
     document.title = 'Simon Asnake | Data Scientist & Power BI Expert';
     document.documentElement.classList.add('dark');
-    document.body.classList.add('bg-[#0D1117]', 'text-white');
+    document.body.classList.add('bg-black', 'text-white');
     
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
@@ -37,12 +37,12 @@ const Index = () => {
     
     return () => {
       document.documentElement.classList.remove('dark');
-      document.body.classList.remove('bg-[#0D1117]', 'text-white', 'reduced-motion');
+      document.body.classList.remove('bg-black', 'text-white', 'reduced-motion');
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0D1117]">
+    <div className="min-h-screen bg-black">
       <ParticleBackground />
       <Navigation sections={sections} />
       

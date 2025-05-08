@@ -87,41 +87,49 @@
   }
 }
 
-/* Logo styling with improved visibility - fixed top cutoff */
+/* New minimalist logo styling */
 .logo {
   position: relative;
-  font-size: 2.25rem;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 8px 0; /* Increased padding to fix cutoff */
-  margin-top: 2px; /* Added margin to ensure logo is fully visible */
 }
 
-.logo-inner {
+.logo-container {
   position: relative;
   display: inline-block;
   transition: all 0.6s ease;
 }
 
-.logo-text {
-  font-family: 'Great Vibes', cursive;
+.logo-letter {
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  background: linear-gradient(to right, #1A7F8C, #15697A); /* Changed to teal color scheme */
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: white;
+  font-size: 1.8rem;
   display: inline-block;
-  transform: scale(1.2);
   transition: all 0.6s ease;
-  letter-spacing: 2px;
-  line-height: 1; /* Added line-height to ensure proper vertical alignment */
+  letter-spacing: 0;
+  margin-right: 2px;
 }
 
-.logo-scrolled {
-  transform: scale(0.85);
+.logo-dot {
+  position: absolute;
+  bottom: 4px;
+  right: -4px;
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+  transition: all 0.6s ease;
 }
 
-.logo-scrolled .logo-text {
-  transform: scale(1);
+.logo-scrolled .logo-letter {
+  transform: scale(0.9);
+}
+
+.logo-scrolled .logo-dot {
+  width: 5px;
+  height: 5px;
+  bottom: 3px;
+  right: -3px;
 }
 
 /* Navigation link animations with improved transitions */
@@ -138,7 +146,7 @@
   left: 0;
   width: 100%;
   height: 0.5px;
-  background: linear-gradient(to right, #1A7F8C, #15697A); /* Changed to teal */
+  background: white;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.5s ease;
@@ -221,10 +229,10 @@
 
 /* Enhanced glassmorphism effects */
 .glass-card {
-  background: rgba(22, 27, 34, 0.5);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(48, 54, 61, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius);
   transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
@@ -236,7 +244,7 @@
 
 /* Multi-layered glassmorphism */
 .glass-layer-1 {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -245,7 +253,7 @@
 }
 
 .glass-layer-2 {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.07);
@@ -254,7 +262,7 @@
 }
 
 .glass-layer-3 {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -274,7 +282,7 @@
 .progress-bar-fill {
   height: 100%;
   width: 0;
-  background: linear-gradient(to right, #1A7F8C, #15697A); /* Changed to teal */
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4));
   border-radius: 3px;
   transition: width 1.5s ease-out;
 }
@@ -353,7 +361,7 @@
 
 @layer utilities {
   .glass-morphism {
-    @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)];
+    @apply backdrop-blur-xl bg-black/20 border border-white/10 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)];
   }
   
   .neo-blur {

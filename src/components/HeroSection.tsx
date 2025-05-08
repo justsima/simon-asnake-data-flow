@@ -12,12 +12,12 @@ const roles = [
   "Data Engineer"
 ];
 
-// Changed to teal color scheme
+// Changed to white color scheme for text gradients
 const gradients = [
-  "from-[#1A7F8C] via-[#15697A] to-[#1A7F8C]",
-  "from-[#15697A] via-[#1A7F8C] to-[#15697A]", 
-  "from-[#1A7F8C] via-[#15697A] to-[#1A7F8C]",
-  "from-[#15697A] via-[#1A7F8C] to-[#15697A]"
+  "from-white via-gray-100 to-gray-200",
+  "from-gray-200 via-white to-gray-200", 
+  "from-white via-gray-100 to-gray-200",
+  "from-gray-200 via-white to-gray-200"
 ];
 
 const HeroSection = () => {
@@ -83,7 +83,7 @@ const HeroSection = () => {
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h1 
               ref={titleRef}
-              className="text-5xl md:text-7xl font-playfair font-bold mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
+              className="text-5xl md:text-7xl font-montserrat font-bold mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
             >
               Simon Asnake
             </h1>

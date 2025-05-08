@@ -13,10 +13,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em rgba(255, 255, 255, 0.4));
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em rgba(255, 255, 255, 0.4));
 }
 
 @keyframes logo-spin {
@@ -44,21 +44,7 @@
 
 /* Custom glassmorphism styles */
 .glass-effect {
-  background: rgba(22, 27, 34, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(48, 54, 61, 0.6);
-  border-radius: var(--radius);
-  transition: all 0.5s ease;
-}
-
-.glass-effect:hover {
-  background: rgba(22, 27, 34, 0.6);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-}
-
-.glass-effect-light {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -66,7 +52,21 @@
   transition: all 0.5s ease;
 }
 
+.glass-effect:hover {
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.glass-effect-light {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius);
+  transition: all 0.5s ease;
+}
+
 .glass-effect-light:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.4);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }

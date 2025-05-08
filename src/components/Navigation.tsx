@@ -73,14 +73,15 @@ const Navigation = ({ sections }: NavigationProps) => {
         <a 
           ref={logoRef}
           href="#hero" 
-          className="logo font-playfair font-semibold text-3xl text-white transition-all duration-500 hover:opacity-90"
+          className="logo font-montserrat font-bold text-3xl text-white transition-all duration-500 hover:opacity-90"
           onClick={(e) => {
             e.preventDefault();
             handleNavigation('hero');
           }}
         >
-          <div className="logo-inner">
-            <span className="logo-text">SA</span>
+          <div className="logo-container relative inline-block">
+            <span className="logo-letter">S</span>
+            <span className="logo-dot absolute"></span>
           </div>
         </a>
 
@@ -99,7 +100,7 @@ const Navigation = ({ sections }: NavigationProps) => {
               {section.title}
               <span 
                 className={cn(
-                  "absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#1A7F8C] to-[#15697A] transform scale-x-0 transition-transform duration-500 origin-left",
+                  "absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-white/80 to-white/40 transform scale-x-0 transition-transform duration-500 origin-left",
                   activeSection === section.id && "scale-x-100"
                 )}
               />

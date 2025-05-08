@@ -14,10 +14,10 @@ export const ProjectCard = ({ project, onClick }: ProjectCardProps) => {
       className="glass-card overflow-hidden flex flex-col hover:cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-[0_15px_30px_rgba(0,0,0,0.3)]"
       onClick={onClick}
       style={{
-        background: 'rgba(22, 27, 34, 0.5)',
+        background: 'rgba(0, 0, 0, 0.5)',
         backdropFilter: 'blur(8px)',
         borderRadius: 'var(--radius)',
-        border: '1px solid rgba(48, 54, 61, 0.6)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
       }}
     >
       <div className="relative h-[180px] overflow-hidden">
@@ -33,7 +33,7 @@ export const ProjectCard = ({ project, onClick }: ProjectCardProps) => {
           </div>
         )}
         {project.liveUrl && (
-          <div className="absolute bottom-2 right-2 bg-portfolio-accent1/70 text-white px-2 py-1 rounded-md text-xs backdrop-blur-md">
+          <div className="absolute bottom-2 right-2 bg-white/20 text-white px-2 py-1 rounded-md text-xs backdrop-blur-md">
             Live Report
           </div>
         )}
