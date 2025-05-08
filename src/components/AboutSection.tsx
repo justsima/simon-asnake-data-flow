@@ -149,11 +149,10 @@ const AboutSection = () => {
       className="py-20 relative"
     >
       <div className="container mx-auto px-4 relative z-10">
-        <div className="rounded-xl overflow-hidden glass-effect" style={{
+        <div className="rounded-xl overflow-hidden" style={{
           background: 'rgba(22, 27, 34, 0.4)',
           backdropFilter: 'blur(12px)',
           border: '1px solid rgba(48, 54, 61, 0.6)',
-          boxShadow: '0 15px 30px rgba(0, 0, 0, 0.2)'
         }}>
           {/* Main content container */}
           <div className="flex flex-col lg:flex-row">
@@ -216,56 +215,44 @@ const AboutSection = () => {
               background: 'rgba(22, 27, 34, 0.3)',
               backdropFilter: 'blur(10px)',
             }}>
-              <h3 className="text-xl font-medium text-[#9b87f5] mb-6 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat">
+              <h3 className="text-xl font-medium text-[#1A7F8C] mb-6 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat">
                 Core Focus Areas
               </h3>
               
               <ul className="space-y-6">
                 <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
-                  <div className="glass-effect p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full" style={{
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#1A7F8C] to-[#15697A] mr-3 flex-shrink-0"></span>
+                  <div style={{
                     background: 'rgba(22, 27, 34, 0.5)',
                     backdropFilter: 'blur(8px)',
                     border: '1px solid rgba(48, 54, 61, 0.6)',
-                  }}>
+                  }} className="p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
                     <p className="font-medium text-white font-montserrat">Data Visualization</p>
                     <p className="text-gray-300 font-inter">Creating intuitive, interactive dashboards that translate complex data into actionable insights. Specializing in Power BI, Tableau, and custom visualization libraries.</p>
                   </div>
                 </li>
                 
                 <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
-                  <div className="glass-effect p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full" style={{
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#1A7F8C] to-[#15697A] mr-3 flex-shrink-0"></span>
+                  <div style={{
                     background: 'rgba(22, 27, 34, 0.5)',
                     backdropFilter: 'blur(8px)',
                     border: '1px solid rgba(48, 54, 61, 0.6)',
-                  }}>
+                  }} className="p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
                     <p className="font-medium text-white font-montserrat">Predictive Analytics</p>
                     <p className="text-gray-300 font-inter">Building machine learning models that anticipate business trends and customer behaviors. Using advanced algorithms to forecast market changes and identify opportunities.</p>
                   </div>
                 </li>
                 
                 <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
-                  <div className="glass-effect p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full" style={{
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#1A7F8C] to-[#15697A] mr-3 flex-shrink-0"></span>
+                  <div style={{
                     background: 'rgba(22, 27, 34, 0.5)',
                     backdropFilter: 'blur(8px)',
                     border: '1px solid rgba(48, 54, 61, 0.6)',
-                  }}>
+                  }} className="p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
                     <p className="font-medium text-white font-montserrat">Data Pipeline Development</p>
                     <p className="text-gray-300 font-inter">Streamlining data flow from diverse sources to enable real-time analytics. Creating robust ETL processes that ensure data quality and accessibility.</p>
-                  </div>
-                </li>
-                
-                <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
-                  <div className="glass-effect p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full" style={{
-                    background: 'rgba(22, 27, 34, 0.5)',
-                    backdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(48, 54, 61, 0.6)',
-                  }}>
-                    <p className="font-medium text-white font-montserrat">Data Governance & Strategy</p>
-                    <p className="text-gray-300 font-inter">Establishing comprehensive data governance frameworks to ensure data integrity, security, and compliance. Developing data strategies aligned with business objectives for sustainable growth.</p>
                   </div>
                 </li>
               </ul>

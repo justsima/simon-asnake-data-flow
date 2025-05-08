@@ -33,7 +33,7 @@ export const ProjectCard = ({ project, onClick }: ProjectCardProps) => {
           </div>
         )}
         {project.liveUrl && (
-          <div className="absolute bottom-2 right-2 bg-[#9b87f5]/70 text-white px-2 py-1 rounded-md text-xs backdrop-blur-md">
+          <div className="absolute bottom-2 right-2 bg-portfolio-accent1/70 text-white px-2 py-1 rounded-md text-xs backdrop-blur-md">
             Live Report
           </div>
         )}
@@ -53,7 +53,7 @@ export const ProjectCard = ({ project, onClick }: ProjectCardProps) => {
           {project.technologies.slice(0, 3).map((tech, i) => (
             <span 
               key={i} 
-              className="px-2 py-1 bg-white/10 backdrop-blur-md rounded-md text-xs text-gray-300 transition-all duration-300 hover:bg-[#9b87f5]/20 hover:text-white"
+              className="px-2 py-1 bg-white/10 backdrop-blur-md rounded-md text-xs text-gray-300 transition-all duration-300 hover:bg-white/20"
             >
               {tech}
             </span>
