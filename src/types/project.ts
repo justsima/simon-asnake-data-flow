@@ -7,8 +7,5 @@ export interface Project {
   impact: string;
   technologies: string[];
   image: string;
-  category: string;
-  videoUrl?: string;
-  imageGallery?: string[];
-  reportUrl?: string;
+  category: 'Power BI' | 'Machine Learning' | 'Data Engineering';
 }

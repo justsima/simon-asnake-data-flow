@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -65,18 +64,19 @@ export default {
 				},
 				portfolio: {
 					navy: '#162447',
+					purple: '#6A4C93',
 					teal: '#1A7F8C',
-					darkTeal: '#15697A',
 					gray: '#1A1A1F',
 					darkText: '#E0E0E2',
 					mediumBlue: '#2A4073',
+					lavender: '#8B7AAF',
 					deepTeal: '#15697A',
 					darkBg: '#0D1117',
 					darkCard: '#161B22',
 					darkBorder: '#30363D',
 					darkHighlight: '#242C37',
-					accent1: '#1A7F8C',
-					accent2: '#15697A',
+					accent1: '#9b87f5',
+					accent2: '#7E69AB',
 				}
 			},
 			borderRadius: {
@@ -299,15 +299,7 @@ export default {
 					'100%': {
 						backgroundPosition: '200% 0'
 					}
-				},
-				'subtle-bounce': {
-					'0%, 100%': {
-						transform: 'translateY(0)'
-					},
-					'50%': {
-						transform: 'translateY(-5px)'
-					}
-				},
+				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -330,7 +322,6 @@ export default {
 				'character-reveal-up': 'character-reveal-up 0.7s ease-out forwards',
 				'character-reveal-down': 'character-reveal-down 0.7s ease-out forwards',
 				'text-shimmer': 'text-shimmer 6s infinite linear',
-				'subtle-bounce': 'subtle-bounce 4s ease-in-out infinite',
 			},
 			fontFamily: {
 				'inter': ['Inter', 'sans-serif'],

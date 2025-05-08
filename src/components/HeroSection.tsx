@@ -2,6 +2,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
+import ParticleBackground from './ParticleBackground';
+import GradientBackground from './GradientBackground';
 
 const roles = [
   "Data Analyst",
@@ -11,10 +13,10 @@ const roles = [
 ];
 
 const gradients = [
-  "from-[#1A7F8C] via-[#15697A] to-[#0D5F6F]",
-  "from-[#0D5F6F] via-[#1A7F8C] to-[#15697A]", 
-  "from-[#15697A] via-[#0D5F6F] to-[#1A7F8C]",
-  "from-[#1A7F8C] via-[#15697A] to-[#0D5F6F]"
+  "from-[#9b87f5] via-[#7E69AB] to-[#6E59A5]",
+  "from-[#6E59A5] via-[#9b87f5] to-[#7E69AB]", 
+  "from-[#7E69AB] via-[#6E59A5] to-[#9b87f5]",
+  "from-[#D6BCFA] via-[#9b87f5] to-[#7E69AB]"
 ];
 
 const HeroSection = () => {
@@ -22,10 +24,39 @@ const HeroSection = () => {
   const [currentGradient, setCurrentGradient] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [showArrow, setShowArrow] = useState({ projects: false, contact: false });
+  const [buttonTilt, setButtonTilt] = useState({ projects: { x: 0, y: 0 }, contact: { x: 0, y: 0 } });
   const titleRef = useRef<HTMLHeadingElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
   const projectsButtonRef = useRef<HTMLButtonElement>(null);
   const contactButtonRef = useRef<HTMLButtonElement>(null);
+  
+  const handleButtonMouseMove = (e: React.MouseEvent, buttonType: 'projects' | 'contact') => {
+    const buttonRef = buttonType === 'projects' ? projectsButtonRef : contactButtonRef;
+    
+    if (!buttonRef.current) return;
+    
+    const rect = buttonRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const tiltX = (y - centerY) / 10;
+    const tiltY = (centerX - x) / 10;
+    
+    setButtonTilt(prev => ({
+      ...prev,
+      [buttonType]: { x: tiltX, y: tiltY }
+    }));
+  };
+  
+  const resetButtonTilt = (buttonType: 'projects' | 'contact') => {
+    setButtonTilt(prev => ({
+      ...prev,
+      [buttonType]: { x: 0, y: 0 }
+    }));
+  };
   
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -75,6 +106,8 @@ const HeroSection = () => {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center">
+      <GradientBackground />
+      
       <div className="container mx-auto px-4 z-10">
         <div className="max-w-3xl ml-8 md:ml-12">
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -107,15 +140,23 @@ const HeroSection = () => {
               <Button
                 ref={projectsButtonRef}
                 variant="outline"
-                className="btn-hover relative overflow-hidden bg-white/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3"
+                className="glass-button group relative overflow-hidden bg-white/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-300 text-white px-6 py-3"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, projects: true}))}
-                onMouseLeave={() => setShowArrow(prev => ({...prev, projects: false}))}
+                onMouseLeave={() => {
+                  setShowArrow(prev => ({...prev, projects: false}));
+                  resetButtonTilt('projects');
+                }}
+                onMouseMove={(e) => handleButtonMouseMove(e, 'projects')}
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                style={{ 
+                  transform: `perspective(1000px) rotateX(${buttonTilt.projects.x}deg) rotateY(${buttonTilt.projects.y}deg)`,
+                  transformStyle: 'preserve-3d'
+                }}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   View Projects
                   <ArrowRight 
-                    className={`transition-all duration-500 transform ${showArrow.projects ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 absolute'}`}
+                    className={`transition-all duration-300 transform ${showArrow.projects ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 absolute'}`}
                     size={18} 
                   />
                 </span>
@@ -124,15 +165,23 @@ const HeroSection = () => {
               <Button
                 ref={contactButtonRef}
                 variant="outline"
-                className="btn-hover relative overflow-hidden bg-white/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3"
+                className="glass-button group relative overflow-hidden bg-white/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-300 text-white px-6 py-3"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, contact: true}))}
-                onMouseLeave={() => setShowArrow(prev => ({...prev, contact: false}))}
+                onMouseLeave={() => {
+                  setShowArrow(prev => ({...prev, contact: false}));
+                  resetButtonTilt('contact');
+                }}
+                onMouseMove={(e) => handleButtonMouseMove(e, 'contact')}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                style={{ 
+                  transform: `perspective(1000px) rotateX(${buttonTilt.contact.x}deg) rotateY(${buttonTilt.contact.y}deg)`,
+                  transformStyle: 'preserve-3d'
+                }}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   Get in touch
                   <ArrowRight 
-                    className={`transition-all duration-500 transform ${showArrow.contact ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 absolute'}`}
+                    className={`transition-all duration-300 transform ${showArrow.contact ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 absolute'}`}
                     size={18}
                   />
                 </span>

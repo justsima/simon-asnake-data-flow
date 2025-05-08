@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
@@ -86,13 +85,12 @@
   }
 }
 
-/* Logo styling with improved visibility and positioning */
+/* Logo styling with improved semibold weight and fixed positioning */
 .logo {
   position: relative;
-  font-size: 2.25rem;
+  font-size: 2.25rem; /* Increased from 2rem */
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  line-height: 1.2; /* Added to ensure proper vertical spacing */
-  margin-top: 5px; /* Added to prevent top being cut off */
+  padding-top: 5px; /* Add padding to ensure logo is fully visible */
 }
 
 .logo-inner {
@@ -104,7 +102,7 @@
 .logo-text {
   font-family: 'Great Vibes', cursive;
   font-weight: 700; /* Increased from 600 */
-  background: linear-gradient(to right, #1A7F8C, #15697A);
+  background: linear-gradient(to right, #9b87f5, #7E69AB);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -112,7 +110,6 @@
   transform: scale(1.2);
   transition: all 0.5s ease;
   letter-spacing: 2px; /* Increased letter spacing */
-  padding-top: 4px; /* Ensure logo is fully visible */
 }
 
 .logo-scrolled {
@@ -127,7 +124,7 @@
 .nav-link {
   position: relative;
   overflow: hidden;
-  transition: all 0.5s ease; /* Increased from 0.3s */
+  transition: all 0.3s ease;
 }
 
 .nav-link::before {
@@ -136,40 +133,46 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 1px;
-  background: linear-gradient(to right, #1A7F8C, #15697A);
+  height: 0.5px;
+  background: linear-gradient(to right, #9b87f5, #7E69AB);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.5s ease; /* Increased from 0.3s */
+  transition: transform 0.3s ease;
 }
 
 .nav-link:hover::before {
   transform: scaleX(1);
 }
 
-/* Glass button effects with simpler hover */
+/* Glass button effects with enhanced 3D hover */
 .glass-button {
-  transition: all 0.5s ease; /* Increased from 0.3s */
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.glass-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: left 0.5s ease;
 }
 
 .glass-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-/* Animation for arrow in buttons */
-.button-arrow {
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-.button-arrow-visible {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.button-arrow-hidden {
-  transform: translateX(-10px);
-  opacity: 0;
+.glass-button:hover::before {
+  left: 100%;
 }
 
 /* Character Animation for the hero section */
@@ -179,7 +182,7 @@
 }
 
 .character-visible {
-  animation: character-reveal 0.7s ease-out forwards;
+  animation: character-reveal 0.5s ease-out forwards;
 }
 
 /* Text morphing animation */
@@ -220,14 +223,14 @@
   }
 }
 
-/* Simple hover interaction styles */
-.hover-scale {
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
+/* 3D interaction styles */
+.tilt-element {
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
 }
 
-.hover-scale:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+.tilt-element:hover {
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
 }
 
 /* Fancy text animations */
@@ -235,10 +238,10 @@
   @apply font-playfair;
   background: linear-gradient(
     to right,
-    #1A7F8C 20%,
+    #9b87f5 20%,
     #fff 30%,
-    #15697A 70%,
-    #1A7F8C 80%
+    #6A4C93 70%,
+    #9b87f5 80%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -251,9 +254,9 @@
   @apply font-raleway;
   background: linear-gradient(
     to right,
-    #15697A 20%,
+    #6A4C93 20%,
     #1A7F8C 50%,
-    #15697A 80%
+    #6A4C93 80%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -262,13 +265,13 @@
   background-size: 200% auto;
 }
 
-/* Glass card with simpler hover effects */
+/* Glass card with enhanced 3D effects */
 .glass-card {
   background: rgba(22, 27, 34, 0.6);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(48, 54, 61, 0.6);
   border-radius: var(--radius);
-  transition: transform 0.5s ease, box-shadow 0.5s ease; /* Increased from 0.3s */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .glass-card:hover {
@@ -282,7 +285,7 @@
   backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius);
-  transition: all 0.5s ease; /* Increased from 0.3s */
+  transition: all 0.3s ease;
 }
 
 .glass-layer-2 {
@@ -290,7 +293,7 @@
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius);
-  transition: all 0.5s ease; /* Increased from 0.3s */
+  transition: all 0.3s ease;
 }
 
 .glass-layer-3 {
@@ -298,7 +301,7 @@
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius);
-  transition: all 0.5s ease; /* Increased from 0.3s */
+  transition: all 0.3s ease;
 }
 
 /* Progress bar styles with animation */
@@ -313,7 +316,7 @@
 .progress-bar-fill {
   height: 100%;
   width: 0;
-  background: linear-gradient(to right, #1A7F8C, #15697A);
+  background: linear-gradient(to right, #9b87f5, #7E69AB);
   border-radius: 3px;
   transition: width 1.5s ease-out;
 }
@@ -329,6 +332,17 @@
   to {
     width: var(--progress-width);
   }
+}
+
+/* 3D Pyramid animation styles */
+.pyramid-container {
+  perspective: 1000px;
+}
+
+.pyramid {
+  transform-style: preserve-3d;
+  transform-origin: center;
+  transition: transform 0.5s ease-out;
 }
 
 /* Reduced motion preferences */
@@ -359,6 +373,16 @@
     transform: none !important;
     transition: none !important;
   }
+  
+  .pyramid {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .tilt-element {
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 @keyframes shimmer {
@@ -372,62 +396,6 @@
 
 .animate-shimmer {
   animation: shimmer 2s infinite;
-}
-
-/* Navigation hover effect */
-.nav-hover-effect {
-  position: relative;
-  overflow: hidden;
-}
-
-.nav-hover-effect::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(to right, #1A7F8C, #15697A);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.5s ease;
-}
-
-.nav-hover-effect:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-/* Button hover animations */
-.btn-hover {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.5s ease;
-}
-
-.btn-hover::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  transition: left 0.5s ease;
-}
-
-.btn-hover:hover::before {
-  left: 100%;
-}
-
-.btn-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 @layer utilities {
@@ -452,12 +420,17 @@
     background-size: 200% auto;
   }
   
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  /* Added proper word spacing and letter spacing */
   .proper-spacing {
     word-spacing: 0.1em;
     letter-spacing: 0.01em;
-  }
-  
-  .button-hover {
-    @apply transition-all duration-500 hover:-translate-y-1 hover:shadow-lg;
   }
 }
