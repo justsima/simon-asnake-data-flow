@@ -71,14 +71,24 @@ const SkillCard = ({ title, icon, skills, delay }: SkillCardProps) => {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={resetTilt}
-      className="glass-layer-3 rounded-lg p-6 transition-all duration-500 transform translate-y-10 opacity-0 hover:shadow-lg"
+      className="rounded-lg p-6 transition-all duration-500 transform translate-y-10 opacity-0 hover:shadow-lg"
       style={{ 
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(${tilt.x !== 0 ? '-5px' : '-10px'})`,
-        transformStyle: 'preserve-3d'
+        transformStyle: 'preserve-3d',
+        background: 'rgba(22, 27, 34, 0.5)',
+        backdropFilter: 'blur(12px)',
+        border: '1px solid rgba(48, 54, 61, 0.6)',
       }}
     >
       <div className="flex items-center mb-6">
-        <div className="w-12 h-12 glass-layer-1 text-portfolio-purple rounded-full flex items-center justify-center mr-4 transform transition-transform hover:scale-110">
+        <div 
+          className="w-12 h-12 rounded-full flex items-center justify-center mr-4 transform transition-transform hover:scale-110"
+          style={{
+            background: 'rgba(26, 127, 140, 0.1)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(26, 127, 140, 0.3)',
+          }}
+        >
           <span className="text-2xl">{icon}</span>
         </div>
         <h3 className="text-xl font-medium text-white font-montserrat">{title}</h3>
@@ -89,7 +99,7 @@ const SkillCard = ({ title, icon, skills, delay }: SkillCardProps) => {
           <div key={skill.name} className="mb-2">
             <div className="flex justify-between mb-1">
               <p className="text-sm font-medium text-gray-300">{skill.name}</p>
-              <p className="text-sm font-medium text-[#9b87f5]">{skill.percentage}%</p>
+              <p className="text-sm font-medium text-[#1A7F8C]">{skill.percentage}%</p>
             </div>
             <div className="progress-bar">
               <div 

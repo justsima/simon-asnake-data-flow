@@ -1,8 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import GradientBackground from './GradientBackground';
 
 // Simplified icon component with subtle 3D effect
 const Icon3D = ({ icon, title, description }: { icon: string, title: string, description: string }) => {
@@ -35,10 +33,12 @@ const Icon3D = ({ icon, title, description }: { icon: string, title: string, des
       <HoverCardTrigger asChild>
         <div
           ref={iconRef}
-          className="w-12 h-12 bg-white/5 backdrop-blur-md rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer glass-layer-1"
+          className="w-12 h-12 glass-layer-1 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer"
           style={{ 
             transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-            boxShadow: '0 8px 20px -12px rgba(0, 0, 0, 0.3)'
+            boxShadow: '0 8px 20px -12px rgba(0, 0, 0, 0.3)',
+            backdropFilter: 'blur(8px)',
+            background: 'rgba(255, 255, 255, 0.05)'
           }}
           onMouseMove={handleMouseMove}
           onMouseLeave={resetTilt}
@@ -148,10 +148,12 @@ const AboutSection = () => {
       ref={sectionRef}
       className="py-20 relative"
     >
-      <GradientBackground />
-      
       <div className="container mx-auto px-4 relative z-10">
-        <div className="glass-layer-3 rounded-xl overflow-hidden">
+        <div className="rounded-xl overflow-hidden" style={{
+          background: 'rgba(22, 27, 34, 0.4)',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(48, 54, 61, 0.6)',
+        }}>
           {/* Main content container */}
           <div className="flex flex-col lg:flex-row">
             {/* Left column - Image and main text */}
@@ -167,7 +169,11 @@ const AboutSection = () => {
             >
               {/* Image with simplified 3D layered glass effect */}
               <div className="rounded-lg overflow-hidden relative mb-8 shadow-xl transform transition-all duration-500 hover:scale-[1.01]">
-                <div className="glass-layer-2 p-1 rounded-lg">
+                <div style={{
+                  background: 'rgba(30, 35, 42, 0.7)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(60, 67, 74, 0.6)',
+                }} className="p-1 rounded-lg">
                   <div className="bg-[#161B22]/70 rounded-lg aspect-[4/3] flex items-center justify-center">
                     <p className="text-gray-400 text-center">Professional headshot placeholder</p>
                   </div>
@@ -205,31 +211,46 @@ const AboutSection = () => {
             </div>
             
             {/* Right column - Bullet points */}
-            <div className="w-full lg:w-1/2 bg-white/[0.01] backdrop-blur-sm p-8">
-              <h3 className="text-xl font-medium text-[#9b87f5] mb-6 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat">
+            <div className="w-full lg:w-1/2 backdrop-blur-lg p-8" style={{
+              background: 'rgba(22, 27, 34, 0.3)',
+              backdropFilter: 'blur(10px)',
+            }}>
+              <h3 className="text-xl font-medium text-[#1A7F8C] mb-6 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat">
                 Core Focus Areas
               </h3>
               
               <ul className="space-y-6">
                 <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
-                  <div className="glass-layer-1 p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#1A7F8C] to-[#15697A] mr-3 flex-shrink-0"></span>
+                  <div style={{
+                    background: 'rgba(22, 27, 34, 0.5)',
+                    backdropFilter: 'blur(8px)',
+                    border: '1px solid rgba(48, 54, 61, 0.6)',
+                  }} className="p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
                     <p className="font-medium text-white font-montserrat">Data Visualization</p>
                     <p className="text-gray-300 font-inter">Creating intuitive, interactive dashboards that translate complex data into actionable insights. Specializing in Power BI, Tableau, and custom visualization libraries.</p>
                   </div>
                 </li>
                 
                 <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
-                  <div className="glass-layer-1 p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#1A7F8C] to-[#15697A] mr-3 flex-shrink-0"></span>
+                  <div style={{
+                    background: 'rgba(22, 27, 34, 0.5)',
+                    backdropFilter: 'blur(8px)',
+                    border: '1px solid rgba(48, 54, 61, 0.6)',
+                  }} className="p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
                     <p className="font-medium text-white font-montserrat">Predictive Analytics</p>
                     <p className="text-gray-300 font-inter">Building machine learning models that anticipate business trends and customer behaviors. Using advanced algorithms to forecast market changes and identify opportunities.</p>
                   </div>
                 </li>
                 
                 <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mr-3 flex-shrink-0"></span>
-                  <div className="glass-layer-1 p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#1A7F8C] to-[#15697A] mr-3 flex-shrink-0"></span>
+                  <div style={{
+                    background: 'rgba(22, 27, 34, 0.5)',
+                    backdropFilter: 'blur(8px)',
+                    border: '1px solid rgba(48, 54, 61, 0.6)',
+                  }} className="p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
                     <p className="font-medium text-white font-montserrat">Data Pipeline Development</p>
                     <p className="text-gray-300 font-inter">Streamlining data flow from diverse sources to enable real-time analytics. Creating robust ETL processes that ensure data quality and accessibility.</p>
                   </div>

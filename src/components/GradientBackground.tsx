@@ -11,33 +11,33 @@ const GradientBackground = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Dark, subtle colors inspired by kidus.engineer
+    // Very dark colors to match reference
     const colors = [
-      { r: 13, g: 17, b: 23, a: 0.95 }, // Very dark blue-black (#0D1117)
-      { r: 22, g: 27, b: 34, a: 0.95 }, // Dark navy (#161B22)
-      { r: 17, g: 22, b: 29, a: 0.95 }, // In between
+      { r: 0, g: 0, b: 0, a: 1 },      // Pure black
+      { r: 10, g: 10, b: 15, a: 1 },   // Very subtle dark blue-black
+      { r: 5, g: 5, b: 10, a: 1 },     // In between
     ];
 
     // Create very subtle accent layers
     const accentLayers = [
-      { x: 0.2, y: 0.2, radius: canvas.width * 0.3, color: { r: 155, g: 135, b: 245, a: 0.01 } }, // Purple (accent1)
-      { x: 0.8, y: 0.8, radius: canvas.width * 0.4, color: { r: 126, g: 105, b: 171, a: 0.01 } }, // Purple (accent2)
-      { x: 0.5, y: 0.3, radius: canvas.width * 0.5, color: { r: 30, g: 31, b: 44, a: 0.015 } }, // Dark accent
+      { x: 0.2, y: 0.2, radius: canvas.width * 0.5, color: { r: 50, g: 50, b: 70, a: 0.003 } }, // Subtle purple glow
+      { x: 0.8, y: 0.8, radius: canvas.width * 0.6, color: { r: 30, g: 40, b: 60, a: 0.003 } }, // Subtle blue glow
+      { x: 0.5, y: 0.3, radius: canvas.width * 0.7, color: { r: 20, g: 20, b: 30, a: 0.005 } }, // Very dark accent
     ];
 
     let currentColorIndex = 0;
     let nextColorIndex = 1;
     let interpolationFactor = 0;
-    const transitionSpeed = 0.0003; // Very slow transition for background
+    const transitionSpeed = 0.0001; // Extremely slow transition
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       
       // Update accent layers sizes on resize
-      accentLayers[0].radius = canvas.width * 0.3;
-      accentLayers[1].radius = canvas.width * 0.4;
-      accentLayers[2].radius = canvas.width * 0.5;
+      accentLayers[0].radius = canvas.width * 0.5;
+      accentLayers[1].radius = canvas.width * 0.6;
+      accentLayers[2].radius = canvas.width * 0.7;
     };
 
     window.addEventListener('resize', resizeCanvas);
@@ -49,7 +49,7 @@ const GradientBackground = () => {
 
     // Animation variables
     let angle = 0;
-    const angleSpeed = 0.0001; // Very slow animation
+    const angleSpeed = 0.00005; // Extremely slow animation
 
     const animate = () => {
       const currentColor = colors[currentColorIndex];
@@ -61,7 +61,7 @@ const GradientBackground = () => {
       const b = lerp(currentColor.b, nextColor.b, interpolationFactor);
       const a = lerp(currentColor.a, nextColor.a, interpolationFactor);
 
-      // Create very subtle gradient background
+      // Create solid black background
       ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -69,8 +69,8 @@ const GradientBackground = () => {
       angle += angleSpeed;
       accentLayers.forEach((layer, index) => {
         // Very subtle movement
-        const offsetX = Math.sin(angle + index * 1.5) * canvas.width * 0.02;
-        const offsetY = Math.cos(angle * 0.8 + index) * canvas.height * 0.02;
+        const offsetX = Math.sin(angle + index * 1.5) * canvas.width * 0.01;
+        const offsetY = Math.cos(angle * 0.8 + index) * canvas.height * 0.01;
         
         const xPos = layer.x * canvas.width + offsetX;
         const yPos = layer.y * canvas.height + offsetY;
@@ -111,7 +111,7 @@ const GradientBackground = () => {
     <canvas
       ref={canvasRef}
       className="fixed top-0 left-0 w-full h-full -z-10"
-      style={{ opacity: 0.99 }}
+      style={{ opacity: 1 }}
     />
   );
 };
