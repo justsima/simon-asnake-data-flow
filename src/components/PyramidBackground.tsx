@@ -12,7 +12,7 @@ const PyramidBackground = () => {
     if (!container) return;
 
     // Create grid of pyramids
-    const pyramidCount = window.innerWidth < 768 ? 20 : 50;
+    const pyramidCount = window.innerWidth < 768 ? 25 : 60; // Increased pyramid count
     
     // Store rotations for each pyramid
     const rotations: number[] = [];
@@ -25,9 +25,9 @@ const PyramidBackground = () => {
       const x = Math.random() * 100;
       const y = Math.random() * 100;
       const size = Math.random() * 70 + 30;
-      const opacity = Math.random() * 0.08 + 0.01;
+      const opacity = Math.random() * 0.08 + 0.02; // Slightly increased opacity
       const rotation = Math.random() * 360;
-      const delay = Math.random() * 5;
+      const delay = Math.random() * 3; // Reduced delay for faster animations
       
       rotations.push(rotation);
       
@@ -44,15 +44,15 @@ const PyramidBackground = () => {
       container.appendChild(pyramid);
     }
 
-    // Handle scroll animation
+    // Handle scroll animation with increased speed
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const pyramids = container.querySelectorAll('.pyramid');
       
       pyramids.forEach((pyramid: Element, index) => {
-        const speed = index % 5 * 0.02 + 0.05;
+        const speed = index % 5 * 0.03 + 0.07; // Increased speed
         const rotateValue = scrollY * speed;
-        const translateValue = scrollY * speed * 0.2;
+        const translateValue = scrollY * speed * 0.25;
         
         (pyramid as HTMLElement).style.transform = `rotateX(60deg) rotateZ(${rotations[index] + rotateValue}deg) translateY(${translateValue}px)`;
       });
@@ -82,7 +82,7 @@ const PyramidBackground = () => {
         .pyramid {
           position: absolute;
           transform-style: preserve-3d;
-          animation: float 15s infinite ease-in-out;
+          animation: float 12s infinite ease-in-out; /* Faster animation */
         }
         
         .pyramid::before {
@@ -94,7 +94,7 @@ const PyramidBackground = () => {
           height: 0;
           border-left: 50% solid transparent;
           border-right: 50% solid transparent;
-          border-bottom: 100% solid rgba(255,255,255,0.1);
+          border-bottom: 100% solid rgba(138, 137, 255, 0.08);
           transform: translateZ(30px);
         }
         

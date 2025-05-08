@@ -11,6 +11,7 @@ import CertificationsSection from '@/components/CertificationsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import ParticleBackground from '@/components/ParticleBackground';
+import PyramidBackground from '@/components/PyramidBackground';
 
 const sections = [
   { id: 'hero', title: 'Home' },
@@ -43,7 +44,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      <ParticleBackground />
+      <PyramidBackground />
       <Navigation sections={sections} />
       
       <main>

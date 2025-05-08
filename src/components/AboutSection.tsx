@@ -150,9 +150,9 @@ const AboutSection = () => {
     >
       <div className="container mx-auto px-4 relative z-10">
         <div className="rounded-xl overflow-hidden" style={{
-          background: 'rgba(22, 27, 34, 0.4)',
+          background: 'rgba(32, 30, 67, 0.4)', // Main theme: #201E43
           backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(48, 54, 61, 0.6)',
+          border: '1px solid rgba(50, 48, 90, 0.6)',
         }}>
           {/* Main content container */}
           <div className="flex flex-col lg:flex-row">
@@ -170,11 +170,11 @@ const AboutSection = () => {
               {/* Image with simplified 3D layered glass effect */}
               <div className="rounded-lg overflow-hidden relative mb-8 shadow-xl transform transition-all duration-500 hover:scale-[1.01]">
                 <div style={{
-                  background: 'rgba(30, 35, 42, 0.7)',
+                  background: 'rgba(40, 38, 70, 0.7)', // Second layer: lighter than main theme
                   backdropFilter: 'blur(8px)',
-                  border: '1px solid rgba(60, 67, 74, 0.6)',
+                  border: '1px solid rgba(60, 58, 100, 0.6)',
                 }} className="p-1 rounded-lg">
-                  <div className="bg-[#161B22]/70 rounded-lg aspect-[4/3] flex items-center justify-center">
+                  <div className="bg-[#302E53]/70 rounded-lg aspect-[4/3] flex items-center justify-center">
                     <p className="text-gray-400 text-center">Professional headshot placeholder</p>
                   </div>
                 </div>
@@ -212,20 +212,20 @@ const AboutSection = () => {
             
             {/* Right column - Bullet points */}
             <div className="w-full lg:w-1/2 backdrop-blur-lg p-8" style={{
-              background: 'rgba(22, 27, 34, 0.3)',
+              background: 'rgba(32, 30, 67, 0.3)', // Main theme with lower opacity
               backdropFilter: 'blur(10px)',
             }}>
-              <h3 className="text-xl font-medium text-[#1A7F8C] mb-6 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat">
+              <h3 className="text-xl font-medium text-[#8A89FF] mb-6 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat">
                 Core Focus Areas
               </h3>
               
               <ul className="space-y-6">
                 <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#1A7F8C] to-[#15697A] mr-3 flex-shrink-0"></span>
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] mr-3 flex-shrink-0"></span>
                   <div style={{
-                    background: 'rgba(22, 27, 34, 0.5)',
+                    background: 'rgba(40, 38, 70, 0.5)', // Second layer
                     backdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(48, 54, 61, 0.6)',
+                    border: '1px solid rgba(50, 48, 90, 0.6)',
                   }} className="p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
                     <p className="font-medium text-white font-montserrat">Data Visualization</p>
                     <p className="text-gray-300 font-inter">Creating intuitive, interactive dashboards that translate complex data into actionable insights. Specializing in Power BI, Tableau, and custom visualization libraries.</p>
@@ -233,11 +233,11 @@ const AboutSection = () => {
                 </li>
                 
                 <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#1A7F8C] to-[#15697A] mr-3 flex-shrink-0"></span>
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] mr-3 flex-shrink-0"></span>
                   <div style={{
-                    background: 'rgba(22, 27, 34, 0.5)',
+                    background: 'rgba(40, 38, 70, 0.5)', // Second layer
                     backdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(48, 54, 61, 0.6)',
+                    border: '1px solid rgba(50, 48, 90, 0.6)',
                   }} className="p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
                     <p className="font-medium text-white font-montserrat">Predictive Analytics</p>
                     <p className="text-gray-300 font-inter">Building machine learning models that anticipate business trends and customer behaviors. Using advanced algorithms to forecast market changes and identify opportunities.</p>
@@ -245,14 +245,26 @@ const AboutSection = () => {
                 </li>
                 
                 <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#1A7F8C] to-[#15697A] mr-3 flex-shrink-0"></span>
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] mr-3 flex-shrink-0"></span>
                   <div style={{
-                    background: 'rgba(22, 27, 34, 0.5)',
+                    background: 'rgba(40, 38, 70, 0.5)', // Second layer
                     backdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(48, 54, 61, 0.6)',
+                    border: '1px solid rgba(50, 48, 90, 0.6)',
                   }} className="p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
                     <p className="font-medium text-white font-montserrat">Data Pipeline Development</p>
                     <p className="text-gray-300 font-inter">Streamlining data flow from diverse sources to enable real-time analytics. Creating robust ETL processes that ensure data quality and accessibility.</p>
+                  </div>
+                </li>
+                
+                <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
+                  <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] mr-3 flex-shrink-0"></span>
+                  <div style={{
+                    background: 'rgba(40, 38, 70, 0.5)', // Second layer
+                    backdropFilter: 'blur(8px)',
+                    border: '1px solid rgba(50, 48, 90, 0.6)',
+                  }} className="p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
+                    <p className="font-medium text-white font-montserrat">Strategic Data Consulting</p>
+                    <p className="text-gray-300 font-inter">Advising organizations on data strategy and governance. Helping teams implement best practices for data management and derive maximum value from their information assets.</p>
                   </div>
                 </li>
               </ul>

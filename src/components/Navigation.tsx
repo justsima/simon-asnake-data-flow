@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useNavigationDelay } from '@/hooks/useNavigationDelay';
 
@@ -12,6 +12,7 @@ const Navigation = ({ sections }: NavigationProps) => {
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
   const { delayedNavigate } = useNavigationDelay(150);
 
@@ -60,6 +61,14 @@ const Navigation = ({ sections }: NavigationProps) => {
     });
   };
 
+  const handleHoverEnter = (id: string) => {
+    setHoveredItem(id);
+  };
+
+  const handleHoverExit = () => {
+    setHoveredItem(null);
+  };
+
   return (
     <nav 
       className={cn(
@@ -73,14 +82,14 @@ const Navigation = ({ sections }: NavigationProps) => {
         <a 
           ref={logoRef}
           href="#hero" 
-          className="logo font-montserrat font-bold text-3xl text-white transition-all duration-500 hover:opacity-90"
+          className="logo font-raleway font-bold text-3xl transition-all duration-500 hover:opacity-90"
           onClick={(e) => {
             e.preventDefault();
             handleNavigation('hero');
           }}
         >
           <div className="logo-container relative inline-block">
-            <span className="logo-letter">S</span>
+            <span className="logo-letter text-[#8A89FF]">S</span>
             <span className="logo-dot absolute"></span>
           </div>
         </a>
@@ -96,15 +105,22 @@ const Navigation = ({ sections }: NavigationProps) => {
                   ? 'text-white'
                   : 'text-gray-400 hover:text-white'
               )}
+              onMouseEnter={() => handleHoverEnter(section.id)}
+              onMouseLeave={handleHoverExit}
             >
               {section.title}
               <span 
                 className={cn(
-                  "absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-white/80 to-white/40 transform scale-x-0 transition-transform duration-500 origin-left",
+                  "absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#8A89FF]/80 to-[#5A5AFF]/40 transform scale-x-0 transition-transform duration-500 origin-left",
                   activeSection === section.id && "scale-x-100"
                 )}
               />
-              <span className="absolute inset-0 rounded-lg bg-white/5 backdrop-blur-sm opacity-0 transition-opacity duration-500 hover:opacity-100 -z-10"></span>
+              {hoveredItem === section.id && (
+                <span className="absolute inset-0 bg-white/5 animate-pulse rounded-lg backdrop-blur-sm -z-10"></span>
+              )}
+              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#8A89FF] rounded-full opacity-0 transition-all duration-300" 
+                style={{ opacity: hoveredItem === section.id ? 1 : 0 }} 
+              />
             </button>
           ))}
         </div>

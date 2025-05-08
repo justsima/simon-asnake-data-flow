@@ -12,12 +12,12 @@ const roles = [
   "Data Engineer"
 ];
 
-// Changed to white color scheme for text gradients
+// Changed to purple color scheme for text gradients
 const gradients = [
-  "from-white via-gray-100 to-gray-200",
-  "from-gray-200 via-white to-gray-200", 
-  "from-white via-gray-100 to-gray-200",
-  "from-gray-200 via-white to-gray-200"
+  "from-[#8A89FF] via-[#7676FF] to-[#6262FF]",
+  "from-[#7676FF] via-[#8A89FF] to-[#7676FF]", 
+  "from-[#8A89FF] via-[#7676FF] to-[#6262FF]",
+  "from-[#7676FF] via-[#8A89FF] to-[#7676FF]"
 ];
 
 const HeroSection = () => {
@@ -83,7 +83,7 @@ const HeroSection = () => {
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h1 
               ref={titleRef}
-              className="text-5xl md:text-7xl font-montserrat font-bold mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
+              className="text-5xl md:text-7xl font-raleway font-bold mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
             >
               Simon Asnake
             </h1>
@@ -109,33 +109,37 @@ const HeroSection = () => {
             <div className="flex gap-4 mb-16 text-left">
               <Button
                 variant="outline"
-                className="glass-button group relative overflow-hidden bg-white/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3"
+                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, projects: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, projects: false}))}
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   View Projects
-                  <ArrowRight 
-                    className={`transition-all duration-500 ${showArrow.projects ? 'opacity-100 translate-x-0 arrow-animation' : 'opacity-0 -translate-x-4 absolute'}`}
-                    size={18} 
-                  />
+                  <span className="arrow-container overflow-hidden w-5">
+                    <ArrowRight 
+                      className={`transition-all duration-300 transform ${showArrow.projects ? 'translate-x-0' : '-translate-x-full'}`}
+                      size={18} 
+                    />
+                  </span>
                 </span>
               </Button>
               
               <Button
                 variant="outline"
-                className="glass-button group relative overflow-hidden bg-white/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3"
+                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, contact: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, contact: false}))}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   Get in touch
-                  <ArrowRight 
-                    className={`transition-all duration-500 ${showArrow.contact ? 'opacity-100 translate-x-0 arrow-animation' : 'opacity-0 -translate-x-4 absolute'}`}
-                    size={18}
-                  />
+                  <span className="arrow-container overflow-hidden w-5">
+                    <ArrowRight 
+                      className={`transition-all duration-300 transform ${showArrow.contact ? 'translate-x-0' : '-translate-x-full'}`}
+                      size={18} 
+                    />
+                  </span>
                 </span>
               </Button>
             </div>
