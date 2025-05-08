@@ -65,18 +65,18 @@ export default {
 				portfolio: {
 					navy: '#162447',
 					purple: '#6A4C93',
-					teal: '#1A7F8C',
+					teal: '#1A7F8C', // Primary teal color
 					gray: '#1A1A1F',
 					darkText: '#E0E0E2',
 					mediumBlue: '#2A4073',
 					lavender: '#8B7AAF',
-					deepTeal: '#15697A',
+					deepTeal: '#15697A', // Secondary teal color
 					darkBg: '#0D1117',
 					darkCard: '#161B22',
 					darkBorder: '#30363D',
 					darkHighlight: '#242C37',
-					accent1: '#9b87f5',
-					accent2: '#7E69AB',
+					accent1: '#1A7F8C', // Changed from purple to teal
+					accent2: '#15697A', // Changed from purple to teal
 				}
 			},
 			borderRadius: {
