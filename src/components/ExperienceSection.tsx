@@ -180,20 +180,23 @@ const ExperienceSection = () => {
         </div>
       </div>
 
-      <style jsx>{`
-        @media (prefers-reduced-motion: reduce) {
-          .timeline-line-progress {
-            transition: none !important;
-            height: 100% !important;
+      {/* Fix: Using proper style element syntax */}
+      <style>
+        {`
+          @media (prefers-reduced-motion: reduce) {
+            .timeline-line-progress {
+              transition: none !important;
+              height: 100% !important;
+            }
+            
+            .timeline-content {
+              opacity: 1 !important;
+              transform: none !important;
+              transition: none !important;
+            }
           }
-          
-          .timeline-content {
-            opacity: 1 !important;
-            transform: none !important;
-            transition: none !important;
-          }
-        }
-      `}</style>
+        `}
+      </style>
     </section>
   );
 };

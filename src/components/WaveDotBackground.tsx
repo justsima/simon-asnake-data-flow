@@ -38,34 +38,36 @@ const WaveDotBackground = () => {
         this.x = x;
         this.y = y;
         this.size = Math.random() * 1.5 + 0.5;
-        this.speedX = Math.random() * 0.5 - 0.25;
-        this.speedY = Math.random() * 0.5 - 0.25;
+        this.speedX = Math.random() * 0.3 - 0.15;
+        this.speedY = Math.random() * 0.3 - 0.15;
         this.density = Math.random() * 20 + 10;
         this.baseY = y;
         this.baseX = x;
-        this.opacity = Math.random() * 0.5 + 0.1;
+        this.opacity = Math.random() * 0.3 + 0.1; // Subtle opacity
       }
 
       draw() {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        ctx.fillStyle = `rgba(138, 137, 255, ${this.opacity})`;
         ctx.fill();
       }
 
       update(time: number) {
-        // Wave motion
-        const frequency = 0.001; // Lower frequency for smoother waves
-        const amplitude = 20; // Wave height
+        // Wave motion - increased frequency for faster movement
+        const frequency = 0.002; 
+        const amplitude = 25; // Higher amplitude for more visible waves
         
         // Calculate wave position
         this.y = this.baseY + Math.sin(time * frequency + this.baseX * 0.01) * amplitude;
-        this.x += this.speedX;
+        this.x += this.speedX * 1.2; // Increased speed multiplier
         
         // Boundary check
-        if (this.x > canvas.width || this.x < 0) {
-          this.speedX = -this.speedX;
+        if (this.x > canvas.width) {
+          this.x = 0;
+        } else if (this.x < 0) {
+          this.x = canvas.width;
         }
       }
 
@@ -76,12 +78,12 @@ const WaveDotBackground = () => {
             (this.y - particle.y) ** 2
           );
           
-          const maxDistance = 85; // Shorter connection distance for cleaner look
+          const maxDistance = 90; // Connection distance
           
           if (distance < maxDistance) {
             const opacity = 1 - distance / maxDistance;
-            ctx!.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.12})`; // More subtle connections
-            ctx!.lineWidth = 0.6; // Thinner lines
+            ctx!.strokeStyle = `rgba(138, 137, 255, ${opacity * 0.08})`; // Subtle connections
+            ctx!.lineWidth = 0.5; // Thinner lines
             ctx!.beginPath();
             ctx!.moveTo(this.x, this.y);
             ctx!.lineTo(particle.x, particle.y);
@@ -92,23 +94,17 @@ const WaveDotBackground = () => {
     }
 
     // Create particles
-    const particleCount = window.innerWidth < 768 ? 80 : 160; // Reduced particle count
+    const particleCount = window.innerWidth < 768 ? 100 : 180; // Increased particle count
     const particles: Particle[] = [];
     
     const createParticles = () => {
       particles.length = 0; // Clear existing particles
       
-      // Create particles in a grid pattern with slight randomness
-      const gridSize = Math.sqrt(particleCount);
-      const cellWidth = canvas.width / gridSize;
-      const cellHeight = canvas.height / gridSize;
-      
-      for (let i = 0; i < gridSize; i++) {
-        for (let j = 0; j < gridSize; j++) {
-          const x = cellWidth * i + Math.random() * cellWidth;
-          const y = cellHeight * j + Math.random() * cellHeight;
-          particles.push(new Particle(x, y));
-        }
+      // Create particles with slight randomness
+      for (let i = 0; i < particleCount; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        particles.push(new Particle(x, y));
       }
     };
     
@@ -118,11 +114,11 @@ const WaveDotBackground = () => {
     // Animation loop
     let time = 0;
     const animate = () => {
-      // Clear with very subtle gradient background
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // Very subtle trail effect
+      // Clear with very dark background
+      ctx.fillStyle = 'rgba(8, 8, 13, 0.2)'; // Darker background with slight trail
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      time++;
+      time += 1.5; // Faster time progression
       
       // Update and connect particles
       particles.forEach(particle => {
@@ -152,7 +148,7 @@ const WaveDotBackground = () => {
     <canvas
       ref={canvasRef}
       className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
-      style={{ background: 'rgb(8, 8, 13)' }} // Darker background
+      style={{ background: '#08080D' }} // Darker background
     />
   );
 };
