@@ -216,6 +216,8 @@ const ExperienceSection = () => {
   
   // Handle horizontal scroll for desktop using wheel
   useEffect(() => {
+    let scrollingTimeout: NodeJS.Timeout;
+    
     const handleWheel = (e: WheelEvent) => {
       if (cardsRef.current && e.deltaY !== 0) {
         const isVerticalScroll = Math.abs(e.deltaY) > Math.abs(e.deltaX);
@@ -230,7 +232,7 @@ const ExperienceSection = () => {
           // Set scrolling state for animation effects
           setIsScrolling(true);
           clearTimeout(scrollingTimeout);
-          const scrollingTimeout = setTimeout(() => {
+          scrollingTimeout = setTimeout(() => {
             setIsScrolling(false);
           }, 150);
         }
@@ -312,7 +314,7 @@ const ExperienceSection = () => {
         
         {/* Experience cards container - horizontal scroll on desktop, vertical on mobile */}
         <div className="relative">
-          <ScrollArea className="w-full h-auto pb-8" orientation="horizontal">
+          <ScrollArea className="w-full h-auto pb-8">
             <div 
               ref={cardsRef}
               className="experience-cards flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0 md:pb-6 px-2"
