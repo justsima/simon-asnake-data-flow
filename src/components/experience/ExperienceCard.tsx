@@ -1,8 +1,5 @@
 
-import { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronRight } from "lucide-react";
 import { Experience } from './types';
 import { AnimatedText } from './AnimatedText';
 
@@ -21,12 +18,6 @@ const ExperienceCard = ({
   isActive, 
   onClick 
 }: ExperienceCardProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  
-  // Toggle collapsible content
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
-  };
   
   return (
     <div 
@@ -37,11 +28,10 @@ const ExperienceCard = ({
         className={`
           transition-all duration-700 mb-8
           transform hover:scale-[1.02] focus:scale-[1.02]
-          ${isActive ? 'translate-x-2 scale-[1.03]' : 'translate-x-0 scale-100'} 
+          ${isActive ? 'translate-x-2 scale-[1.03]' : 'translate-x-0 scale-100 opacity-50'} 
           ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-12'}
         `}
         style={{
-          transitionDelay: `${index * 100}ms`,
           background: 'rgba(32, 30, 67, 0.4)',
           backdropFilter: 'blur(12px)',
           border: isActive ? '1px solid rgba(138, 137, 255, 0.3)' : '1px solid rgba(138, 137, 255, 0.1)',
@@ -82,31 +72,28 @@ const ExperienceCard = ({
             />
           </div>
           
-          <Collapsible open={isOpen} onOpenChange={toggleOpen}>
-            <CollapsibleTrigger className="flex items-center text-sm text-[#8A89FF] hover:text-white transition-colors mb-3">
-              <span>View responsibilities</span>
-              <ChevronRight className={`w-4 h-4 ml-1 transition-transform ${isOpen ? 'rotate-90' : ''}`} />
-            </CollapsibleTrigger>
-            
-            <CollapsibleContent className="space-y-3">
-              <ul className="space-y-3 mt-2">
-                {experience.responsibilities.map((item, i) => (
-                  <li 
-                    key={i} 
-                    className={`
-                      text-sm text-gray-300 flex items-start
-                      transition-all duration-500
-                      ${isOpen ? 'opacity-100' : 'opacity-0'}
-                    `}
-                    style={{ transitionDelay: `${i * 100}ms` }}
-                  >
-                    <span className="w-1 h-1 bg-[#8A89FF] rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Always visible responsibilities */}
+          <div className="space-y-3">
+            <ul className="space-y-3 mt-2">
+              {experience.responsibilities.map((item, i) => (
+                <li 
+                  key={i} 
+                  className={`
+                    text-sm text-gray-300 flex items-start
+                    transition-all duration-500
+                    opacity-0 transform translate-y-4
+                  `}
+                  style={{ 
+                    transitionDelay: `${i * 100}ms`,
+                    animation: isActive ? `fadeInUp 0.5s ${i * 100}ms forwards` : 'none',
+                  }}
+                >
+                  <span className="w-1 h-1 bg-[#8A89FF] rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -5,9 +5,17 @@ interface TimelineNodeProps {
   isActive: boolean;
   onClick: () => void;
   index: number;
+  isFirstNode: boolean;
+  isLastNode: boolean;
 }
 
-const TimelineNode = ({ isActive, onClick, index }: TimelineNodeProps) => {
+const TimelineNode = ({ 
+  isActive, 
+  onClick, 
+  index,
+  isFirstNode,
+  isLastNode 
+}: TimelineNodeProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -16,10 +24,10 @@ const TimelineNode = ({ isActive, onClick, index }: TimelineNodeProps) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Timeline connector line above */}
-      {index > 0 && (
+      {/* Timeline connector line above - only hide for the first node */}
+      {!isFirstNode && (
         <div 
-          className="absolute w-0.5 bg-gradient-to-b from-gray-700 to-gray-500 left-1/2 -translate-x-1/2 top-[-40px] h-10"
+          className="absolute w-0.5 bg-gradient-to-b from-gray-600 to-gray-500 left-1/2 -translate-x-1/2 top-[-150px] h-[150px]"
           style={{ opacity: 0.6 }}
         />
       )}
@@ -52,11 +60,13 @@ const TimelineNode = ({ isActive, onClick, index }: TimelineNodeProps) => {
         />
       </button>
       
-      {/* Timeline connector line below */}
-      <div 
-        className="absolute w-0.5 bg-gradient-to-b from-gray-500 to-gray-700 left-1/2 -translate-x-1/2 top-6 h-[calc(100%-6px)]"
-        style={{ opacity: 0.6 }}
-      />
+      {/* Timeline connector line below - only hide for the last node */}
+      {!isLastNode && (
+        <div 
+          className="absolute w-0.5 bg-gradient-to-b from-gray-500 to-gray-700 left-1/2 -translate-x-1/2 top-6 h-[150px]"
+          style={{ opacity: 0.6 }}
+        />
+      )}
     </div>
   );
 };
