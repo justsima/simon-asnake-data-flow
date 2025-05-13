@@ -1,5 +1,6 @@
 
 import { CSSProperties } from 'react';
+import { motion } from 'framer-motion';
 
 interface AnimatedTextProps {
   text: string;
@@ -9,21 +10,53 @@ interface AnimatedTextProps {
 }
 
 export const AnimatedText = ({ text, delay = 0, className = "", visible = false }: AnimatedTextProps) => {
+  const words = text.split(' ');
+  
+  const container = {
+    hidden: { opacity: 0 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      transition: { staggerChildren: 0.05, delayChildren: delay * 0.001 }
+    })
+  };
+  
+  const child = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 100
+      }
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 100
+      }
+    }
+  };
+  
   return (
-    <div className={`overflow-hidden ${className}`}>
-      {text.split('').map((char, index) => (
-        <span 
-          key={`${text}-${index}`}
-          className={`inline-block transition-all duration-500 ${
-            visible 
-              ? "opacity-100 transform-none" 
-              : "opacity-0 translate-y-8"
-          }`}
-          style={{ transitionDelay: `${delay + index * 30}ms` } as CSSProperties}
+    <motion.div
+      className={`overflow-hidden ${className}`}
+      variants={container}
+      initial="hidden"
+      animate={visible ? "visible" : "hidden"}
+    >
+      {words.map((word, index) => (
+        <motion.span
+          key={index}
+          className="inline-block mr-1"
+          variants={child}
         >
-          {char === ' ' ? '\u00A0' : char}
-        </span>
+          {word}
+        </motion.span>
       ))}
-    </div>
+    </motion.div>
   );
 };

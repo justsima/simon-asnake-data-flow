@@ -1,8 +1,9 @@
 
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { experiences } from './experience/experienceData';
-import TimelineNode from './experience/TimelineNode';
 import ExperienceCard from './experience/ExperienceCard';
+import ExperienceTimeline from './experience/ExperienceTimeline';
 import FloatingParticles from './experience/FloatingParticles';
 
 const ExperienceSection = () => {
@@ -12,7 +13,7 @@ const ExperienceSection = () => {
   
   const sectionRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
   
   // Handle intersection observer for animations
   useEffect(() => {
@@ -56,15 +57,15 @@ const ExperienceSection = () => {
 
   // Scroll to active card when it changes
   useEffect(() => {
-    if (activeCard !== null && cardsRef.current) {
-      const cards = cardsRef.current.querySelectorAll('.experience-card');
+    if (activeCard !== null && cardsContainerRef.current) {
+      const cards = cardsContainerRef.current.querySelectorAll('.experience-card');
       const activeCardElement = cards[activeCard];
       
       if (activeCardElement) {
         activeCardElement.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
-          inline: 'nearest'
+          inline: 'center'
         });
       }
     }
@@ -72,14 +73,14 @@ const ExperienceSection = () => {
 
   // Update active card based on scroll position
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
-    
     const handleScroll = () => {
-      if (!cardsRef.current) return;
+      if (!cardsContainerRef.current) return;
       
       setIsScrolling(true);
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
+      
+      // Add debounce for scroll end detection
+      clearTimeout(window.scrollEndTimer);
+      window.scrollEndTimer = setTimeout(() => {
         setIsScrolling(false);
       }, 150);
       
@@ -93,22 +94,24 @@ const ExperienceSection = () => {
       cards.forEach((card, index) => {
         const rect = card.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
-        const cardHeight = rect.height;
-        const cardMiddle = rect.top + cardHeight / 2;
-        const viewportMiddle = viewportHeight / 2;
         
-        // Calculate how centered the card is in the viewport
-        const distanceFromCenter = Math.abs(cardMiddle - viewportMiddle);
-        const normalizedDistance = 1 - (distanceFromCenter / (viewportHeight / 2));
-        const visibilityScore = Math.max(0, normalizedDistance);
-        
-        if (visibilityScore > maxVisibleAmount) {
-          maxVisibleAmount = visibilityScore;
-          maxVisibleCard = index;
+        // If card is in viewport
+        if (rect.top < viewportHeight && rect.bottom > 0) {
+          // Calculate how centered the card is in the viewport
+          const cardMiddle = rect.top + rect.height / 2;
+          const viewportMiddle = viewportHeight / 2;
+          
+          const distanceFromCenter = Math.abs(cardMiddle - viewportMiddle);
+          const visibilityScore = 1 - (distanceFromCenter / (viewportHeight / 2));
+          
+          if (visibilityScore > maxVisibleAmount) {
+            maxVisibleAmount = visibilityScore;
+            maxVisibleCard = index;
+          }
         }
       });
       
-      if (maxVisibleAmount > 0.3) {
+      if (maxVisibleAmount > 0.3 && activeCard !== maxVisibleCard) {
         setActiveCard(maxVisibleCard);
       }
     };
@@ -117,8 +120,9 @@ const ExperienceSection = () => {
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      clearTimeout(window.scrollEndTimer);
     };
-  }, []);
+  }, [activeCard]);
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -148,42 +152,44 @@ const ExperienceSection = () => {
     <section 
       id="experience" 
       ref={sectionRef}
-      className="py-20 relative overflow-hidden"
+      className="min-h-screen py-20 relative overflow-hidden snap-y snap-mandatory"
+      style={{ scrollSnapType: 'y mandatory' }}
     >
-      <div className="container mx-auto px-4">
+      <motion.div 
+        className="container mx-auto px-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4 text-center font-playfair">Work Experience</h2>
         <p className="text-lg text-gray-300 max-w-3xl mx-auto text-center mb-16 font-inter">
           My professional journey in data science and software development
         </p>
         
         {/* Timeline layout with vertical experience cards */}
-        <div className="grid md:grid-cols-[100px_1fr] gap-8 mt-16 relative max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-[100px_1fr] gap-8 mt-16 relative max-w-5xl mx-auto">
           {/* Timeline column - vertical timeline with nodes */}
           <div 
             ref={timelineRef}
-            className="hidden md:flex flex-col items-center space-y-36 sticky top-20 self-start h-[80vh]"
+            className="hidden md:flex flex-col items-center sticky top-20 self-start h-[80vh]"
           >
-            <div className="h-full flex flex-col items-center justify-around">
-              {experiences.map((_, index) => (
-                <TimelineNode
-                  key={index}
-                  index={index}
-                  isActive={activeCard === index}
-                  onClick={() => handleNodeClick(index)}
-                  isFirstNode={index === 0}
-                  isLastNode={index === experiences.length - 1}
-                />
-              ))}
-            </div>
+            <ExperienceTimeline 
+              activeIndex={activeCard} 
+              experienceCount={experiences.length} 
+              onNodeClick={handleNodeClick} 
+            />
           </div>
           
           {/* Experience cards column - vertical layout */}
-          <div ref={cardsRef} className="space-y-36">
+          <div 
+            ref={cardsContainerRef} 
+            className="space-y-[40vh] pb-[40vh]"
+          >
             {experiences.map((exp, index) => (
               <div
                 key={`${exp.company}-${exp.title}`}
                 id={`experience-${index}`}
-                className="scroll-mt-20 min-h-[300px]"
+                className="scroll-mt-20 min-h-[80vh] snap-center"
               >
                 <ExperienceCard
                   experience={exp}
@@ -194,14 +200,14 @@ const ExperienceSection = () => {
                 />
                 
                 {/* Mobile timeline indicator (only visible on mobile) */}
-                <div className="flex md:hidden items-center justify-center mt-2 space-x-2">
+                <div className="flex md:hidden items-center justify-center mt-8 space-x-2">
                   {experiences.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => handleNodeClick(i)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
                         activeCard === i
-                          ? 'bg-[#8A89FF] w-4'
+                          ? 'bg-[#8A89FF] w-6'
                           : 'bg-gray-600 hover:bg-gray-400'
                       }`}
                       aria-label={`View experience ${i + 1}`}
@@ -212,10 +218,31 @@ const ExperienceSection = () => {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
       
       {/* Floating particles effect */}
       <FloatingParticles isScrolling={isScrolling} />
+
+      {/* Additional scroll guidance */}
+      <motion.div 
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-400"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+      >
+        <p className="text-sm mb-2">Scroll to explore</p>
+        <motion.div 
+          className="w-6 h-10 rounded-full border-2 border-gray-400 flex items-start justify-center p-1"
+          animate={{ y: [0, 5, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+        >
+          <motion.div 
+            className="w-1.5 h-3 bg-gray-400 rounded-full"
+            animate={{ y: [0, 4, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, delay: 0.2 }}
+          />
+        </motion.div>
+      </motion.div>
 
       {/* Custom styles for this component */}
       <style>
@@ -233,28 +260,8 @@ const ExperienceSection = () => {
             }
           }
           
-          @keyframes fadeInUp {
-            from {
-              opacity: 0;
-              transform: translateY(10px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          
-          .animate-float {
-            animation: float 3s ease-in-out infinite;
-          }
-          
-          @keyframes float {
-            0%, 100% {
-              transform: translateY(0);
-            }
-            50% {
-              transform: translateY(-10px);
-            }
+          .snap-center {
+            scroll-snap-align: center;
           }
         `}
       </style>
