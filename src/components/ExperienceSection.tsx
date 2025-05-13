@@ -6,6 +6,13 @@ import ExperienceCard from './experience/ExperienceCard';
 import ExperienceTimeline from './experience/ExperienceTimeline';
 import FloatingParticles from './experience/FloatingParticles';
 
+// Extend Window interface to include our custom property
+declare global {
+  interface Window {
+    scrollEndTimer: number | undefined;
+  }
+}
+
 const ExperienceSection = () => {
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [visibleItems, setVisibleItems] = useState<boolean[]>(new Array(experiences.length).fill(false));
@@ -82,7 +89,7 @@ const ExperienceSection = () => {
       clearTimeout(window.scrollEndTimer);
       window.scrollEndTimer = setTimeout(() => {
         setIsScrolling(false);
-      }, 150);
+      }, 150) as unknown as number;
       
       // Calculate which experience card is most visible in the viewport
       const cards = Array.from(document.querySelectorAll('.experience-card'));
