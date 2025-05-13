@@ -146,6 +146,57 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+      
+      {/* Scroll to explore animation */}
+      <motion.div 
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-400"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ 
+          opacity: [0, 1, 1],
+          y: [10, 0, 0]
+        }}
+        transition={{ 
+          duration: 2,
+          times: [0, 0.5, 1],
+          repeat: Infinity,
+          repeatDelay: 1
+        }}
+      >
+        <p className="text-sm mb-2 font-medium tracking-wide">Scroll to explore</p>
+        <motion.div 
+          className="w-6 h-10 rounded-full border-2 border-gray-400 flex items-start justify-center p-1"
+          animate={{ y: [0, 5, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+        >
+          <motion.div 
+            className="w-1.5 h-3 bg-gradient-to-b from-[#8A89FF] to-[#6262FF] rounded-full"
+            animate={{ y: [0, 4, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, delay: 0.2 }}
+          />
+        </motion.div>
+      </motion.div>
+
+      {/* Animated dots trail effect */}
+      <div className="absolute bottom-0 left-0 w-full h-20 pointer-events-none overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-full flex justify-center">
+          {[...Array(9)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="w-1 h-1 rounded-full mx-1 bg-[#8A89FF]"
+              animate={{
+                y: [0, -15, 0],
+                opacity: [0.2, 0.8, 0.2]
+              }}
+              transition={{
+                duration: 2,
+                delay: i * 0.1,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </div>
+      </div>
     </section>
   );
 };

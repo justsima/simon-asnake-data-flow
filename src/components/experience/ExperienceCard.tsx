@@ -63,7 +63,7 @@ const ExperienceCard = ({
   
   return (
     <motion.div 
-      className={`experience-card ${isActive ? 'is-active' : ''} ${isVisible ? 'is-visible' : ''} min-h-[80vh] flex items-center`}
+      className={`experience-card ${isActive ? 'is-active' : ''} ${isVisible ? 'is-visible' : ''} min-h-[85vh] flex items-center`}
       onClick={onClick}
       initial="hidden"
       animate={isActive ? "active" : isVisible ? "visible" : "hidden"}
@@ -74,7 +74,7 @@ const ExperienceCard = ({
         ref={cardRef}
         className={`
           transition-all duration-700 w-full max-w-3xl mx-auto
-          ${isActive ? 'opacity-100' : 'opacity-30 hover:opacity-70 cursor-pointer'} 
+          ${isActive ? 'opacity-100 shadow-[0_10px_40px_rgba(138,137,255,0.2)]' : 'opacity-30 hover:opacity-70 cursor-pointer'} 
           ${isVisible ? '' : 'opacity-0 translate-y-12'}
         `}
         style={{
@@ -83,10 +83,11 @@ const ExperienceCard = ({
           border: isActive ? '1px solid rgba(138, 137, 255, 0.3)' : '1px solid rgba(138, 137, 255, 0.1)',
           boxShadow: isActive ? '0 8px 32px rgba(138, 137, 255, 0.15)' : '0 8px 32px rgba(0, 0, 0, 0.2)',
           transformStyle: 'preserve-3d',
-          transition: 'transform 0.5s ease, opacity 0.5s ease'
+          transition: 'transform 0.5s ease, opacity 0.5s ease, box-shadow 0.5s ease',
+          height: '100%'
         }}
       >
-        <CardContent className="p-8 md:p-10 relative">
+        <CardContent className="p-8 md:p-10 relative h-full flex flex-col">
           {/* 3D hover effect elements */}
           <div 
             className="absolute inset-0 opacity-0 bg-gradient-to-tr from-[rgba(138,137,255,0.1)] to-transparent rounded-lg transition-opacity duration-300 pointer-events-none"
@@ -115,19 +116,42 @@ const ExperienceCard = ({
               className="text-xl text-[#8A89FF] font-medium mb-3"
             />
             
-            <AnimatedText 
-              text={experience.period}
-              delay={300}
-              visible={isVisible}
-              className="text-md text-gray-400 mb-6"
-            />
+            <div className="flex flex-wrap items-center gap-3 mb-3">
+              <AnimatedText 
+                text={experience.period}
+                delay={300}
+                visible={isVisible}
+                className="text-md text-gray-400"
+              />
+              
+              {experience.location && (
+                <>
+                  <span className="w-1.5 h-1.5 rounded-full bg-gray-500"></span>
+                  <AnimatedText 
+                    text={experience.location}
+                    delay={350}
+                    visible={isVisible}
+                    className="text-md text-gray-400"
+                  />
+                </>
+              )}
+            </div>
 
             <div className="w-16 h-1 bg-[#8A89FF] rounded opacity-80 mb-8"></div>
+            
+            {experience.description && (
+              <AnimatedText 
+                text={experience.description}
+                delay={400}
+                visible={isVisible}
+                className="text-gray-300 mb-8"
+              />
+            )}
           </motion.div>
           
           {/* Responsibilities with staggered animation */}
-          <div className="space-y-4">
-            <ul className="space-y-4">
+          <div className="space-y-4 flex-grow">
+            <ul className="space-y-6">
               {experience.responsibilities.map((item, i) => (
                 <motion.li 
                   key={i} 
@@ -142,6 +166,48 @@ const ExperienceCard = ({
               ))}
             </ul>
           </div>
+          
+          {/* Technology tags */}
+          {experience.technologies && experience.technologies.length > 0 && (
+            <motion.div 
+              className="mt-8 flex flex-wrap gap-2"
+              initial={{ opacity: 0, y: 10 }}
+              animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0.6, y: 5 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              {experience.technologies.map((tech, i) => (
+                <span 
+                  key={i} 
+                  className="px-3 py-1 bg-gray-800 bg-opacity-50 rounded-full text-sm text-gray-300 border border-[rgba(138,137,255,0.2)]"
+                >
+                  {tech}
+                </span>
+              ))}
+            </motion.div>
+          )}
+          
+          {/* Achievements section if present */}
+          {experience.achievements && experience.achievements.length > 0 && (
+            <motion.div 
+              className="mt-8"
+              initial={{ opacity: 0, y: 10 }}
+              animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0.6, y: 5 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+            >
+              <h4 className="text-[#8A89FF] font-medium mb-4">Key Achievements</h4>
+              <ul className="space-y-3">
+                {experience.achievements.map((achievement, i) => (
+                  <li 
+                    key={i} 
+                    className="text-md text-gray-300 flex items-start"
+                  >
+                    <span className="text-[#8A89FF] mr-2">•</span>
+                    <span>{achievement}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
         </CardContent>
       </Card>
     </motion.div>

@@ -28,9 +28,9 @@ const TimelineNode = ({
       {/* Timeline connector line above - only hide for the first node */}
       {!isFirstNode && (
         <motion.div 
-          className="absolute w-0.5 bg-gradient-to-b from-gray-600 to-gray-500 left-1/2 -translate-x-1/2 top-[-150px] h-[150px]"
+          className="absolute w-0.5 bg-gradient-to-b from-gray-600 to-gray-500 left-1/2 -translate-x-1/2 top-[-30vh] h-[30vh]"
           initial={{ height: 0 }}
-          animate={{ height: '150px' }}
+          animate={{ height: '30vh' }}
           transition={{ duration: 0.8, delay: index * 0.2 }}
           style={{ opacity: isActive || isHovered ? 0.9 : 0.6 }}
         />
@@ -71,9 +71,9 @@ const TimelineNode = ({
       {/* Timeline connector line below - only hide for the last node */}
       {!isLastNode && (
         <motion.div 
-          className="absolute w-0.5 bg-gradient-to-b from-gray-500 to-gray-700 left-1/2 -translate-x-1/2 top-8 h-[150px]"
+          className="absolute w-0.5 bg-gradient-to-b from-gray-500 to-gray-700 left-1/2 -translate-x-1/2 top-8 h-[30vh]"
           initial={{ height: 0 }}
-          animate={{ height: '150px' }}
+          animate={{ height: '30vh' }}
           transition={{ duration: 0.8, delay: (index + 1) * 0.2 }}
           style={{ opacity: isActive || isHovered ? 0.9 : 0.6 }}
         />

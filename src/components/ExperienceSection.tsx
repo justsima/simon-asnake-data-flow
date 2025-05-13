@@ -159,7 +159,7 @@ const ExperienceSection = () => {
     <section 
       id="experience" 
       ref={sectionRef}
-      className="min-h-screen py-20 relative overflow-hidden snap-y snap-mandatory"
+      className="min-h-screen py-20 relative overflow-hidden snap-mandatory"
       style={{ scrollSnapType: 'y mandatory' }}
     >
       <motion.div 
@@ -174,11 +174,11 @@ const ExperienceSection = () => {
         </p>
         
         {/* Timeline layout with vertical experience cards */}
-        <div className="grid md:grid-cols-[100px_1fr] gap-8 mt-16 relative max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-[120px_1fr] gap-8 mt-16 relative max-w-5xl mx-auto">
           {/* Timeline column - vertical timeline with nodes */}
           <div 
             ref={timelineRef}
-            className="hidden md:flex flex-col items-center sticky top-20 self-start h-[80vh]"
+            className="hidden md:flex flex-col items-center sticky top-20 self-start h-[calc(100vh-100px)]"
           >
             <ExperienceTimeline 
               activeIndex={activeCard} 
@@ -190,13 +190,13 @@ const ExperienceSection = () => {
           {/* Experience cards column - vertical layout */}
           <div 
             ref={cardsContainerRef} 
-            className="space-y-[40vh] pb-[40vh]"
+            className="space-y-[95vh] pb-[40vh]"
           >
             {experiences.map((exp, index) => (
               <div
                 key={`${exp.company}-${exp.title}`}
                 id={`experience-${index}`}
-                className="scroll-mt-20 min-h-[80vh] snap-center"
+                className="scroll-mt-20 min-h-[90vh] snap-center"
               >
                 <ExperienceCard
                   experience={exp}
@@ -229,49 +229,6 @@ const ExperienceSection = () => {
       
       {/* Floating particles effect */}
       <FloatingParticles isScrolling={isScrolling} />
-
-      {/* Additional scroll guidance */}
-      <motion.div 
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-400"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-      >
-        <p className="text-sm mb-2">Scroll to explore</p>
-        <motion.div 
-          className="w-6 h-10 rounded-full border-2 border-gray-400 flex items-start justify-center p-1"
-          animate={{ y: [0, 5, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-        >
-          <motion.div 
-            className="w-1.5 h-3 bg-gray-400 rounded-full"
-            animate={{ y: [0, 4, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, delay: 0.2 }}
-          />
-        </motion.div>
-      </motion.div>
-
-      {/* Custom styles for this component */}
-      <style>
-        {`
-          @media (prefers-reduced-motion: reduce) {
-            .experience-card, .card, .inline-block {
-              transition: none !important;
-              transform: none !important;
-              animation: none !important;
-            }
-            
-            .experience-card.is-visible .card {
-              opacity: 1 !important;
-              transform: none !important;
-            }
-          }
-          
-          .snap-center {
-            scroll-snap-align: center;
-          }
-        `}
-      </style>
     </section>
   );
 };
