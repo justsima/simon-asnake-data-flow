@@ -1,7 +1,7 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
+import { motion } from 'framer-motion';
 import ParticleBackground from './ParticleBackground';
 import GradientBackground from './GradientBackground';
 
