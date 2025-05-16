@@ -1,7 +1,9 @@
 
 import { useState, useEffect, useRef, FormEvent } from 'react';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail, Send, User, AtSign, MessageSquare } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { motion } from 'framer-motion';
+import { Badge } from './ui/badge';
 
 interface FormState {
   name: string;
@@ -22,6 +24,7 @@ const ContactSection = () => {
     isSuccess: false,
   });
   
+  const [activeField, setActiveField] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const { toast } = useToast();
@@ -29,6 +32,14 @@ const ContactSection = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormState(prev => ({ ...prev, [name]: value }));
+  };
+  
+  const handleFocus = (fieldName: string) => {
+    setActiveField(fieldName);
+  };
+  
+  const handleBlur = () => {
+    setActiveField(null);
   };
   
   const handleSubmit = (e: FormEvent) => {
@@ -119,114 +130,232 @@ const ContactSection = () => {
     <section 
       id="contact" 
       ref={sectionRef}
-      className="py-20 bg-gradient-to-b from-white to-portfolio-gray/30"
+      className="py-20 relative min-h-screen flex items-center"
     >
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-semibold text-portfolio-navy mb-4 text-center">Get In Touch</h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto text-center mb-12">
-          Interested in transforming your data into actionable insights? Let's connect to discuss how data science and visualization can drive your business forward.
-        </p>
-        
-        <div className="max-w-3xl mx-auto">
-          <form 
-            ref={formRef}
-            onSubmit={handleSubmit}
-            className="bg-white shadow-md rounded-lg p-8"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0C0C14] via-[#08080D] to-[#08080D] -z-10"></div>
+      
+      {/* Animated background blobs */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-5">
+        <motion.div 
+          className="absolute top-[10%] left-[10%] w-[300px] h-[300px] rounded-full bg-[#8A89FF]/5 filter blur-[80px]"
+          animate={{
+            x: [0, 30, 0],
+            y: [0, -20, 0],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-[10%] right-[10%] w-[250px] h-[250px] rounded-full bg-[#6262FF]/5 filter blur-[60px]"
+          animate={{
+            x: [0, -20, 0],
+            y: [0, 30, 0],
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </div>
+      
+      <div className="container mx-auto px-4 z-10 relative">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl md:text-5xl font-semibold mb-4 text-center">
+            <span className="bg-gradient-to-r from-[#8A89FF] via-[#7676FF] to-[#6262FF] bg-clip-text text-transparent">
+              Get In Touch
+            </span>
+          </h2>
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto text-center mb-12">
+            Interested in transforming your data into actionable insights? Let's connect to discuss how data science and visualization can drive your business forward.
+          </p>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-stretch">
+            {/* Contact info card */}
+            <motion.div 
+              className="lg:col-span-2 glass-card bg-black/20 backdrop-blur-lg border border-white/10 rounded-xl p-8 shadow-xl flex flex-col justify-between"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formState.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-portfolio-purple/40 transition-all duration-300 transform translate-y-4 opacity-0"
-                  placeholder="Your name"
-                />
+                <h3 className="text-xl text-white font-medium mb-4">Contact Information</h3>
+                <p className="text-gray-300 mb-8">Fill out the form and I will get back to you within 24 hours.</p>
+                
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 rounded-full bg-[#8A89FF]/10 flex items-center justify-center mr-4">
+                      <Mail className="text-[#8A89FF]" size={18} />
+                    </div>
+                    <p className="text-gray-300">simon.asnake@example.com</p>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 rounded-full bg-[#8A89FF]/10 flex items-center justify-center mr-4">
+                      <User className="text-[#8A89FF]" size={18} />
+                    </div>
+                    <p className="text-gray-300">Data Science Consultant</p>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="text-white font-medium mb-2">Connect with me</h4>
+                  <div className="flex space-x-4">
+                    <a href="#" aria-label="LinkedIn" className="w-10 h-10 rounded-full bg-[#8A89FF]/10 hover:bg-[#8A89FF]/20 text-[#8A89FF] flex items-center justify-center transition-colors duration-300">
+                      <Linkedin size={18} />
+                    </a>
+                    <a href="#" aria-label="GitHub" className="w-10 h-10 rounded-full bg-[#8A89FF]/10 hover:bg-[#8A89FF]/20 text-[#8A89FF] flex items-center justify-center transition-colors duration-300">
+                      <Github size={18} />
+                    </a>
+                  </div>
+                </div>
               </div>
               
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-portfolio-purple/40 transition-all duration-300 transform translate-y-4 opacity-0"
-                  placeholder="Your email"
-                />
+              <div className="mt-12">
+                <Badge className="bg-[#8A89FF]/10 text-[#8A89FF] hover:bg-[#8A89FF]/20 border-[#8A89FF]/20">
+                  Available for freelance work
+                </Badge>
               </div>
-            </div>
+            </motion.div>
             
-            <div className="mb-6">
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-              <select
-                id="subject"
-                name="subject"
-                value={formState.subject}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-portfolio-purple/40 transition-all duration-300 transform translate-y-4 opacity-0"
-              >
-                <option value="Consultation">Consultation</option>
-                <option value="Project Inquiry">Project Inquiry</option>
-                <option value="Job Opportunity">Job Opportunity</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            
-            <div className="mb-6">
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                value={formState.message}
-                onChange={handleChange}
-                rows={5}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-portfolio-purple/40 transition-all duration-300 transform translate-y-4 opacity-0"
-                placeholder="Your message"
-              ></textarea>
-            </div>
-            
-            <button
-              type="submit"
-              disabled={formState.isSubmitting}
-              className={`w-full py-3 px-6 rounded-md font-medium text-white transition-all duration-300 transform translate-y-4 opacity-0 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-portfolio-purple/40 ${
-                formState.isSubmitting 
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-portfolio-purple hover:bg-portfolio-navy'
-              }`}
+            {/* Contact form */}
+            <motion.div 
+              className="lg:col-span-3 glass-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-xl relative"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
             >
-              {formState.isSubmitting ? 'Sending...' : 'Send Message'}
-            </button>
-          </form>
-          
-          <div className="mt-12 flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-6 md:mb-0 text-center md:text-left">
-              <p className="font-medium text-portfolio-navy mb-2">Alternative Contact Methods</p>
-              <div className="flex items-center space-x-3">
-                <a href="#" aria-label="Email" className="flex items-center text-gray-600 hover:text-portfolio-purple transition-colors">
-                  <Mail size={16} className="mr-1" />
-                  <span>simon.asnake@example.com</span>
-                </a>
-              </div>
-            </div>
-            
-            <div className="flex space-x-4">
-              <a href="#" aria-label="LinkedIn" className="w-10 h-10 rounded-full bg-portfolio-navy text-white flex items-center justify-center hover:bg-portfolio-purple transition-colors">
-                <Linkedin size={20} />
-              </a>
-              <a href="#" aria-label="GitHub" className="w-10 h-10 rounded-full bg-portfolio-navy text-white flex items-center justify-center hover:bg-portfolio-purple transition-colors">
-                <Github size={20} />
-              </a>
-            </div>
+              {/* Decoration elements */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#8A89FF]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#6262FF]/10 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2"></div>
+              
+              <form 
+                ref={formRef}
+                onSubmit={handleSubmit}
+                className="p-8 relative z-10"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  {/* Name input with floating icon */}
+                  <div className="relative">
+                    <div className={`absolute left-3 top-1/2 -translate-y-1/2 transition-all duration-300 ${activeField === 'name' ? 'text-[#8A89FF]' : 'text-gray-400'}`}>
+                      <User size={16} />
+                    </div>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formState.name}
+                      onChange={handleChange}
+                      onFocus={() => handleFocus('name')}
+                      onBlur={handleBlur}
+                      className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-md focus:outline-none focus:ring-1 focus:ring-[#8A89FF]/40 focus:border-[#8A89FF]/40 text-white transition-all duration-300 transform translate-y-4 opacity-0"
+                      placeholder="Your name"
+                    />
+                    {activeField === 'name' && (
+                      <motion.div 
+                        className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#8A89FF] to-[#6262FF]"
+                        initial={{ width: 0 }}
+                        animate={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    )}
+                  </div>
+                  
+                  {/* Email input with floating icon */}
+                  <div className="relative">
+                    <div className={`absolute left-3 top-1/2 -translate-y-1/2 transition-all duration-300 ${activeField === 'email' ? 'text-[#8A89FF]' : 'text-gray-400'}`}>
+                      <AtSign size={16} />
+                    </div>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formState.email}
+                      onChange={handleChange}
+                      onFocus={() => handleFocus('email')}
+                      onBlur={handleBlur}
+                      className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-md focus:outline-none focus:ring-1 focus:ring-[#8A89FF]/40 focus:border-[#8A89FF]/40 text-white transition-all duration-300 transform translate-y-4 opacity-0"
+                      placeholder="Your email"
+                    />
+                    {activeField === 'email' && (
+                      <motion.div 
+                        className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#8A89FF] to-[#6262FF]"
+                        initial={{ width: 0 }}
+                        animate={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    )}
+                  </div>
+                </div>
+                
+                <div className="mb-6">
+                  <select
+                    id="subject"
+                    name="subject"
+                    value={formState.subject}
+                    onChange={handleChange}
+                    onFocus={() => handleFocus('subject')}
+                    onBlur={handleBlur}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-md focus:outline-none focus:ring-1 focus:ring-[#8A89FF]/40 focus:border-[#8A89FF]/40 text-white transition-all duration-300 transform translate-y-4 opacity-0 appearance-none"
+                  >
+                    <option value="Consultation" className="bg-[#161B22]">Consultation</option>
+                    <option value="Project Inquiry" className="bg-[#161B22]">Project Inquiry</option>
+                    <option value="Job Opportunity" className="bg-[#161B22]">Job Opportunity</option>
+                    <option value="Other" className="bg-[#161B22]">Other</option>
+                  </select>
+                  {activeField === 'subject' && (
+                    <motion.div 
+                      className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF]"
+                      initial={{ width: 0 }}
+                      animate={{ width: '100%' }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+                </div>
+                
+                <div className="mb-6 relative">
+                  <div className={`absolute left-3 top-6 transition-all duration-300 ${activeField === 'message' ? 'text-[#8A89FF]' : 'text-gray-400'}`}>
+                    <MessageSquare size={16} />
+                  </div>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formState.message}
+                    onChange={handleChange}
+                    onFocus={() => handleFocus('message')}
+                    onBlur={handleBlur}
+                    rows={5}
+                    className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-md focus:outline-none focus:ring-1 focus:ring-[#8A89FF]/40 focus:border-[#8A89FF]/40 text-white transition-all duration-300 transform translate-y-4 opacity-0"
+                    placeholder="Your message"
+                  ></textarea>
+                  {activeField === 'message' && (
+                    <motion.div 
+                      className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#8A89FF] to-[#6262FF]"
+                      initial={{ width: 0 }}
+                      animate={{ width: '100%' }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+                </div>
+                
+                <motion.button
+                  type="submit"
+                  disabled={formState.isSubmitting}
+                  className="w-full py-3 px-6 rounded-md flex items-center justify-center gap-2 font-medium text-white bg-gradient-to-r from-[#8A89FF] via-[#7676FF] to-[#6262FF] hover:opacity-90 focus:outline-none transition-all duration-300 transform translate-y-4 opacity-0"
+                  whileHover={{ y: -2, boxShadow: '0 5px 15px rgba(138, 137, 255, 0.4)' }}
+                >
+                  {formState.isSubmitting ? 'Sending...' : 'Send Message'}
+                  <Send size={16} />
+                </motion.button>
+              </form>
+            </motion.div>
           </div>
-          
-          <p className="mt-8 text-center text-gray-600">
-            Currently available for freelance projects and consulting opportunities.
-          </p>
         </div>
       </div>
     </section>

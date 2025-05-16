@@ -6,7 +6,6 @@ import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
 import SkillsSection from '@/components/SkillsSection';
 import ProjectsSection from '@/components/ProjectsSection';
-import ExperienceSection from '@/components/ExperienceSection';
 import CertificationsSection from '@/components/CertificationsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
@@ -17,7 +16,6 @@ const sections = [
   { id: 'about', title: 'About' },
   { id: 'skills', title: 'Skills' },
   { id: 'projects', title: 'Projects' },
-  { id: 'experience', title: 'Experience' },
   { id: 'certifications', title: 'Certifications' },
   { id: 'contact', title: 'Contact' },
 ];
@@ -51,7 +49,6 @@ const Index = () => {
         <AboutSection />
         <SkillsSection />
         <ProjectsSection />
-        <ExperienceSection />
         <CertificationsSection />
         <ContactSection />
       </main>

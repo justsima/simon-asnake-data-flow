@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
@@ -25,6 +26,7 @@ const HeroSection = () => {
   const [currentGradient, setCurrentGradient] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [showArrow, setShowArrow] = useState({ projects: false, contact: false });
+  const [scrollPromptVisible, setScrollPromptVisible] = useState(true);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
   
@@ -67,6 +69,28 @@ const HeroSection = () => {
       setCurrentRole(prev => (prev + 1) % roles.length);
       setCurrentGradient(prev => (prev + 1) % gradients.length);
     }, 3000);
+
+    // Setup intersection observer to hide scroll prompt when user scrolls down
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setScrollPromptVisible(false);
+          } else {
+            setScrollPromptVisible(true);
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      observer.observe(aboutSection);
+      
+      return () => {
+        clearTimeout(timer);
+        clearInterval(roleInterval);
+        observer.disconnect();
+      };
+    }
 
     return () => {
       clearTimeout(timer);
@@ -147,18 +171,18 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Scroll to explore animation */}
+      {/* Scroll to explore animation with smooth fade-out */}
       <motion.div 
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-400"
         initial={{ opacity: 0, y: 10 }}
         animate={{ 
-          opacity: [0, 1, 1],
-          y: [10, 0, 0]
+          opacity: scrollPromptVisible ? [0, 1, 1] : 0,
+          y: scrollPromptVisible ? [10, 0, 0] : 10
         }}
         transition={{ 
           duration: 2,
           times: [0, 0.5, 1],
-          repeat: Infinity,
+          repeat: scrollPromptVisible ? Infinity : 0,
           repeatDelay: 1
         }}
       >
@@ -176,19 +200,19 @@ const HeroSection = () => {
         </motion.div>
       </motion.div>
 
-      {/* Animated dots trail effect */}
-      <div className="absolute bottom-0 left-0 w-full h-20 pointer-events-none overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-full flex justify-center">
-          {[...Array(9)].map((_, i) => (
+      {/* Enhanced symmetrical wave dots animation */}
+      <div className="absolute bottom-0 left-0 w-full h-24 pointer-events-none overflow-hidden">
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-4xl flex justify-center">
+          {[...Array(15)].map((_, i) => (
             <motion.div
               key={i}
-              className="w-1 h-1 rounded-full mx-1 bg-[#8A89FF]"
+              className="w-1.5 h-1.5 rounded-full mx-1.5 bg-[#8A89FF]"
               animate={{
-                y: [0, -15, 0],
+                y: [0, -(10 + Math.sin(i * 0.5) * 10), 0],
                 opacity: [0.2, 0.8, 0.2]
               }}
               transition={{
-                duration: 2,
+                duration: 2.5,
                 delay: i * 0.1,
                 repeat: Infinity,
                 ease: "easeInOut"
