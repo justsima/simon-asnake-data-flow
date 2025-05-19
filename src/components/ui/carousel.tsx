@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
@@ -60,6 +61,7 @@ const Carousel = React.forwardRef<
       {
         ...opts,
         axis: orientation === "horizontal" ? "x" : "y",
+        dragFree: true,
       },
       plugins
     )
@@ -76,11 +78,11 @@ const Carousel = React.forwardRef<
     }, [])
 
     const scrollPrev = React.useCallback(() => {
-      api?.scrollPrev()
+      api?.scrollPrev({duration: 800})
     }, [api])
 
     const scrollNext = React.useCallback(() => {
-      api?.scrollNext()
+      api?.scrollNext({duration: 800})
     }, [api])
 
     const handleKeyDown = React.useCallback(
@@ -155,7 +157,7 @@ const CarouselContent = React.forwardRef<
   const { carouselRef, orientation } = useCarousel()
 
   return (
-    <div ref={carouselRef} className="overflow-hidden">
+    <div ref={carouselRef} className="overflow-hidden certification-carousel">
       <div
         ref={ref}
         className={cn(
