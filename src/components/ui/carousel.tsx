@@ -1,10 +1,6 @@
-
 import * as React from "react"
-import useEmblaCarousel, {
-  type UseEmblaCarouselType,
-  type EmblaOptionsType,
-  type EmblaPluginType,
-} from "embla-carousel-react"
+import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react"
+import type { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
