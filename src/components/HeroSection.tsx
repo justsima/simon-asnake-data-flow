@@ -107,12 +107,12 @@ const HeroSection = () => {
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h1 
               ref={titleRef}
-              className="text-5xl md:text-7xl font-micuale font-bold mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
+              className="text-5xl md:text-7xl font-kiak font-bold mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
             >
               Simon Asnake
             </h1>
             
-            <h2 className="text-2xl md:text-3xl mb-8 font-charis text-left">
+            <h2 className="text-2xl md:text-3xl mb-8 font-kiak text-left">
               <span className="text-gray-300">I'm a </span>
               <span 
                 className={`animate-text-shimmer bg-gradient-to-r ${gradients[currentGradient]} bg-clip-text text-transparent font-bold transition-all duration-700`}
@@ -125,7 +125,7 @@ const HeroSection = () => {
             
             <p 
               ref={textRef}
-              className="text-lg text-gray-300 mb-12 font-welland max-w-2xl text-left leading-relaxed proper-spacing"
+              className="text-lg text-gray-300 mb-12 font-kiak max-w-2xl text-left leading-relaxed proper-spacing"
             >
               {/* Text content will be dynamically populated with proper spacing */}
             </p>
@@ -181,7 +181,7 @@ const HeroSection = () => {
         }}
         transition={{ duration: 0.5 }}
       >
-        <p className="text-sm mb-2 font-shunsine font-medium tracking-wide">Scroll to explore</p>
+        <p className="text-sm mb-2 font-kiak font-medium tracking-wide">Scroll to explore</p>
         <motion.div 
           className="w-6 h-10 rounded-full border-2 border-gray-400 flex items-start justify-center p-1"
           animate={{ y: [0, 5, 0] }}
