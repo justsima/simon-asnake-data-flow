@@ -75,14 +75,24 @@ const CertificationCard = ({
   return (
     <motion.div 
       className={`glass-card ${item.isEducation ? 'glass-layer-3' : ''} p-6 min-w-[300px] max-w-[350px] transition-all duration-500
-        ${isActive ? 'scale-105 border-[#8A89FF]/30 bg-white/10' : 'hover:scale-[1.02]'}`}
-      whileHover={{ y: -5 }}
+        ${isActive ? 'scale-110 border-[#8A89FF]/30 bg-white/10 z-10' : 'hover:scale-[1.02]'}`}
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      animate={{ 
+        opacity: 1, 
+        y: 0,
+        scale: isActive ? 1.1 : 1
+      }}
+      transition={{ 
+        duration: 0.5,
+        scale: {
+          type: "spring",
+          stiffness: 100,
+          damping: 15
+        }
+      }}
     >
       <div className="flex items-start mb-4">
-        <div className={`w-12 h-12 ${item.isEducation ? 'bg-[#8A89FF]/20' : 'bg-[#8A89FF]/10'} rounded-full flex items-center justify-center mr-4 text-[#8A89FF]`}>
+        <div className={`w-12 h-12 ${item.isEducation ? 'bg-[#8A89FF]/30' : 'bg-[#8A89FF]/15'} rounded-full flex items-center justify-center mr-4 text-[#8A89FF]`}>
           <span className="text-xl">{item.isEducation ? '🎓' : '🏆'}</span>
         </div>
         <div>
@@ -101,7 +111,7 @@ const CertificationCard = ({
           {item.skills.map((skill) => (
             <Badge 
               key={skill} 
-              className={`${item.isEducation ? 'bg-[#8A89FF]/20' : 'bg-[#8A89FF]/10'} hover:bg-[#8A89FF]/20 text-[#8A89FF] border-[#8A89FF]/20 font-micuale`}
+              className={`${item.isEducation ? 'bg-[#8A89FF]/30' : 'bg-[#8A89FF]/15'} hover:bg-[#8A89FF]/20 text-[#8A89FF] border-[#8A89FF]/20 font-micuale`}
             >
               {skill}
             </Badge>
@@ -114,6 +124,7 @@ const CertificationCard = ({
           className="mt-4 pt-4 border-t border-white/10"
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
+          transition={{ duration: 0.3 }}
         >
           <p className="text-xs text-gray-300 font-alberobello">
             {item.isEducation ? 'Graduation year: ' + item.date : 'Certification date: ' + item.date}
@@ -125,12 +136,12 @@ const CertificationCard = ({
 };
 
 const CertificationsSection = () => {
-  const [activeCert, setActiveCert] = useState<number | null>(null);
+  const [activeCert, setActiveCert] = useState<number | null>(0);
   const [api, setApi] = useState<any>();
   const autoScrollInterval = useRef<NodeJS.Timeout | null>(null);
   const isManualInteraction = useRef<boolean>(false);
   
-  // Setup auto-scrolling - always enabled by default
+  // Setup auto-scrolling - always enabled by default but with longer delay
   useEffect(() => {
     if (api) {
       // Clear any existing interval
@@ -138,12 +149,14 @@ const CertificationsSection = () => {
         clearInterval(autoScrollInterval.current);
       }
       
-      // Set new interval for auto-scrolling if not currently in manual interaction mode
-      if (!isManualInteraction.current) {
-        autoScrollInterval.current = setInterval(() => {
-          api.scrollNext();
-        }, 4000);
-      }
+      // Set new interval for auto-scrolling with 4 second delay
+      autoScrollInterval.current = setInterval(() => {
+        if (!isManualInteraction.current) {
+          const nextIndex = activeCert === null ? 0 : (activeCert + 1) % certifications.length;
+          setActiveCert(nextIndex);
+          api.scrollTo(nextIndex, { duration: 1500 }); // Smooth transition over 1.5 seconds
+        }
+      }, 4000); // 4 second delay between slides
     }
     
     return () => {
@@ -151,7 +164,7 @@ const CertificationsSection = () => {
         clearInterval(autoScrollInterval.current);
       }
     };
-  }, [api, isManualInteraction.current]);
+  }, [api, activeCert]);
   
   // Handle manual interaction
   const handleManualInteraction = () => {
@@ -162,24 +175,47 @@ const CertificationsSection = () => {
       clearInterval(autoScrollInterval.current);
     }
     
-    // Resume auto scroll after 10 seconds of inactivity
+    // Resume auto scroll after 15 seconds of inactivity
     const timeout = setTimeout(() => {
       isManualInteraction.current = false;
       
       if (api) {
         autoScrollInterval.current = setInterval(() => {
-          api.scrollNext();
+          if (!isManualInteraction.current) {
+            const nextIndex = activeCert === null ? 0 : (activeCert + 1) % certifications.length;
+            setActiveCert(nextIndex);
+            api.scrollTo(nextIndex, { duration: 1500 });
+          }
         }, 4000);
       }
-    }, 10000);
+    }, 15000);
     
     return () => clearTimeout(timeout);
   };
   
   const handleCardClick = (index: number) => {
     handleManualInteraction();
-    setActiveCert(activeCert === index ? null : index);
+    setActiveCert(index);
+    api?.scrollTo(index, { duration: 800 });
   };
+
+  // Set up observation of carousel position
+  useEffect(() => {
+    if (api) {
+      const onSelect = () => {
+        const currentIndex = api.selectedScrollSnap();
+        setActiveCert(currentIndex);
+      };
+      
+      api.on("select", onSelect);
+      
+      return () => {
+        api.off("select", onSelect);
+      };
+    }
+    
+    return undefined;
+  }, [api]);
 
   return (
     <section id="certifications" className="py-20 bg-portfolio-darkBg relative overflow-hidden">
@@ -208,15 +244,18 @@ const CertificationsSection = () => {
               align: "center",
               loop: true,
               skipSnaps: false,
-              duration: 800 // Set the duration here for all transitions
+              duration: 1500
             }}
             onMouseEnter={handleManualInteraction}
             onTouchStart={handleManualInteraction}
           >
-            <CarouselContent className="py-4">
+            <CarouselContent className="py-8">
               {certifications.map((cert, index) => (
                 <CarouselItem key={cert.title} className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3 pl-4">
-                  <div className="p-1" onClick={() => handleCardClick(index)}>
+                  <div 
+                    className="p-1" 
+                    onClick={() => handleCardClick(index)}
+                  >
                     <CertificationCard 
                       item={cert}
                       isActive={activeCert === index}
@@ -226,15 +265,9 @@ const CertificationsSection = () => {
               ))}
             </CarouselContent>
             
-            <div className="hidden sm:block">
-              <CarouselPrevious 
-                onClick={handleManualInteraction} 
-                className="glass-morphism-light rounded-full -left-4 lg:-left-8 hover:bg-[#8A89FF]/20 hover:border-[#8A89FF]/30"
-              />
-              <CarouselNext 
-                onClick={handleManualInteraction} 
-                className="glass-morphism-light rounded-full -right-4 lg:-right-8 hover:bg-[#8A89FF]/20 hover:border-[#8A89FF]/30"
-              />
+            <div className="hidden">
+              <CarouselPrevious onClick={handleManualInteraction} />
+              <CarouselNext onClick={handleManualInteraction} />
             </div>
           </Carousel>
           
@@ -246,7 +279,7 @@ const CertificationsSection = () => {
                 onClick={() => {
                   handleManualInteraction();
                   setActiveCert(index);
-                  api?.scrollTo(index);
+                  api?.scrollTo(index, { duration: 800 });
                 }}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
                   activeCert === index 

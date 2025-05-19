@@ -1,62 +1,41 @@
 
-import { CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface AnimatedTextProps {
   text: string;
-  delay?: number;
+  delay: number;
+  visible: boolean;
   className?: string;
-  visible?: boolean;
 }
 
-export const AnimatedText = ({ text, delay = 0, className = "", visible = false }: AnimatedTextProps) => {
-  const words = text.split(' ');
+export const AnimatedText = ({ text, delay, visible, className = "" }: AnimatedTextProps) => {
+  const [show, setShow] = useState(false);
   
-  const container = {
-    hidden: { opacity: 0 },
-    visible: (i = 1) => ({
-      opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: delay * 0.001 }
-    })
-  };
-  
-  const child = {
-    hidden: {
-      opacity: 0,
-      y: 20,
-      transition: {
-        type: "spring",
-        damping: 12,
-        stiffness: 100
-      }
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        damping: 12,
-        stiffness: 100
-      }
+  useEffect(() => {
+    if (visible) {
+      const timeout = setTimeout(() => {
+        setShow(true);
+      }, delay);
+      
+      return () => clearTimeout(timeout);
     }
-  };
+    return undefined;
+  }, [visible, delay]);
   
   return (
-    <motion.div
-      className={`overflow-hidden ${className}`}
-      variants={container}
-      initial="hidden"
-      animate={visible ? "visible" : "hidden"}
-    >
-      {words.map((word, index) => (
+    <div className={className}>
+      {show ? (
         <motion.span
-          key={index}
-          className="inline-block mr-1"
-          variants={child}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.05 }}
         >
-          {word}
+          {text}
         </motion.span>
-      ))}
-    </motion.div>
+      ) : (
+        <span style={{ opacity: 0 }}>{text}</span>
+      )}
+    </div>
   );
 };

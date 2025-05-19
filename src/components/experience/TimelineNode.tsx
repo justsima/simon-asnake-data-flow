@@ -1,82 +1,66 @@
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface TimelineNodeProps {
+  index: number;
   isActive: boolean;
   onClick: () => void;
-  index: number;
   isFirstNode: boolean;
   isLastNode: boolean;
 }
 
 const TimelineNode = ({ 
+  index, 
   isActive, 
   onClick, 
-  index,
-  isFirstNode,
+  isFirstNode, 
   isLastNode 
 }: TimelineNodeProps) => {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
-    <div 
-      className="relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Timeline connector line above - only hide for the first node */}
+    <div className="relative">
+      {/* Connecting line above */}
       {!isFirstNode && (
         <motion.div 
-          className="absolute w-0.5 bg-gradient-to-b from-gray-600 to-gray-500 left-1/2 -translate-x-1/2 top-[-30vh] h-[30vh]"
+          className="absolute left-1/2 -top-20 w-0.5 h-20 bg-gray-700"
           initial={{ height: 0 }}
-          animate={{ height: '30vh' }}
-          transition={{ duration: 0.8, delay: index * 0.2 }}
-          style={{ opacity: isActive || isHovered ? 0.9 : 0.6 }}
+          animate={{ height: 80 }}
+          transition={{ duration: 1, delay: 0.2 * index }}
         />
       )}
       
-      {/* Node circle */}
-      <motion.button 
+      {/* The node */}
+      <button 
         onClick={onClick}
         className={`
-          h-8 w-8 rounded-full flex items-center justify-center z-10 relative
-          transition-all duration-300
-          ${isActive 
-            ? 'bg-[#8A89FF] scale-125 shadow-[0_0_15px_rgba(138,137,255,0.5)]' 
-            : 'bg-gray-700 hover:bg-gray-600'}
+          relative z-10 w-5 h-5 rounded-full 
+          transition-all duration-500 ease-in-out
+          ${isActive ? 'bg-[#8A89FF] scale-150' : 'bg-gray-600 hover:bg-gray-500'}
         `}
-        aria-label={`View experience ${index + 1}`}
-        whileHover={{ scale: isActive ? 1.3 : 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <motion.span 
-          className={`
-            absolute inset-0 rounded-full animate-ping 
-            ${isActive ? 'bg-[#8A89FF] opacity-30' : 'bg-transparent opacity-0'}
-            ${isHovered && !isActive ? 'bg-gray-600 opacity-20' : ''}
-          `}
-        />
-        <motion.span 
-          className={`
-            w-2 h-2 rounded-full bg-white
-            transition-transform duration-300
-            ${isActive ? 'scale-100' : 'scale-0'}
-          `}
-          animate={isActive ? { scale: [0, 1.2, 1] } : { scale: 0 }}
-          transition={{ duration: 0.5 }}
-        />
-      </motion.button>
+        aria-label={`Timeline node ${index + 1}`}
+      />
       
-      {/* Timeline connector line below - only hide for the last node */}
+      {/* Connecting line below */}
       {!isLastNode && (
         <motion.div 
-          className="absolute w-0.5 bg-gradient-to-b from-gray-500 to-gray-700 left-1/2 -translate-x-1/2 top-8 h-[30vh]"
+          className="absolute left-1/2 top-5 w-0.5 h-20 bg-gray-700"
           initial={{ height: 0 }}
-          animate={{ height: '30vh' }}
-          transition={{ duration: 0.8, delay: (index + 1) * 0.2 }}
-          style={{ opacity: isActive || isHovered ? 0.9 : 0.6 }}
+          animate={{ height: 80 }}
+          transition={{ duration: 1, delay: 0.2 * index + 0.1 }}
         />
+      )}
+      
+      {/* Year indicator for active node */}
+      {isActive && (
+        <div className="absolute -left-16 top-0 w-12 text-right">
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-sm font-medium text-[#8A89FF]"
+          >
+            {2022 - index}
+          </motion.div>
+        </div>
       )}
     </div>
   );

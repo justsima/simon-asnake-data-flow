@@ -106,14 +106,14 @@ const ExperienceCard = ({
               text={experience.title}
               delay={100}
               visible={isVisible}
-              className="text-3xl font-medium text-white mb-3"
+              className="text-3xl font-medium text-white mb-3 font-micuale"
             />
             
             <AnimatedText 
               text={experience.company}
               delay={200}
               visible={isVisible}
-              className="text-xl text-[#8A89FF] font-medium mb-3"
+              className="text-xl text-[#8A89FF] font-medium mb-3 font-kiak"
             />
             
             <div className="flex flex-wrap items-center gap-3 mb-3">
@@ -121,7 +121,7 @@ const ExperienceCard = ({
                 text={experience.period}
                 delay={300}
                 visible={isVisible}
-                className="text-md text-gray-400"
+                className="text-md text-gray-400 font-welland"
               />
               
               {experience.location && (
@@ -131,7 +131,7 @@ const ExperienceCard = ({
                     text={experience.location}
                     delay={350}
                     visible={isVisible}
-                    className="text-md text-gray-400"
+                    className="text-md text-gray-400 font-welland"
                   />
                 </>
               )}
@@ -144,7 +144,7 @@ const ExperienceCard = ({
                 text={experience.description}
                 delay={400}
                 visible={isVisible}
-                className="text-gray-300 mb-8"
+                className="text-gray-300 mb-8 font-welland"
               />
             )}
           </motion.div>
@@ -155,7 +155,7 @@ const ExperienceCard = ({
               {experience.responsibilities.map((item, i) => (
                 <motion.li 
                   key={i} 
-                  className="text-md text-gray-300 flex items-start"
+                  className="text-md text-gray-300 flex items-start font-welland"
                   initial={{ opacity: 0, x: -10 }}
                   animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0.6, x: -5 }}
                   transition={{ duration: 0.5, delay: 0.3 + (i * 0.1) }}
@@ -178,7 +178,7 @@ const ExperienceCard = ({
               {experience.technologies.map((tech, i) => (
                 <span 
                   key={i} 
-                  className="px-3 py-1 bg-gray-800 bg-opacity-50 rounded-full text-sm text-gray-300 border border-[rgba(138,137,255,0.2)]"
+                  className="px-3 py-1 bg-gray-800 bg-opacity-50 rounded-full text-sm text-gray-300 border border-[rgba(138,137,255,0.2)] font-shunsine"
                 >
                   {tech}
                 </span>
@@ -194,12 +194,12 @@ const ExperienceCard = ({
               animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0.6, y: 5 }}
               transition={{ duration: 0.5, delay: 0.7 }}
             >
-              <h4 className="text-[#8A89FF] font-medium mb-4">Key Achievements</h4>
+              <h4 className="text-[#8A89FF] font-medium mb-4 font-charis">Key Achievements</h4>
               <ul className="space-y-3">
                 {experience.achievements.map((achievement, i) => (
                   <li 
                     key={i} 
-                    className="text-md text-gray-300 flex items-start"
+                    className="text-md text-gray-300 flex items-start font-welland"
                   >
                     <span className="text-[#8A89FF] mr-2">•</span>
                     <span>{achievement}</span>

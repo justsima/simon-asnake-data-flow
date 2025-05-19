@@ -12,6 +12,12 @@ export const experiences: Experience[] = [
       "Implement machine learning models for predictive analytics and business intelligence",
       "Create and optimize ETL pipelines for efficient data integration",
     ],
+    technologies: ["Power BI", "Python", "R", "SQL", "Azure ML"],
+    achievements: [
+      "Reduced client reporting time by 65% through automated dashboard solutions",
+      "Increased prediction accuracy by 27% using advanced machine learning algorithms",
+      "Saved $450K annually through optimized data integration processes",
+    ]
   },
   {
     title: "Software Developer",
@@ -23,6 +29,11 @@ export const experiences: Experience[] = [
       "Implemented database solutions for client projects",
       "Contributed to automation of business processes",
     ],
+    technologies: ["JavaScript", "React", "Node.js", "MongoDB", "AWS"],
+    achievements: [
+      "Improved application performance by 40% through code optimization",
+      "Reduced deployment time by 75% with CI/CD pipeline implementation",
+    ]
   },
   {
     title: "Data Science Internship",
@@ -34,5 +45,6 @@ export const experiences: Experience[] = [
       "Performed statistical analysis of business data",
       "Helped document data science methodologies",
     ],
+    technologies: ["Python", "SQL", "Tableau", "Excel"],
   },
 ];

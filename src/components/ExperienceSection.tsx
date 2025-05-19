@@ -168,8 +168,8 @@ const ExperienceSection = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4 text-center font-playfair">Work Experience</h2>
-        <p className="text-lg text-gray-300 max-w-3xl mx-auto text-center mb-16 font-inter">
+        <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4 text-center font-alberobello">Work Experience</h2>
+        <p className="text-lg text-gray-300 max-w-3xl mx-auto text-center mb-16 font-welland">
           My professional journey in data science and software development
         </p>
         
