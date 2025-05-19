@@ -86,22 +86,22 @@ const CertificationCard = ({
           <span className="text-xl">{item.isEducation ? '🎓' : '🏆'}</span>
         </div>
         <div>
-          <h3 className="text-lg font-medium text-white">{item.title}</h3>
-          <p className="text-[#8A89FF]">{item.organization}</p>
+          <h3 className="text-lg font-medium text-white font-charis">{item.title}</h3>
+          <p className="text-[#8A89FF] font-kiak">{item.organization}</p>
         </div>
       </div>
       
-      <p className="text-sm text-gray-400 mb-4">{item.date}</p>
+      <p className="text-sm text-gray-400 mb-4 font-welland">{item.date}</p>
       
       <div>
-        <p className="text-sm font-medium text-gray-300 mb-2">
+        <p className="text-sm font-medium text-gray-300 mb-2 font-shunsine">
           {item.isEducation ? 'Focus Areas' : 'Skills Verified'}
         </p>
         <div className="flex flex-wrap gap-2">
           {item.skills.map((skill) => (
             <Badge 
               key={skill} 
-              className={`${item.isEducation ? 'bg-[#8A89FF]/20' : 'bg-[#8A89FF]/10'} hover:bg-[#8A89FF]/20 text-[#8A89FF] border-[#8A89FF]/20`}
+              className={`${item.isEducation ? 'bg-[#8A89FF]/20' : 'bg-[#8A89FF]/10'} hover:bg-[#8A89FF]/20 text-[#8A89FF] border-[#8A89FF]/20 font-micuale`}
             >
               {skill}
             </Badge>
@@ -115,7 +115,7 @@ const CertificationCard = ({
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
         >
-          <p className="text-xs text-gray-300">
+          <p className="text-xs text-gray-300 font-alberobello">
             {item.isEducation ? 'Graduation year: ' + item.date : 'Certification date: ' + item.date}
           </p>
         </motion.div>
@@ -126,16 +126,24 @@ const CertificationCard = ({
 
 const CertificationsSection = () => {
   const [activeCert, setActiveCert] = useState<number | null>(null);
-  const [autoScroll, setAutoScroll] = useState(true);
   const [api, setApi] = useState<any>();
   const autoScrollInterval = useRef<NodeJS.Timeout | null>(null);
+  const isManualInteraction = useRef<boolean>(false);
   
-  // Setup auto-scrolling
+  // Setup auto-scrolling - always enabled by default
   useEffect(() => {
-    if (autoScroll && api) {
-      autoScrollInterval.current = setInterval(() => {
-        api.scrollNext();
-      }, 4000);
+    if (api) {
+      // Clear any existing interval
+      if (autoScrollInterval.current) {
+        clearInterval(autoScrollInterval.current);
+      }
+      
+      // Set new interval for auto-scrolling if not currently in manual interaction mode
+      if (!isManualInteraction.current) {
+        autoScrollInterval.current = setInterval(() => {
+          api.scrollNext();
+        }, 4000);
+      }
     }
     
     return () => {
@@ -143,19 +151,26 @@ const CertificationsSection = () => {
         clearInterval(autoScrollInterval.current);
       }
     };
-  }, [autoScroll, api]);
+  }, [api, isManualInteraction.current]);
   
   // Handle manual interaction
   const handleManualInteraction = () => {
-    setAutoScroll(false);
+    isManualInteraction.current = true;
     
-    // Resume auto scroll after 10 seconds of inactivity
+    // Clear existing auto-scroll
     if (autoScrollInterval.current) {
       clearInterval(autoScrollInterval.current);
     }
     
+    // Resume auto scroll after 10 seconds of inactivity
     const timeout = setTimeout(() => {
-      setAutoScroll(true);
+      isManualInteraction.current = false;
+      
+      if (api) {
+        autoScrollInterval.current = setInterval(() => {
+          api.scrollNext();
+        }, 4000);
+      }
     }, 10000);
     
     return () => clearTimeout(timeout);
@@ -175,12 +190,12 @@ const CertificationsSection = () => {
       <div className="absolute inset-0 backdrop-blur-sm bg-black/10"></div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4 text-center">
+        <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4 text-center font-alberobello">
           <span className="bg-gradient-to-r from-[#8A89FF] via-[#7676FF] to-[#6262FF] bg-clip-text text-transparent">
             Education & Certifications
           </span>
         </h2>
-        <p className="text-lg text-gray-300 max-w-3xl mx-auto text-center mb-12">
+        <p className="text-lg text-gray-300 max-w-3xl mx-auto text-center mb-12 font-welland">
           Professional qualifications and academic background
         </p>
         
@@ -241,18 +256,6 @@ const CertificationsSection = () => {
                 aria-label={`Go to certificate ${index + 1}`}
               />
             ))}
-          </div>
-          
-          {/* Auto-scroll indicator */}
-          <div className="flex justify-center mt-4">
-            <button 
-              onClick={() => setAutoScroll(!autoScroll)}
-              className={`text-xs px-3 py-1 rounded-full transition-all ${
-                autoScroll ? 'bg-[#8A89FF]/20 text-[#8A89FF]' : 'bg-white/5 text-gray-400'
-              }`}
-            >
-              {autoScroll ? 'Auto-scroll On' : 'Auto-scroll Off'}
-            </button>
           </div>
         </div>
       </div>

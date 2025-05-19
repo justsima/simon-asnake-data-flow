@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -328,6 +329,12 @@ export default {
 				'playfair': ['"Playfair Display"', 'serif'],
 				'raleway': ['Raleway', 'sans-serif'],
 				'montserrat': ['Montserrat', 'sans-serif'],
+				'micuale': ['Micuale', 'serif'],
+				'charis': ['Charis', 'serif'],
+				'welland': ['Welland', 'sans-serif'],
+				'shunsine': ['Shunsine', 'sans-serif'],
+				'kiak': ['Kiak', 'sans-serif'],
+				'alberobello': ['Alberobello', 'serif'],
 			},
 		}
 	},

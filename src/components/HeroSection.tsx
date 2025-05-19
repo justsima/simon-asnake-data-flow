@@ -107,12 +107,12 @@ const HeroSection = () => {
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h1 
               ref={titleRef}
-              className="text-5xl md:text-7xl font-raleway font-bold mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
+              className="text-5xl md:text-7xl font-micuale font-bold mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
             >
               Simon Asnake
             </h1>
             
-            <h2 className="text-2xl md:text-3xl mb-8 font-montserrat text-left">
+            <h2 className="text-2xl md:text-3xl mb-8 font-charis text-left">
               <span className="text-gray-300">I'm a </span>
               <span 
                 className={`animate-text-shimmer bg-gradient-to-r ${gradients[currentGradient]} bg-clip-text text-transparent font-bold transition-all duration-700`}
@@ -125,7 +125,7 @@ const HeroSection = () => {
             
             <p 
               ref={textRef}
-              className="text-lg text-gray-300 mb-12 font-inter max-w-2xl text-left leading-relaxed proper-spacing"
+              className="text-lg text-gray-300 mb-12 font-welland max-w-2xl text-left leading-relaxed proper-spacing"
             >
               {/* Text content will be dynamically populated with proper spacing */}
             </p>
@@ -133,7 +133,7 @@ const HeroSection = () => {
             <div className="flex gap-4 mb-16 text-left">
               <Button
                 variant="outline"
-                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3"
+                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3 font-kiak"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, projects: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, projects: false}))}
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
@@ -151,7 +151,7 @@ const HeroSection = () => {
               
               <Button
                 variant="outline"
-                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3"
+                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3 font-kiak"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, contact: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, contact: false}))}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
@@ -171,22 +171,17 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Scroll to explore animation with smooth fade-out */}
+      {/* Scroll to explore animation with permanent visibility */}
       <motion.div 
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-400"
         initial={{ opacity: 0, y: 10 }}
         animate={{ 
-          opacity: scrollPromptVisible ? [0, 1, 1] : 0,
-          y: scrollPromptVisible ? [10, 0, 0] : 10
+          opacity: scrollPromptVisible ? 1 : 0,
+          y: scrollPromptVisible ? 0 : 10 
         }}
-        transition={{ 
-          duration: 2,
-          times: [0, 0.5, 1],
-          repeat: scrollPromptVisible ? Infinity : 0,
-          repeatDelay: 1
-        }}
+        transition={{ duration: 0.5 }}
       >
-        <p className="text-sm mb-2 font-medium tracking-wide">Scroll to explore</p>
+        <p className="text-sm mb-2 font-shunsine font-medium tracking-wide">Scroll to explore</p>
         <motion.div 
           className="w-6 h-10 rounded-full border-2 border-gray-400 flex items-start justify-center p-1"
           animate={{ y: [0, 5, 0] }}
@@ -202,18 +197,18 @@ const HeroSection = () => {
 
       {/* Enhanced symmetrical wave dots animation */}
       <div className="absolute bottom-0 left-0 w-full h-24 pointer-events-none overflow-hidden">
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-4xl flex justify-center">
-          {[...Array(15)].map((_, i) => (
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-6xl flex justify-center">
+          {[...Array(25)].map((_, i) => (
             <motion.div
               key={i}
-              className="w-1.5 h-1.5 rounded-full mx-1.5 bg-[#8A89FF]"
+              className="w-1.5 h-1.5 rounded-full mx-1 bg-[#8A89FF]"
               animate={{
-                y: [0, -(10 + Math.sin(i * 0.5) * 10), 0],
+                y: [0, -(Math.sin((i / 25) * Math.PI) * 25), 0], // Perfect sine wave
                 opacity: [0.2, 0.8, 0.2]
               }}
               transition={{
-                duration: 2.5,
-                delay: i * 0.1,
+                duration: 3,
+                delay: i * 0.08,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
