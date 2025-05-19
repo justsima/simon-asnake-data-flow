@@ -107,12 +107,12 @@ const HeroSection = () => {
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h1 
               ref={titleRef}
-              className="text-5xl md:text-7xl font-kiak font-bold mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
+              className="text-5xl md:text-7xl font-playfair font-bold mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
             >
               Simon Asnake
             </h1>
             
-            <h2 className="text-2xl md:text-3xl mb-8 font-kiak text-left">
+            <h2 className="text-2xl md:text-3xl mb-8 font-inter text-left">
               <span className="text-gray-300">I'm a </span>
               <span 
                 className={`animate-text-shimmer bg-gradient-to-r ${gradients[currentGradient]} bg-clip-text text-transparent font-bold transition-all duration-700`}
@@ -125,7 +125,7 @@ const HeroSection = () => {
             
             <p 
               ref={textRef}
-              className="text-lg text-gray-300 mb-12 font-kiak max-w-2xl text-left leading-relaxed proper-spacing"
+              className="text-lg text-gray-300 mb-12 font-raleway max-w-2xl text-left leading-relaxed proper-spacing"
             >
               {/* Text content will be dynamically populated with proper spacing */}
             </p>
@@ -133,7 +133,7 @@ const HeroSection = () => {
             <div className="flex gap-4 mb-16 text-left">
               <Button
                 variant="outline"
-                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3 font-kiak"
+                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3 font-montserrat"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, projects: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, projects: false}))}
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
@@ -151,7 +151,7 @@ const HeroSection = () => {
               
               <Button
                 variant="outline"
-                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3 font-kiak"
+                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3 font-montserrat"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, contact: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, contact: false}))}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
@@ -181,7 +181,7 @@ const HeroSection = () => {
         }}
         transition={{ duration: 0.5 }}
       >
-        <p className="text-sm mb-2 font-kiak font-medium tracking-wide">Scroll to explore</p>
+        <p className="text-sm mb-2 font-montserrat font-medium tracking-wide">Scroll to explore</p>
         <motion.div 
           className="w-6 h-10 rounded-full border-2 border-gray-400 flex items-start justify-center p-1"
           animate={{ y: [0, 5, 0] }}
