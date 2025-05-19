@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from './ui/badge';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
@@ -194,7 +193,7 @@ const CertificationsSection = () => {
               align: "center",
               loop: true,
               skipSnaps: false,
-              duration: 40
+              duration: 800 // Set the duration here for all transitions
             }}
             onMouseEnter={handleManualInteraction}
             onTouchStart={handleManualInteraction}

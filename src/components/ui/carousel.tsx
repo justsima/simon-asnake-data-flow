@@ -78,11 +78,13 @@ const Carousel = React.forwardRef<
     }, [])
 
     const scrollPrev = React.useCallback(() => {
-      api?.scrollPrev({duration: 800})
+      // Remove the options object and just call the method
+      api?.scrollPrev()
     }, [api])
 
     const scrollNext = React.useCallback(() => {
-      api?.scrollNext({duration: 800})
+      // Remove the options object and just call the method
+      api?.scrollNext()
     }, [api])
 
     const handleKeyDown = React.useCallback(
