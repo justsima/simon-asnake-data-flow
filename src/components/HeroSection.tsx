@@ -133,7 +133,7 @@ const HeroSection = () => {
             <div className="flex gap-4 mb-16 text-left">
               <Button
                 variant="outline"
-                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3 font-montserrat"
+                className="button-slide-effect group bg-gradient-to-r from-[#8A89FF]/10 to-[#6262FF]/10 backdrop-blur-lg border-[#8A89FF]/20 hover:bg-gradient-to-r hover:from-[#8A89FF]/20 hover:to-[#6262FF]/20 hover:border-[#8A89FF]/40 transition-all duration-500 text-white px-6 py-3 font-montserrat"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, projects: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, projects: false}))}
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
@@ -151,7 +151,7 @@ const HeroSection = () => {
               
               <Button
                 variant="outline"
-                className="button-slide-effect group bg-black/5 backdrop-blur-lg border-white/10 hover:bg-white/10 transition-all duration-500 text-white px-6 py-3 font-montserrat"
+                className="button-slide-effect group bg-gradient-to-r from-[#7676FF]/10 to-[#8A89FF]/10 backdrop-blur-lg border-[#7676FF]/20 hover:bg-gradient-to-r hover:from-[#7676FF]/20 hover:to-[#8A89FF]/20 hover:border-[#7676FF]/40 transition-all duration-500 text-white px-6 py-3 font-montserrat"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, contact: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, contact: false}))}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
@@ -195,25 +195,35 @@ const HeroSection = () => {
         </motion.div>
       </motion.div>
 
-      {/* Enhanced symmetrical wave dots animation */}
-      <div className="absolute bottom-0 left-0 w-full h-24 pointer-events-none overflow-hidden">
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-6xl flex justify-center">
-          {[...Array(25)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="w-1.5 h-1.5 rounded-full mx-1 bg-[#8A89FF]"
-              animate={{
-                y: [0, -(Math.sin((i / 25) * Math.PI) * 25), 0], // Perfect sine wave
-                opacity: [0.2, 0.8, 0.2]
-              }}
-              transition={{
-                duration: 3,
-                delay: i * 0.08,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
+      {/* Fixed centered wave dots animation */}
+      <div className="absolute bottom-0 left-0 w-full h-16 pointer-events-none overflow-hidden flex items-end justify-center">
+        <div className="flex items-end justify-center pb-4">
+          {[...Array(30)].map((_, i) => {
+            // Create a perfect sine wave centered
+            const progress = i / 29; // 0 to 1
+            const angle = progress * Math.PI; // 0 to π for half sine wave
+            const height = Math.sin(angle) * 30; // Wave height
+            
+            return (
+              <motion.div
+                key={i}
+                className="w-1.5 h-1.5 rounded-full mx-0.5 bg-[#8A89FF]/80"
+                style={{
+                  marginBottom: `${height}px`
+                }}
+                animate={{
+                  opacity: [0.3, 1, 0.3],
+                  scale: [0.8, 1.2, 0.8]
+                }}
+                transition={{
+                  duration: 2.5,
+                  delay: i * 0.05,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
