@@ -7,10 +7,11 @@ import { Project } from '@/types/project';
 
 interface ProjectCardProps {
   project: Project;
-  index: number;
+  index?: number;
+  onClick?: () => void;
 }
 
-const ProjectCard = ({ project, index }: ProjectCardProps) => {
+const ProjectCard = ({ project, index = 0, onClick }: ProjectCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -19,7 +20,10 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="h-full"
     >
-      <Card className="h-full border border-gray-800 bg-gray-900/60 backdrop-blur-sm shadow-lg hover:shadow-xl hover:border-gray-700/70 hover:bg-gray-800/70 transform hover:-translate-y-2 transition-all duration-300 group">
+      <Card 
+        className="h-full border border-gray-800 bg-gray-900/60 backdrop-blur-sm shadow-lg hover:shadow-xl hover:border-gray-700/70 hover:bg-gray-800/70 transform hover:-translate-y-2 transition-all duration-300 group cursor-pointer"
+        onClick={onClick}
+      >
         <CardContent className="p-6 h-full flex flex-col">
           {/* Project Image */}
           {project.image && (
@@ -65,7 +69,10 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
                 variant="outline"
                 size="sm"
                 className="button-slide-effect group bg-gradient-to-r from-[#8A89FF]/10 to-[#6262FF]/10 backdrop-blur-lg border-[#8A89FF]/20 hover:bg-gradient-to-r hover:from-[#8A89FF]/20 hover:to-[#6262FF]/20 hover:border-[#8A89FF]/40 transition-all duration-300 text-white font-montserrat"
-                onClick={() => window.open(project.liveUrl, '_blank')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(project.liveUrl, '_blank');
+                }}
               >
                 <ExternalLink size={16} className="mr-2" />
                 Live Demo
@@ -77,7 +84,10 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
                 variant="outline"
                 size="sm"
                 className="button-slide-effect group bg-gradient-to-r from-[#7676FF]/10 to-[#8A89FF]/10 backdrop-blur-lg border-[#7676FF]/20 hover:bg-gradient-to-r hover:from-[#7676FF]/20 hover:to-[#8A89FF]/20 hover:border-[#7676FF]/40 transition-all duration-300 text-white font-montserrat"
-                onClick={() => window.open(project.githubUrl, '_blank')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(project.githubUrl, '_blank');
+                }}
               >
                 <Github size={16} className="mr-2" />
                 Code

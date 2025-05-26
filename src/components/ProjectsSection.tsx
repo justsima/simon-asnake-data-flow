@@ -1,6 +1,5 @@
-
 import { useState, useEffect, useRef } from 'react';
-import { ProjectCard } from './projects/ProjectCard';
+import ProjectCard from './projects/ProjectCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Pagination,
