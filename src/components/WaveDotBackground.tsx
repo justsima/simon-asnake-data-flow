@@ -38,8 +38,8 @@ const WaveDotBackground = () => {
         this.x = x;
         this.y = y;
         this.size = Math.random() * 1.5 + 0.5;
-        this.speedX = Math.random() * 0.3 - 0.15;
-        this.speedY = Math.random() * 0.3 - 0.15;
+        this.speedX = Math.random() * 0.33 - 0.165; // 10% faster
+        this.speedY = Math.random() * 0.33 - 0.165; // 10% faster
         this.density = Math.random() * 20 + 10;
         this.baseY = y;
         this.baseX = x;
@@ -55,13 +55,13 @@ const WaveDotBackground = () => {
       }
 
       update(time: number) {
-        // Wave motion - increased frequency for faster movement
-        const frequency = 0.002; 
+        // Wave motion - 10% faster frequency
+        const frequency = 0.0022; // Increased from 0.002
         const amplitude = 25; // Higher amplitude for more visible waves
         
         // Calculate wave position
         this.y = this.baseY + Math.sin(time * frequency + this.baseX * 0.01) * amplitude;
-        this.x += this.speedX * 1.2; // Increased speed multiplier
+        this.x += this.speedX * 1.32; // Increased speed multiplier by 10%
         
         // Boundary check
         if (this.x > canvas.width) {
@@ -118,7 +118,7 @@ const WaveDotBackground = () => {
       ctx.fillStyle = 'rgba(8, 8, 13, 0.2)'; // Darker background with slight trail
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      time += 1.5; // Faster time progression
+      time += 1.65; // 10% faster time progression (increased from 1.5)
       
       // Update and connect particles
       particles.forEach(particle => {

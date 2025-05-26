@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
@@ -194,38 +193,6 @@ const HeroSection = () => {
           />
         </motion.div>
       </motion.div>
-
-      {/* Fixed centered wave dots animation */}
-      <div className="absolute bottom-0 left-0 w-full h-16 pointer-events-none overflow-hidden flex items-end justify-center">
-        <div className="flex items-end justify-center pb-4">
-          {[...Array(30)].map((_, i) => {
-            // Create a perfect sine wave centered
-            const progress = i / 29; // 0 to 1
-            const angle = progress * Math.PI; // 0 to π for half sine wave
-            const height = Math.sin(angle) * 30; // Wave height
-            
-            return (
-              <motion.div
-                key={i}
-                className="w-1.5 h-1.5 rounded-full mx-0.5 bg-[#8A89FF]/80"
-                style={{
-                  marginBottom: `${height}px`
-                }}
-                animate={{
-                  opacity: [0.3, 1, 0.3],
-                  scale: [0.8, 1.2, 0.8]
-                }}
-                transition={{
-                  duration: 2.5,
-                  delay: i * 0.05,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-            );
-          })}
-        </div>
-      </div>
     </section>
   );
 };
