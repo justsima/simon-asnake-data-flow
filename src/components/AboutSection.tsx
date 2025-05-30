@@ -167,21 +167,21 @@ const AboutSection = () => {
                 transformStyle: 'preserve-3d'
               }}
             >
-              {/* Image with simplified 3D layered glass effect */}
-              <div className="rounded-lg overflow-hidden relative mb-8 shadow-xl transform transition-all duration-500 hover:scale-[1.01]">
+              {/* Image with simplified 3D layered glass effect - reduced size */}
+              <div className="rounded-lg overflow-hidden relative mb-6 shadow-xl transform transition-all duration-500 hover:scale-[1.01] max-w-xs mx-auto lg:mx-0">
                 <div style={{
                   background: 'rgba(40, 38, 70, 0.7)', // Second layer: lighter than main theme
                   backdropFilter: 'blur(8px)',
                   border: '1px solid rgba(60, 58, 100, 0.6)',
                 }} className="p-1 rounded-lg">
-                  <div className="bg-[#302E53]/70 rounded-lg aspect-[4/3] flex items-center justify-center">
-                    <p className="text-gray-400 text-center">Professional headshot placeholder</p>
+                  <div className="bg-[#302E53]/70 rounded-lg aspect-[3/4] flex items-center justify-center">
+                    <p className="text-gray-400 text-center text-sm px-4">Professional headshot placeholder</p>
                   </div>
                 </div>
               </div>
               
-              {/* Main introduction text */}
-              <div ref={contentRef} className="space-y-6">
+              {/* Main introduction text - moved up with reduced spacing */}
+              <div ref={contentRef} className="space-y-4">
                 <h2 className="text-3xl md:text-4xl font-playfair font-semibold text-white transition-all duration-500 transform translate-y-10 opacity-0">
                   About Me
                 </h2>
@@ -190,7 +190,7 @@ const AboutSection = () => {
                   As a Data Scientist and Power BI Expert, I specialize in transforming complex data into strategic business insights. With extensive experience across multiple industries, I've helped organizations leverage their data for informed decision-making.
                 </p>
 
-                <div className="flex flex-wrap gap-4 pt-4">
+                <div className="flex flex-wrap gap-4 pt-2">
                   <Icon3D 
                     icon="📊" 
                     title="Data Visualization" 
