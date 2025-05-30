@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import ProjectCard from './projects/ProjectCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -21,6 +22,7 @@ const projects: Project[] = [
   {
     id: 1,
     title: "Executive Sales Intelligence Dashboard",
+    description: "Interactive Power BI dashboard providing executive insights on sales trends, store performance, and inventory management across 200+ retail locations.",
     challenge: "Fortune 500 retailer needed real-time sales performance visibility across 200+ stores",
     solution: "Developed interactive Power BI dashboard integrating multiple data sources with advanced DAX measures to provide executive insights on sales trends, store performance, and inventory management.",
     impact: "32% reduction in reporting time, $1.2M identified in revenue opportunities, and improved decision-making across regional management teams.",
@@ -32,6 +34,7 @@ const projects: Project[] = [
   {
     id: 2,
     title: "Customer Churn Prediction Model",
+    description: "Machine learning model predicting customer churn 60 days in advance using random forest algorithm with 24% reduction in churn rate.",
     challenge: "Financial services company experiencing unexpected customer attrition",
     solution: "Developed ML model predicting likely churners 60 days in advance using random forest algorithm with feature engineering on transactional and demographic data points.",
     impact: "24% reduction in churn rate, $850K annual savings in retention costs, and improved customer satisfaction metrics across targeted segments.",
@@ -43,6 +46,7 @@ const projects: Project[] = [
   {
     id: 3,
     title: "Healthcare Claims ETL Pipeline",
+    description: "Automated ETL pipeline with data quality frameworks integrating 12 healthcare systems, reducing claim processing time from 72 hours to 4 hours.",
     challenge: "Healthcare provider struggling with data integration from 12 systems",
     solution: "Designed automated ETL pipeline with validation rules and data quality frameworks to standardize inputs from disparate healthcare systems.",
     impact: "95% reduction in manual data processing, 99.8% data accuracy achievement, and reduced claim processing time from 72 hours to 4 hours.",
@@ -54,6 +58,7 @@ const projects: Project[] = [
   {
     id: 4,
     title: "Retail Inventory Optimization System",
+    description: "Predictive inventory model with seasonal adjustments and ML algorithms optimizing stock levels across 50+ locations.",
     challenge: "Eliminating overstock while preventing stockouts across 50+ locations",
     solution: "Created predictive inventory model with seasonal adjustments and machine learning algorithms to optimize stock levels based on historical sales patterns.",
     impact: "18% reduction in carrying costs, 35% fewer stockouts, and improved cash flow by reducing unnecessary inventory investments.",
@@ -65,6 +70,7 @@ const projects: Project[] = [
   {
     id: 5,
     title: "Marketing Campaign Analytics Platform",
+    description: "End-to-end marketing analytics platform with custom attribution models tracking customer journey across digital channels.",
     challenge: "Marketing team needed advanced attribution modeling for digital campaigns",
     solution: "Built end-to-end marketing analytics platform with custom attribution models to track customer journey touchpoints across channels.",
     impact: "42% improvement in campaign ROI by optimizing channel mix based on analytical insights.",
@@ -76,6 +82,7 @@ const projects: Project[] = [
   {
     id: 6,
     title: "Supply Chain Visibility Dashboard",
+    description: "Interactive Power BI dashboard integrating supplier, logistics, and inventory data with real-time alerts for potential disruptions.",
     challenge: "Global manufacturer lacked visibility into multi-tier supply chain",
     solution: "Created interactive Power BI dashboard integrating supplier, logistics, and inventory data with real-time alerts for potential disruptions.",
     impact: "28% reduction in stockouts, 15% improvement in on-time delivery, and $2.2M in savings from optimized inventory levels.",
@@ -87,6 +94,7 @@ const projects: Project[] = [
   {
     id: 7,
     title: "Financial Forecasting Engine",
+    description: "Ensemble machine learning model combining time series analysis with external economic indicators for improved forecast accuracy.",
     challenge: "CFO needed improved cash flow and revenue forecasting accuracy",
     solution: "Developed ensemble machine learning model combining time series analysis with external economic indicators to improve forecast accuracy.",
     impact: "Reduced forecast error by 37%, enabling more confident capital allocation decisions and improved investor communications.",
@@ -98,6 +106,7 @@ const projects: Project[] = [
   {
     id: 8,
     title: "HR Analytics Portal",
+    description: "Comprehensive HR analytics dashboard with predictive attrition modeling and recruitment funnel optimization.",
     challenge: "HR leadership needed deeper insights into talent acquisition and retention",
     solution: "Built comprehensive HR analytics dashboard with predictive attrition modeling and recruitment funnel optimization.",
     impact: "Reduced time-to-hire by 24%, decreased unwanted attrition by 18%, and improved hiring manager satisfaction scores by 31%.",
@@ -109,6 +118,7 @@ const projects: Project[] = [
   {
     id: 9,
     title: "Real-time IoT Data Pipeline",
+    description: "Streaming data architecture with real-time dashboards for monitoring equipment performance and predictive maintenance.",
     challenge: "Manufacturing operation needed real-time analysis of sensor data from production lines",
     solution: "Implemented streaming data architecture with Azure Event Hubs, Stream Analytics, and real-time dashboards for monitoring equipment performance.",
     impact: "Reduced unplanned downtime by 42% through predictive maintenance alerts and real-time anomaly detection.",
@@ -120,6 +130,7 @@ const projects: Project[] = [
   {
     id: 10,
     title: "Customer Segmentation Analysis",
+    description: "Advanced clustering algorithms applied to transaction history and demographic data to identify distinct customer segments.",
     challenge: "Retail client needed deeper understanding of customer base for targeted marketing",
     solution: "Applied clustering algorithms to transaction history and demographic data to identify distinct customer segments with actionable insights.",
     impact: "34% improvement in email campaign engagement and 22% increase in repeat purchases through segment-specific offerings.",
@@ -131,6 +142,7 @@ const projects: Project[] = [
   {
     id: 11,
     title: "Data Warehouse Modernization",
+    description: "Migration from legacy on-premise SQL Server to Azure Synapse Analytics with optimized star schema design and automated ETL.",
     challenge: "Legacy data warehouse couldn't handle growing data volumes and query complexity",
     solution: "Migrated from on-premise SQL Server to Azure Synapse Analytics with optimized star schema design and automated ETL processes.",
     impact: "95% reduction in query latency, 75% decrease in maintenance overhead, and enabled self-service analytics for business users.",
@@ -142,6 +154,7 @@ const projects: Project[] = [
   {
     id: 12,
     title: "Executive KPI Dashboard",
+    description: "Executive dashboard with drill-through capabilities focusing on key business metrics with AI-powered trend analysis.",
     challenge: "CEO needed unified view of company performance across departments",
     solution: "Created executive dashboard with drill-through capabilities focusing on key business metrics with AI-powered trend analysis and forecasting.",
     impact: "Reduced executive meeting preparation time by 68% and enabled data-driven strategic planning across all business units.",
@@ -153,6 +166,7 @@ const projects: Project[] = [
   {
     id: 13,
     title: "Fraud Detection System",
+    description: "Real-time fraud detection system using ensemble ML models with continuous learning capability to adapt to emerging patterns.",
     challenge: "Financial institution experiencing increasing fraudulent transactions",
     solution: "Developed real-time fraud detection system using ensemble ML models with continuous learning capability to adapt to emerging fraud patterns.",
     impact: "Reduced fraudulent transactions by 67%, saving approximately $3.2M annually with minimal increase in false positives.",
@@ -164,6 +178,7 @@ const projects: Project[] = [
   {
     id: 14,
     title: "Data Quality Framework",
+    description: "Automated data quality monitoring framework with customizable rules and alerting for proactive issue resolution.",
     challenge: "Organization struggling with inconsistent data quality across systems",
     solution: "Implemented automated data quality monitoring framework with customizable rules and alerting for proactive issue resolution.",
     impact: "Improved data accuracy from 82% to 99.5%, reducing rework and enabling confident decision-making based on trusted data.",
@@ -175,6 +190,7 @@ const projects: Project[] = [
   {
     id: 15,
     title: "Product Recommendation Engine",
+    description: "Collaborative filtering and content-based recommendation engine analyzing purchase history and browsing behavior.",
     challenge: "E-commerce platform wanted to improve cross-selling and upselling",
     solution: "Built collaborative filtering and content-based recommendation engine analyzing purchase history, browsing behavior, and product attributes.",
     impact: "27% increase in average order value and 18% improvement in conversion rates through personalized recommendations.",
@@ -186,6 +202,7 @@ const projects: Project[] = [
   {
     id: 16,
     title: "Sales Performance Dashboard",
+    description: "Multi-level Power BI dashboard with territory mapping, pipeline analysis, and predictive forecasting capabilities.",
     challenge: "Sales organization lacked visibility into rep performance and pipeline health",
     solution: "Developed multi-level Power BI dashboard with territory mapping, pipeline analysis, and predictive forecasting capabilities.",
     impact: "Sales cycle reduced by 22% and win rate increased by 15% through improved pipeline management and targeted coaching.",
