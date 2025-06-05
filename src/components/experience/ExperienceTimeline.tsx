@@ -1,4 +1,3 @@
-
 import { motion } from 'framer-motion';
 import TimelineNode from './TimelineNode';
 import { experiences } from './experienceData';
