@@ -102,16 +102,16 @@ const HeroSection = () => {
       <GradientBackground />
       
       <div className="container mx-auto px-4 z-10">
-        <div className="max-w-3xl ml-8 md:ml-12">
+        <div className="max-w-3xl ml-4 md:ml-8 lg:ml-12">
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h1 
               ref={titleRef}
-              className="text-5xl md:text-7xl font-playfair font-bold mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-playfair font-bold mb-4 md:mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
             >
               Simon Asnake
             </h1>
             
-            <h2 className="text-2xl md:text-3xl mb-8 font-inter text-left">
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6 md:mb-8 font-inter text-left">
               <span className="text-gray-300">I'm a </span>
               <span 
                 className={`animate-text-shimmer bg-gradient-to-r ${gradients[currentGradient]} bg-clip-text text-transparent font-bold transition-all duration-700`}
@@ -124,25 +124,25 @@ const HeroSection = () => {
             
             <p 
               ref={textRef}
-              className="text-lg text-gray-300 mb-12 font-raleway max-w-2xl text-left leading-relaxed proper-spacing"
+              className="text-sm sm:text-base md:text-lg text-gray-300 mb-8 md:mb-12 font-raleway max-w-full md:max-w-2xl text-left leading-relaxed proper-spacing"
             >
               {/* Text content will be dynamically populated with proper spacing */}
             </p>
             
-            <div className="flex gap-4 mb-16 text-left">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-12 md:mb-16 text-left">
               <Button
                 variant="outline"
-                className="button-slide-effect group bg-gradient-to-r from-[#8A89FF]/10 to-[#6262FF]/10 backdrop-blur-lg border-[#8A89FF]/20 hover:bg-gradient-to-r hover:from-[#8A89FF]/20 hover:to-[#6262FF]/20 hover:border-[#8A89FF]/40 transition-all duration-500 text-white px-6 py-3 font-montserrat"
+                className="button-slide-effect group bg-gradient-to-r from-[#8A89FF]/10 to-[#6262FF]/10 backdrop-blur-lg border-[#8A89FF]/20 hover:bg-gradient-to-r hover:from-[#8A89FF]/20 hover:to-[#6262FF]/20 hover:border-[#8A89FF]/40 transition-all duration-500 text-white px-4 md:px-6 py-2.5 md:py-3 font-montserrat text-sm md:text-base"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, projects: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, projects: false}))}
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   View Projects
-                  <span className="arrow-container overflow-hidden w-5">
+                  <span className="arrow-container overflow-hidden w-4 md:w-5">
                     <ArrowRight 
                       className={`transition-all duration-300 transform ${showArrow.projects ? 'translate-x-0' : '-translate-x-full'}`}
-                      size={18} 
+                      size={16} 
                     />
                   </span>
                 </span>
@@ -150,17 +150,17 @@ const HeroSection = () => {
               
               <Button
                 variant="outline"
-                className="button-slide-effect group bg-gradient-to-r from-[#7676FF]/10 to-[#8A89FF]/10 backdrop-blur-lg border-[#7676FF]/20 hover:bg-gradient-to-r hover:from-[#7676FF]/20 hover:to-[#8A89FF]/20 hover:border-[#7676FF]/40 transition-all duration-500 text-white px-6 py-3 font-montserrat"
+                className="button-slide-effect group bg-gradient-to-r from-[#7676FF]/10 to-[#8A89FF]/10 backdrop-blur-lg border-[#7676FF]/20 hover:bg-gradient-to-r hover:from-[#7676FF]/20 hover:to-[#8A89FF]/20 hover:border-[#7676FF]/40 transition-all duration-500 text-white px-4 md:px-6 py-2.5 md:py-3 font-montserrat text-sm md:text-base"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, contact: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, contact: false}))}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   Get in touch
-                  <span className="arrow-container overflow-hidden w-5">
+                  <span className="arrow-container overflow-hidden w-4 md:w-5">
                     <ArrowRight 
                       className={`transition-all duration-300 transform ${showArrow.contact ? 'translate-x-0' : '-translate-x-full'}`}
-                      size={18} 
+                      size={16} 
                     />
                   </span>
                 </span>

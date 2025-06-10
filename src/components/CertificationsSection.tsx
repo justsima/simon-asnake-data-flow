@@ -74,13 +74,13 @@ const CertificationCard = ({
 }) => {
   return (
     <motion.div 
-      className={`glass-card ${item.isEducation ? 'glass-layer-3' : ''} p-6 min-w-[300px] max-w-[350px] transition-all duration-500
-        ${isActive ? 'scale-110 border-[#8A89FF]/30 bg-white/10 z-10' : 'hover:scale-[1.02]'}`}
+      className={`glass-card ${item.isEducation ? 'glass-layer-3' : ''} p-4 md:p-6 min-w-[280px] sm:min-w-[300px] max-w-[320px] md:max-w-[350px] transition-all duration-500
+        ${isActive ? 'scale-105 md:scale-110 border-[#8A89FF]/30 bg-white/10 z-10' : 'hover:scale-[1.02]'}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ 
         opacity: 1, 
         y: 0,
-        scale: isActive ? 1.1 : 1
+        scale: isActive ? (window.innerWidth < 768 ? 1.05 : 1.1) : 1
       }}
       transition={{ 
         duration: 0.5,
@@ -91,17 +91,17 @@ const CertificationCard = ({
         }
       }}
     >
-      <div className="flex items-start mb-4">
-        <div className={`w-12 h-12 ${item.isEducation ? 'bg-[#8A89FF]/30' : 'bg-[#8A89FF]/15'} rounded-full flex items-center justify-center mr-4 text-[#8A89FF]`}>
-          <span className="text-xl">{item.isEducation ? '🎓' : '🏆'}</span>
+      <div className="flex items-start mb-3 md:mb-4">
+        <div className={`w-10 h-10 md:w-12 md:h-12 ${item.isEducation ? 'bg-[#8A89FF]/30' : 'bg-[#8A89FF]/15'} rounded-full flex items-center justify-center mr-3 md:mr-4 text-[#8A89FF]`}>
+          <span className="text-lg md:text-xl">{item.isEducation ? '🎓' : '🏆'}</span>
         </div>
         <div>
-          <h3 className="text-lg font-medium text-white font-charis">{item.title}</h3>
-          <p className="text-[#8A89FF] font-kiak">{item.organization}</p>
+          <h3 className="text-base md:text-lg font-medium text-white font-charis">{item.title}</h3>
+          <p className="text-[#8A89FF] font-kiak text-sm md:text-base">{item.organization}</p>
         </div>
       </div>
       
-      <p className="text-sm text-gray-400 mb-4 font-welland">{item.date}</p>
+      <p className="text-xs md:text-sm text-gray-400 mb-3 md:mb-4 font-welland">{item.date}</p>
       
       <div>
         <p className="text-sm font-medium text-gray-300 mb-2 font-shunsine">
@@ -226,12 +226,12 @@ const CertificationsSection = () => {
       <div className="absolute inset-0 backdrop-blur-sm bg-black/10"></div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4 text-center font-alberobello">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-3 md:mb-4 text-center font-alberobello px-4">
           <span className="bg-gradient-to-r from-[#8A89FF] via-[#7676FF] to-[#6262FF] bg-clip-text text-transparent">
             Education & Certifications
           </span>
         </h2>
-        <p className="text-lg text-gray-300 max-w-3xl mx-auto text-center mb-12 font-welland">
+        <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-3xl mx-auto text-center mb-8 md:mb-12 font-welland px-4">
           Professional qualifications and academic background
         </p>
         
@@ -249,9 +249,9 @@ const CertificationsSection = () => {
             onMouseEnter={handleManualInteraction}
             onTouchStart={handleManualInteraction}
           >
-            <CarouselContent className="py-8">
+            <CarouselContent className="py-4 md:py-8">
               {certifications.map((cert, index) => (
-                <CarouselItem key={cert.title} className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3 pl-4">
+                <CarouselItem key={cert.title} className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3 pl-2 md:pl-4">
                   <div 
                     className="p-1" 
                     onClick={() => handleCardClick(index)}

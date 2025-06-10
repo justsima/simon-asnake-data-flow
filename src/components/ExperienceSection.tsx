@@ -128,17 +128,17 @@ const CascadingExperienceCard = ({
             ))}
           </div>
 
-          {/* Card content */}
-          <div className="relative p-8 z-10">
+          {/* Card content - mobile optimized */}
+          <div className="relative p-4 md:p-6 lg:p-8 z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: delay + 0.3 }}
             >
-              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+              <div className="flex flex-col gap-4 md:gap-6">
                 <div className="flex-1">
                   <motion.h3 
-                    className="text-3xl font-bold text-white mb-2 font-micuale"
+                    className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 font-micuale"
                     whileHover={{ scale: 1.02, color: "#1A7F8C" }}
                     transition={{ duration: 0.2 }}
                   >
@@ -146,13 +146,13 @@ const CascadingExperienceCard = ({
                   </motion.h3>
                   
                   <motion.h4 
-                    className="text-xl text-portfolio-teal mb-3 font-kiak"
+                    className="text-lg sm:text-xl text-portfolio-teal mb-3 font-kiak"
                     whileHover={{ scale: 1.02 }}
                   >
                     {experience.company}
                   </motion.h4>
                   
-                  <div className="flex flex-col sm:flex-row sm:items-center text-gray-300 mb-4 font-welland gap-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center text-gray-300 mb-3 md:mb-4 font-welland gap-1 md:gap-2 text-sm md:text-base">
                     <span className="text-portfolio-teal font-medium">{experience.period}</span>
                     {experience.location && (
                       <>
@@ -164,7 +164,7 @@ const CascadingExperienceCard = ({
                   
                   {experience.description && (
                     <motion.p 
-                      className="text-gray-300 mb-6 font-welland leading-relaxed"
+                      className="text-gray-300 mb-4 md:mb-6 font-welland leading-relaxed text-sm md:text-base"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: delay + 0.5 }}
@@ -175,39 +175,39 @@ const CascadingExperienceCard = ({
                 </div>
               </div>
 
-              {/* Responsibilities */}
-              <div className="mb-6">
-                <h5 className="text-sm uppercase text-portfolio-teal mb-3 font-charis tracking-wide">
+              {/* Responsibilities - mobile optimized */}
+              <div className="mb-4 md:mb-6">
+                <h5 className="text-xs md:text-sm uppercase text-portfolio-teal mb-2 md:mb-3 font-charis tracking-wide">
                   Key Responsibilities
                 </h5>
-                <div className="grid gap-2">
+                <div className="grid gap-1.5 md:gap-2">
                   {experience.responsibilities.slice(0, 3).map((item, i) => (
                     <motion.div 
                       key={i} 
-                      className="text-gray-300 flex items-start font-welland group"
+                      className="text-gray-300 flex items-start font-welland group text-sm md:text-base"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: delay + 0.6 + (i * 0.1) }}
                       whileHover={{ x: 5 }}
                     >
-                      <span className="text-portfolio-teal mr-3 mt-1 group-hover:scale-125 transition-transform duration-200">→</span>
+                      <span className="text-portfolio-teal mr-2 md:mr-3 mt-0.5 md:mt-1 group-hover:scale-125 transition-transform duration-200 text-sm">→</span>
                       <span className="leading-relaxed">{item}</span>
                     </motion.div>
                   ))}
                 </div>
               </div>
 
-              {/* Technologies */}
+              {/* Technologies - mobile optimized */}
               {experience.technologies && (
-                <div className="mb-6">
-                  <h5 className="text-sm uppercase text-portfolio-teal mb-3 font-charis tracking-wide">
+                <div className="mb-4 md:mb-6">
+                  <h5 className="text-xs md:text-sm uppercase text-portfolio-teal mb-2 md:mb-3 font-charis tracking-wide">
                     Technologies
                   </h5>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5 md:gap-2">
                     {experience.technologies.slice(0, 6).map((tech, i) => (
                       <motion.span 
                         key={i} 
-                        className="px-3 py-1 bg-white/5 backdrop-blur-sm rounded-full text-xs text-gray-300 font-shunsine border border-white/10 hover:border-portfolio-teal/50 hover:bg-portfolio-teal/10 hover:text-portfolio-teal transition-all duration-300"
+                        className="px-2 md:px-3 py-1 bg-white/5 backdrop-blur-sm rounded-full text-xs text-gray-300 font-shunsine border border-white/10 hover:border-portfolio-teal/50 hover:bg-portfolio-teal/10 hover:text-portfolio-teal transition-all duration-300"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: delay + 0.8 + (i * 0.05) }}
@@ -220,23 +220,23 @@ const CascadingExperienceCard = ({
                 </div>
               )}
 
-              {/* Achievements */}
+              {/* Achievements - mobile optimized */}
               {experience.achievements && (
                 <div>
-                  <h5 className="text-sm uppercase text-portfolio-teal mb-3 font-charis tracking-wide">
+                  <h5 className="text-xs md:text-sm uppercase text-portfolio-teal mb-2 md:mb-3 font-charis tracking-wide">
                     Key Achievements
                   </h5>
-                  <div className="grid gap-2">
+                  <div className="grid gap-1.5 md:gap-2">
                     {experience.achievements.slice(0, 2).map((achievement, i) => (
                       <motion.div 
                         key={i} 
-                        className="text-gray-300 flex items-start font-welland group"
+                        className="text-gray-300 flex items-start font-welland group text-sm md:text-base"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: delay + 1.0 + (i * 0.1) }}
                         whileHover={{ x: 5 }}
                       >
-                        <span className="text-portfolio-teal mr-3 mt-1 group-hover:scale-125 transition-transform duration-200">★</span>
+                        <span className="text-portfolio-teal mr-2 md:mr-3 mt-0.5 md:mt-1 group-hover:scale-125 transition-transform duration-200 text-sm">★</span>
                         <span className="leading-relaxed">{achievement}</span>
                       </motion.div>
                     ))}
@@ -297,10 +297,10 @@ const ExperienceSection = () => {
           </motion.p>
         </div>
         
-        {/* Cascading cards container */}
+        {/* Cascading cards container - mobile responsive */}
         <div 
           ref={containerRef}
-          className="relative min-h-[4000px]"
+          className="relative min-h-[2500px] md:min-h-[3500px] lg:min-h-[4000px]"
           style={{ transformStyle: "preserve-3d" }}
         >
           {experiences.map((experience, index) => (

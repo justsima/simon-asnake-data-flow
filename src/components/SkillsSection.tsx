@@ -71,7 +71,7 @@ const SkillCard = ({ title, icon, skills, delay }: SkillCardProps) => {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={resetTilt}
-      className="rounded-lg p-6 transition-all duration-500 transform translate-y-10 opacity-0 hover:shadow-lg"
+      className="rounded-lg p-4 md:p-6 transition-all duration-500 transform translate-y-10 opacity-0 hover:shadow-lg"
       style={{ 
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(${tilt.x !== 0 ? '-5px' : '-10px'})`,
         transformStyle: 'preserve-3d',
@@ -80,26 +80,26 @@ const SkillCard = ({ title, icon, skills, delay }: SkillCardProps) => {
         border: '1px solid rgba(48, 54, 61, 0.6)',
       }}
     >
-      <div className="flex items-center mb-6">
+      <div className="flex items-center mb-4 md:mb-6">
         <div 
-          className="w-12 h-12 rounded-full flex items-center justify-center mr-4 transform transition-transform hover:scale-110"
+          className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center mr-3 md:mr-4 transform transition-transform hover:scale-110"
           style={{
             background: 'rgba(138, 137, 255, 0.1)',
             backdropFilter: 'blur(8px)',
             border: '1px solid rgba(138, 137, 255, 0.3)',
           }}
         >
-          <span className="text-2xl">{icon}</span>
+          <span className="text-lg md:text-2xl">{icon}</span>
         </div>
-        <h3 className="text-xl font-medium text-white font-montserrat">{title}</h3>
+        <h3 className="text-lg md:text-xl font-medium text-white font-montserrat">{title}</h3>
       </div>
       
-      <div className="space-y-4">
+      <div className="space-y-3 md:space-y-4">
         {skills.map((skill) => (
           <div key={skill.name} className="mb-2">
             <div className="flex justify-between mb-1">
-              <p className="text-sm font-medium text-gray-300">{skill.name}</p>
-              <p className="text-sm font-medium text-[#8A89FF]">{skill.percentage}%</p>
+              <p className="text-xs md:text-sm font-medium text-gray-300">{skill.name}</p>
+              <p className="text-xs md:text-sm font-medium text-[#8A89FF]">{skill.percentage}%</p>
             </div>
             <div className="progress-bar">
               <div 
@@ -168,12 +168,12 @@ const SkillsSection = () => {
       className="py-20 relative"
     >
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4 text-center font-playfair">Skills & Expertise</h2>
-        <p className="text-lg text-gray-300 max-w-3xl mx-auto text-center mb-12 font-inter">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-3 md:mb-4 text-center font-playfair">Skills & Expertise</h2>
+        <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-3xl mx-auto text-center mb-8 md:mb-12 font-inter px-4">
           My technical toolkit for delivering data-driven solutions across industries
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
           {skillCategories.map((category, index) => (
             <SkillCard 
               key={category.title}
