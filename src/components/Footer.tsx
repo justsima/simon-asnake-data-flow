@@ -1,12 +1,13 @@
-
-import { Github, Linkedin, Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, Phone, ExternalLink, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const Footer = () => {
   const socialLinks = [
-    { icon: Linkedin, href: "#", label: "LinkedIn", color: "hover:text-portfolio-teal" },
-    { icon: Github, href: "#", label: "GitHub", color: "hover:text-portfolio-teal" },
-    { icon: Mail, href: "#", label: "Email", color: "hover:text-portfolio-teal" },
+    { icon: Linkedin, href: "#", label: "LinkedIn", color: "hover:text-[var(--color-primary-500)]" },
+    { icon: Github, href: "#", label: "GitHub", color: "hover:text-[var(--color-primary-500)]" },
+    { icon: Mail, href: "#", label: "Email", color: "hover:text-[var(--color-primary-500)]" },
   ];
 
   const contactInfo = [
@@ -16,30 +17,35 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-br from-[#08080D] via-portfolio-navy/20 to-[#08080D]">
+    <footer className="relative overflow-hidden" style={{ background: 'var(--color-surface-primary)' }}>
       {/* Floating background elements */}
       <div className="absolute inset-0">
         <motion.div
-          className="absolute top-10 left-10 w-32 h-32 bg-portfolio-teal/5 rounded-full"
+          className="absolute top-10 left-10 w-32 h-32 rounded-full opacity-20"
+          style={{ background: 'var(--color-primary-500)' }}
           animate={{
             scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3],
+            opacity: [0.1, 0.3, 0.1],
           }}
           transition={{ duration: 4, repeat: Infinity }}
         />
         <motion.div
-          className="absolute bottom-10 right-10 w-24 h-24 bg-portfolio-deepTeal/10 rounded-full"
+          className="absolute bottom-10 right-10 w-24 h-24 rounded-full opacity-20"
+          style={{ background: 'var(--color-primary-700)' }}
           animate={{
             scale: [1.2, 1, 1.2],
-            opacity: [0.4, 0.8, 0.4],
+            opacity: [0.2, 0.4, 0.2],
           }}
           transition={{ duration: 6, repeat: Infinity }}
         />
       </div>
 
       {/* Glass overlay */}
-      <div className="relative backdrop-blur-sm bg-white/[0.02] border-t border-white/10">
-        <div className="container mx-auto px-4 py-8 md:py-12 lg:py-16">
+      <div className="relative backdrop-blur-sm border-t" style={{ 
+        background: 'rgba(22, 27, 34, 0.8)',
+        borderColor: 'var(--color-border-primary)'
+      }}>
+        <div className="mobile-container py-8 md:py-12 lg:py-16">
           {/* Main footer content */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 lg:gap-12 mb-8 md:mb-10 lg:mb-12">
             {/* Brand section */}
@@ -49,13 +55,13 @@ const Footer = () => {
               transition={{ duration: 0.6 }}
               className="space-y-3 md:space-y-4 text-center md:text-left"
             >
-              <h3 className="font-bold text-2xl md:text-3xl text-white font-micuale">
+              <h3 className="font-bold text-2xl md:text-3xl font-playfair" style={{ color: 'var(--color-text-primary)' }}>
                 Simon Asnake
               </h3>
-              <p className="text-portfolio-teal font-medium font-kiak text-sm md:text-base">
+              <p className="font-medium font-montserrat text-sm md:text-base" style={{ color: 'var(--color-primary-500)' }}>
                 Data Scientist & Power BI Expert
               </p>
-              <p className="text-gray-300 leading-relaxed font-welland text-sm md:text-base">
+              <p className="leading-relaxed font-inter text-sm md:text-base" style={{ color: 'var(--color-text-secondary)' }}>
                 Transforming data into actionable insights and building innovative solutions 
                 that drive business growth and decision-making.
               </p>
@@ -68,64 +74,100 @@ const Footer = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="space-y-3 md:space-y-4 text-center md:text-left"
             >
-              <h4 className="font-semibold text-base md:text-lg text-white font-charis">Get In Touch</h4>
+              <h4 className="font-semibold text-base md:text-lg font-montserrat" style={{ color: 'var(--color-text-primary)' }}>
+                Get In Touch
+              </h4>
               <div className="space-y-2 md:space-y-3">
                 {contactInfo.map((item, index) => (
                   <motion.div
                     key={index}
-                    className="flex items-center justify-center md:justify-start space-x-2 md:space-x-3 text-gray-300 hover:text-portfolio-teal transition-colors duration-300 group"
-                    whileHover={{ x: 5 }}
+                    className="flex items-center justify-center md:justify-start space-x-2 md:space-x-3 transition-colors duration-300 group"
+                    style={{ color: 'var(--color-text-secondary)' }}
+                    whileHover={{ x: 5, color: 'var(--color-primary-500)' }}
                   >
                     <item.icon 
                       size={14} 
-                      className="text-portfolio-teal group-hover:scale-110 transition-transform duration-200" 
+                      className="group-hover:scale-110 transition-transform duration-200" 
+                      style={{ color: 'var(--color-primary-500)' }}
                     />
-                    <span className="font-welland text-sm md:text-base">{item.text}</span>
+                    <span className="font-inter text-sm md:text-base">{item.text}</span>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
 
-            {/* Social links */}
+            {/* Social links and Portfolio Management */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="space-y-3 md:space-y-4 text-center md:text-left"
             >
-              <h4 className="font-semibold text-base md:text-lg text-white font-charis">Connect With Me</h4>
+              <h4 className="font-semibold text-base md:text-lg font-montserrat" style={{ color: 'var(--color-text-primary)' }}>
+                Connect With Me
+              </h4>
               <div className="flex justify-center md:justify-start space-x-3 md:space-x-4">
                 {socialLinks.map((link, index) => (
                   <motion.a
                     key={index}
                     href={link.href}
                     aria-label={link.label}
-                    className="group relative"
+                    className="group relative touch-target"
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <div className="p-2.5 md:p-3 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-white hover:border-portfolio-teal/50 hover:bg-portfolio-teal/10 transition-all duration-300">
-                      <link.icon size={18} className="group-hover:text-portfolio-teal transition-colors duration-300" />
+                    <div className="p-2.5 md:p-3 glass-card rounded-xl transition-all duration-300">
+                      <link.icon size={18} className="transition-colors duration-300" style={{ color: 'var(--color-text-primary)' }} />
                     </div>
                     
                     {/* Tooltip */}
-                    <div className="absolute -top-8 md:-top-10 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-portfolio-teal text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 font-welland">
+                    <div className="absolute -top-8 md:-top-10 left-1/2 transform -translate-x-1/2 px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 font-inter"
+                         style={{ background: 'var(--color-primary-500)', color: 'var(--color-text-inverse)' }}>
                       {link.label}
                     </div>
                   </motion.a>
                 ))}
               </div>
               
+              {/* Portfolio Management Button - Moved to Footer */}
+              <div className="pt-4 md:pt-6">
+                <Link to="/admin">
+                  <Button 
+                    size="sm" 
+                    className="glass-button w-full md:w-auto transition-all duration-300 hover:scale-105"
+                    style={{ 
+                      background: 'rgba(138, 137, 255, 0.1)',
+                      borderColor: 'var(--color-border-secondary)',
+                      color: 'var(--color-text-primary)'
+                    }}
+                  >
+                    <Settings className="w-4 h-4 mr-2" />
+                    Manage Portfolio
+                  </Button>
+                </Link>
+              </div>
+
               {/* Quick links */}
               <div className="pt-3 md:pt-4">
-                <h5 className="text-xs md:text-sm uppercase text-portfolio-teal mb-2 md:mb-3 font-charis tracking-wide">Quick Navigation</h5>
+                <h5 className="text-xs md:text-sm uppercase mb-2 md:mb-3 font-montserrat tracking-wide" 
+                    style={{ color: 'var(--color-primary-500)' }}>
+                  Quick Navigation
+                </h5>
                 <div className="flex flex-wrap justify-center md:justify-start gap-1.5 md:gap-2">
                   {['About', 'Skills', 'Projects', 'Experience', 'Contact'].map((item, index) => (
                     <motion.a
                       key={index}
                       href={`#${item.toLowerCase()}`}
-                      className="px-2.5 md:px-3 py-1 text-xs text-gray-300 hover:text-portfolio-teal border border-white/10 rounded-full hover:border-portfolio-teal/50 transition-all duration-300 font-shunsine"
-                      whileHover={{ scale: 1.05 }}
+                      className="px-2.5 md:px-3 py-1 text-xs rounded-full transition-all duration-300 font-montserrat border"
+                      style={{ 
+                        color: 'var(--color-text-secondary)',
+                        borderColor: 'var(--color-border-muted)'
+                      }}
+                      whileHover={{ 
+                        scale: 1.05,
+                        color: 'var(--color-primary-500)',
+                        borderColor: 'var(--color-border-secondary)'
+                      }}
                     >
                       {item}
                     </motion.a>
@@ -137,29 +179,31 @@ const Footer = () => {
           
           {/* Bottom section */}
           <motion.div 
-            className="pt-6 md:pt-8 border-t border-white/10"
+            className="pt-6 md:pt-8 border-t"
+            style={{ borderColor: 'var(--color-border-primary)' }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
               <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 lg:space-x-6 text-center md:text-left">
-                <p className="text-xs md:text-sm text-gray-400 font-welland">
+                <p className="text-xs md:text-sm font-inter" style={{ color: 'var(--color-text-muted)' }}>
                   © {new Date().getFullYear()} Simon Asnake. All rights reserved.
                 </p>
-                <p className="text-xs md:text-sm text-gray-400 font-welland">
+                <p className="text-xs md:text-sm font-inter" style={{ color: 'var(--color-text-muted)' }}>
                   Built with React, TypeScript & Tailwind CSS
                 </p>
               </div>
               
               <motion.a
                 href="#hero"
-                className="group flex items-center space-x-1.5 md:space-x-2 px-3 md:px-4 py-1.5 md:py-2 bg-portfolio-teal/10 hover:bg-portfolio-teal/20 border border-portfolio-teal/30 rounded-lg text-portfolio-teal hover:text-white transition-all duration-300 font-welland"
+                className="group flex items-center space-x-1.5 md:space-x-2 px-3 md:px-4 py-1.5 md:py-2 glass-button rounded-lg transition-all duration-300 font-inter"
                 whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <span className="text-xs md:text-sm">Back to Top</span>
-                <ExternalLink size={12} className="group-hover:rotate-45 transition-transform duration-300" />
+                <span className="text-xs md:text-sm" style={{ color: 'var(--color-primary-500)' }}>Back to Top</span>
+                <ExternalLink size={12} className="group-hover:rotate-45 transition-transform duration-300" 
+                             style={{ color: 'var(--color-primary-500)' }} />
               </motion.a>
             </div>
           </motion.div>

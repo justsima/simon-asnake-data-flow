@@ -1,0 +1,72 @@
+/* Unified Color System */
+:root {
+  /* Primary Purple Palette */
+  --color-primary-50: #f5f5ff;
+  --color-primary-100: #ebebff;
+  --color-primary-200: #d6d6ff;
+  --color-primary-300: #b8b8ff;
+  --color-primary-400: #9999ff;
+  --color-primary-500: #8A89FF; /* Main brand color */
+  --color-primary-600: #7676FF;
+  --color-primary-700: #6262FF;
+  --color-primary-800: #4d4dcc;
+  --color-primary-900: #3d3da3;
+
+  /* Neutral Palette */
+  --color-neutral-50: #f8f9fa;
+  --color-neutral-100: #e9ecef;
+  --color-neutral-200: #dee2e6;
+  --color-neutral-300: #ced4da;
+  --color-neutral-400: #adb5bd;
+  --color-neutral-500: #6c757d;
+  --color-neutral-600: #495057;
+  --color-neutral-700: #343a40;
+  --color-neutral-800: #212529;
+  --color-neutral-900: #08080D;
+
+  /* Surface Colors */
+  --color-surface-primary: #08080D;
+  --color-surface-secondary: #161B22;
+  --color-surface-tertiary: #21262D;
+  --color-surface-overlay: rgba(22, 27, 34, 0.8);
+
+  /* Border Colors */
+  --color-border-primary: #30363D;
+  --color-border-secondary: rgba(138, 137, 255, 0.2);
+  --color-border-muted: rgba(255, 255, 255, 0.1);
+
+  /* Text Colors */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #E0E0E2;
+  --color-text-muted: #8B949E;
+  --color-text-inverse: #08080D;
+
+  /* Semantic Colors */
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-error: #dc3545;
+  --color-info: var(--color-primary-500);
+}
+
+/* Dark theme overrides */
+.dark {
+  --background: var(--color-surface-primary);
+  --foreground: var(--color-text-primary);
+  --card: var(--color-surface-secondary);
+  --card-foreground: var(--color-text-primary);
+  --popover: var(--color-surface-secondary);
+  --popover-foreground: var(--color-text-primary);
+  --primary: var(--color-primary-500);
+  --primary-foreground: var(--color-text-inverse);
+  --secondary: var(--color-surface-tertiary);
+  --secondary-foreground: var(--color-text-primary);
+  --muted: var(--color-surface-tertiary);
+  --muted-foreground: var(--color-text-muted);
+  --accent: var(--color-surface-tertiary);
+  --accent-foreground: var(--color-text-primary);
+  --destructive: var(--color-error);
+  --destructive-foreground: var(--color-text-primary);
+  --border: var(--color-border-primary);
+  --input: var(--color-border-primary);
+  --ring: var(--color-primary-500);
+}
