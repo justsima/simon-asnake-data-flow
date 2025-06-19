@@ -26,8 +26,10 @@ const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showArrow, setShowArrow] = useState({ projects: false, contact: false });
   const [scrollPromptVisible, setScrollPromptVisible] = useState(true);
+  const [isChanging, setIsChanging] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
+  const roleRef = useRef<HTMLSpanElement>(null);
   
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -65,9 +67,14 @@ const HeroSection = () => {
     }, 500);
 
     const roleInterval = setInterval(() => {
-      setCurrentRole(prev => (prev + 1) % roles.length);
-      setCurrentGradient(prev => (prev + 1) % gradients.length);
-    }, 3000);
+      setIsChanging(true);
+      
+      setTimeout(() => {
+        setCurrentRole(prev => (prev + 1) % roles.length);
+        setCurrentGradient(prev => (prev + 1) % gradients.length);
+        setIsChanging(false);
+      }, 400);
+    }, 3500);
 
     // Setup intersection observer to hide scroll prompt when user scrolls down
     const aboutSection = document.getElementById('about');
@@ -102,24 +109,27 @@ const HeroSection = () => {
       <GradientBackground />
       
       <div className="container mx-auto px-4 z-10">
-        <div className="max-w-4xl ml-4 md:ml-8 lg:ml-12">
+        <div className="max-w-5xl ml-4 md:ml-8 lg:ml-12">
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {/* Main Title with Trendy Typography */}
+            {/* Main Title with Elegant Typography */}
             <h1 
               ref={titleRef}
-              className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-8xl mb-6 md:mb-8 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
+              className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6 md:mb-8 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
             >
               <span className="block">Simon</span>
               <span className="block text-gradient-primary">Asnake</span>
             </h1>
             
-            {/* Dynamic Role with Enhanced Typography */}
-            <h2 className="hero-subtitle text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-8 md:mb-10 text-left">
+            {/* Dynamic Role with Smooth Animation */}
+            <h2 className="hero-subtitle text-lg sm:text-xl md:text-2xl lg:text-3xl mb-8 md:mb-10 text-left">
               <span className="text-gray-300">I'm a </span>
               <span 
-                className={`animate-text-shimmer bg-gradient-to-r ${gradients[currentGradient]} bg-clip-text text-transparent font-bold transition-all duration-700`}
-                key={currentRole}
-                style={{ animation: 'text-morph 0.75s ease-out' }}
+                ref={roleRef}
+                className={`role-text bg-gradient-to-r ${gradients[currentGradient]} bg-clip-text text-transparent font-medium transition-all duration-800 ${isChanging ? 'fade-out' : 'fade-in'}`}
+                style={{
+                  backgroundSize: '200% 200%',
+                  animation: isChanging ? 'none' : 'gradient-shift 3s ease-in-out infinite'
+                }}
               >
                 {roles[currentRole]}
               </span>
@@ -128,7 +138,7 @@ const HeroSection = () => {
             {/* Description with Modern Typography */}
             <p 
               ref={textRef}
-              className="hero-description text-base sm:text-lg md:text-xl text-gray-300 mb-10 md:mb-14 max-w-full md:max-w-3xl text-left leading-relaxed proper-spacing"
+              className="hero-description text-base sm:text-lg md:text-xl text-gray-300 mb-10 md:mb-14 max-w-full md:max-w-4xl text-left leading-relaxed proper-spacing"
             >
               {/* Text content will be dynamically populated with proper spacing */}
             </p>
@@ -198,6 +208,17 @@ const HeroSection = () => {
           />
         </motion.div>
       </motion.div>
+
+      <style jsx>{`
+        @keyframes gradient-shift {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+      `}</style>
     </section>
   );
 };

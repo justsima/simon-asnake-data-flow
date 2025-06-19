@@ -1,104 +1,145 @@
-/* Minimalistic Elegant Logo Styles */
+/* Elegant Cursive Logo with Minimalistic Design */
 
 .unique-logo {
   position: relative;
   cursor: pointer;
   user-select: none;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
 }
 
 .logo-container {
   position: relative;
   display: flex;
   align-items: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Minimalistic S Container */
+/* Elegant Cursive S Container */
 .minimalistic-s-container {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(138, 137, 255, 0.1), rgba(98, 98, 255, 0.05));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(138, 137, 255, 0.2);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
 }
 
-/* Elegant S Letter */
+/* Elegant Cursive S Letter */
 .elegant-s {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 28px;
+  font-family: 'Cormorant Garamond', 'Spectral', serif;
+  font-size: 32px;
   font-weight: 600;
+  font-style: italic;
   color: var(--color-primary-500);
   position: relative;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  letter-spacing: -0.02em;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  letter-spacing: -0.03em;
   transform: translateZ(0);
+  text-shadow: 0 2px 8px rgba(138, 137, 255, 0.3);
 }
 
-/* Subtle Glow Effect */
+/* Elegant Glow Effect */
 .elegant-s::before {
   content: 'S';
   position: absolute;
   top: 0;
   left: 0;
+  font-family: 'Cormorant Garamond', 'Spectral', serif;
+  font-size: 32px;
+  font-weight: 600;
+  font-style: italic;
   color: var(--color-primary-500);
-  filter: blur(8px);
+  filter: blur(12px);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
   z-index: -1;
 }
 
 .unique-logo:hover .elegant-s::before {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
-/* Minimalistic Dot Accent */
-.logo-dot {
+/* Floating Particles Animation */
+.minimalistic-s-container::after {
+  content: '';
   position: absolute;
-  top: 8px;
-  right: 6px;
-  width: 4px;
-  height: 4px;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 2px;
   background: var(--color-primary-500);
   border-radius: 50%;
   opacity: 0;
-  transform: scale(0);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate(-50%, -50%) scale(0);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.unique-logo:hover .logo-dot {
+.unique-logo:hover .minimalistic-s-container::after {
   opacity: 1;
-  transform: scale(1);
+  transform: translate(-50%, -50%) scale(1);
+  animation: floatingParticle 2s ease-in-out infinite;
 }
 
-/* Elegant Underline */
+@keyframes floatingParticle {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  25% {
+    transform: translate(-30%, -70%) scale(1.2);
+  }
+  50% {
+    transform: translate(-70%, -30%) scale(0.8);
+  }
+  75% {
+    transform: translate(-30%, -30%) scale(1.1);
+  }
+}
+
+/* Elegant Underline with Gradient */
 .elegant-underline {
   position: absolute;
-  bottom: -2px;
+  bottom: -3px;
   left: 50%;
   transform: translateX(-50%);
   width: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-primary-500), transparent);
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--color-primary-500), 
+    var(--color-primary-600),
+    var(--color-primary-500), 
+    transparent
+  );
+  border-radius: 1px;
+  transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 0 8px rgba(138, 137, 255, 0.4);
 }
 
 .unique-logo:hover .elegant-underline {
-  width: 32px;
+  width: 38px;
 }
 
-/* Brand Text - Minimalistic */
+/* Cursive Brand Text */
 .brand-text {
-  margin-left: 12px;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 14px;
+  margin-left: 14px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
   font-weight: 500;
+  font-style: italic;
   color: var(--color-primary-500);
   opacity: 0;
-  transform: translateX(-8px);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  letter-spacing: 0.02em;
+  transform: translateX(-12px);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 4px rgba(138, 137, 255, 0.2);
 }
 
 .unique-logo:hover .brand-text {
@@ -106,56 +147,76 @@
   transform: translateX(0);
 }
 
+/* Hover Effects */
+.unique-logo:hover .minimalistic-s-container {
+  background: linear-gradient(135deg, rgba(138, 137, 255, 0.2), rgba(98, 98, 255, 0.1));
+  border-color: rgba(138, 137, 255, 0.4);
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: 0 8px 25px rgba(138, 137, 255, 0.3);
+}
+
+.unique-logo:hover .elegant-s {
+  transform: scale(1.1) rotate(-2deg);
+  color: var(--color-primary-400);
+  text-shadow: 0 3px 12px rgba(138, 137, 255, 0.5);
+}
+
 /* Scrolled State - More Compact */
 .logo-scrolled .minimalistic-s-container {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
 }
 
 .logo-scrolled .elegant-s {
-  font-size: 24px;
+  font-size: 26px;
 }
 
 .logo-scrolled .brand-text {
   opacity: 0;
-  transform: translateX(-12px);
+  transform: translateX(-16px);
 }
 
-/* Subtle Pulse Animation */
-@keyframes subtlePulse {
+/* Breathing Animation */
+@keyframes breathingGlow {
   0%, 100% {
-    transform: scale(1);
+    box-shadow: 0 0 5px rgba(138, 137, 255, 0.2);
   }
   50% {
-    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(138, 137, 255, 0.4);
   }
 }
 
-.unique-logo:hover .elegant-s {
-  animation: subtlePulse 2s ease-in-out infinite;
+.unique-logo:not(:hover) .minimalistic-s-container {
+  animation: breathingGlow 3s ease-in-out infinite;
 }
 
 /* Active State */
+.unique-logo:active .minimalistic-s-container {
+  transform: scale(0.95);
+}
+
 .unique-logo:active .elegant-s {
-  transform: scale(0.98);
+  transform: scale(0.9);
 }
 
 /* Focus State for Accessibility */
 .unique-logo:focus-visible {
   outline: 2px solid var(--color-primary-500);
-  outline-offset: 4px;
-  border-radius: 6px;
+  outline-offset: 6px;
+  border-radius: 8px;
 }
 
 /* Mobile Optimizations */
 @media (max-width: 768px) {
   .minimalistic-s-container {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
   }
   
   .elegant-s {
-    font-size: 24px;
+    font-size: 26px;
   }
   
   .brand-text {
@@ -166,11 +227,8 @@
     display: none;
   }
   
-  .logo-dot {
-    width: 3px;
-    height: 3px;
-    top: 6px;
-    right: 4px;
+  .unique-logo:hover .minimalistic-s-container {
+    transform: scale(1.03);
   }
 }
 
@@ -178,16 +236,25 @@
 @media (prefers-reduced-motion: reduce) {
   .unique-logo,
   .logo-container,
+  .minimalistic-s-container,
   .elegant-s,
-  .logo-dot,
   .elegant-underline,
   .brand-text {
     transition: none;
     animation: none;
   }
   
-  .elegant-s::before {
+  .elegant-s::before,
+  .minimalistic-s-container::after {
     display: none;
+  }
+  
+  .unique-logo:hover .minimalistic-s-container {
+    transform: none;
+  }
+  
+  .unique-logo:hover .elegant-s {
+    transform: none;
   }
 }
 
@@ -196,13 +263,16 @@
   .elegant-s {
     color: #ffffff;
     font-weight: 700;
+    text-shadow: none;
   }
   
-  .logo-dot {
-    background: #ffffff;
+  .minimalistic-s-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
   }
   
-  .elegant-s::before {
+  .elegant-s::before,
+  .minimalistic-s-container::after {
     display: none;
   }
 }
@@ -210,20 +280,27 @@
 /* Dark Mode Enhancements */
 @media (prefers-color-scheme: dark) {
   .elegant-s::before {
-    filter: blur(6px);
+    filter: blur(10px);
+  }
+  
+  .minimalistic-s-container {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 }
 
 /* Performance Optimizations */
 .elegant-s,
 .brand-text,
-.elegant-underline {
+.elegant-underline,
+.minimalistic-s-container {
   will-change: transform;
 }
 
 .unique-logo:not(:hover) .elegant-s,
 .unique-logo:not(:hover) .brand-text,
-.unique-logo:not(:hover) .elegant-underline {
+.unique-logo:not(:hover) .elegant-underline,
+.unique-logo:not(:hover) .minimalistic-s-container {
   will-change: auto;
 }
 
@@ -233,12 +310,14 @@
     filter: grayscale(1);
   }
   
-  .logo-dot,
-  .elegant-underline {
+  .elegant-underline,
+  .elegant-s::before,
+  .minimalistic-s-container::after {
     display: none;
   }
   
-  .elegant-s::before {
-    display: none;
+  .minimalistic-s-container {
+    background: none;
+    border: 1px solid #000;
   }
 }
