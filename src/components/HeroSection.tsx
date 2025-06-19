@@ -12,12 +12,12 @@ const roles = [
   "Data Engineer"
 ];
 
-// Enhanced gradients for the new typography
+// Enhanced purple gradients for role text
 const gradients = [
-  "from-[#8A89FF] via-[#7676FF] to-[#6262FF]",
-  "from-[#7676FF] via-[#8A89FF] to-[#7676FF]", 
-  "from-[#8A89FF] via-[#7676FF] to-[#6262FF]",
-  "from-[#7676FF] via-[#8A89FF] to-[#7676FF]"
+  "from-[#8A89FF] via-[#9D8CFF] to-[#7676FF]",
+  "from-[#7676FF] via-[#8A89FF] to-[#9D8CFF]", 
+  "from-[#9D8CFF] via-[#8A89FF] to-[#6262FF]",
+  "from-[#6262FF] via-[#7676FF] to-[#8A89FF]"
 ];
 
 const HeroSection = () => {
@@ -26,55 +26,78 @@ const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showArrow, setShowArrow] = useState({ projects: false, contact: false });
   const [scrollPromptVisible, setScrollPromptVisible] = useState(true);
-  const [isChanging, setIsChanging] = useState(false);
+  const [isRoleChanging, setIsRoleChanging] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
   const roleRef = useRef<HTMLSpanElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
+    // Staggered animations for different sections
     const timer = setTimeout(() => {
       setIsVisible(true);
       
+      // 1. First: Title appears (Simon Asnake)
       if (titleRef.current) {
         titleRef.current.classList.remove('opacity-0');
+        titleRef.current.classList.add('animate-fade-in');
       }
       
-      // Animate intro paragraph word by word with proper spacing
-      if (textRef.current) {
-        const text = "Empowering businesses with data-driven insights through advanced visualization and analytics, transforming complex datasets into strategic business intelligence.";
-        const words = text.split(' ');
-        textRef.current.innerHTML = '';
-        
-        words.forEach((word, index) => {
-          const span = document.createElement('span');
-          span.textContent = word;
-          span.className = 'inline-block opacity-0 translate-y-3 transition-all duration-500 proper-spacing';
-          span.style.transitionDelay = `${800 + index * 50}ms`;
+      // 2. Second: Role text appears (after 600ms)
+      setTimeout(() => {
+        if (roleRef.current) {
+          roleRef.current.classList.remove('opacity-0');
+          roleRef.current.classList.add('animate-fade-in');
+        }
+      }, 600);
+      
+      // 3. Third: Description appears word by word (after 1200ms)
+      setTimeout(() => {
+        if (textRef.current) {
+          const text = "Empowering businesses with data-driven insights through advanced visualization and analytics, transforming complex datasets into strategic business intelligence.";
+          const words = text.split(' ');
+          textRef.current.innerHTML = '';
           
-          setTimeout(() => {
-            span.classList.remove('opacity-0', 'translate-y-3');
-          }, 800 + index * 50);
-          
-          textRef.current?.appendChild(span);
-          
-          // Add space after each word except the last one
-          if (index < words.length - 1) {
-            const space = document.createTextNode(' ');
-            textRef.current?.appendChild(space);
-          }
-        });
-      }
-    }, 500);
+          words.forEach((word, index) => {
+            const span = document.createElement('span');
+            span.textContent = word;
+            span.className = 'inline-block opacity-0 translate-y-3 transition-all duration-500';
+            span.style.transitionDelay = `${index * 80}ms`;
+            
+            setTimeout(() => {
+              span.classList.remove('opacity-0', 'translate-y-3');
+            }, index * 80);
+            
+            textRef.current?.appendChild(span);
+            
+            // Add space after each word except the last one
+            if (index < words.length - 1) {
+              const space = document.createTextNode(' ');
+              textRef.current?.appendChild(space);
+            }
+          });
+        }
+      }, 1200);
+      
+      // 4. Fourth: Buttons appear (after 2500ms)
+      setTimeout(() => {
+        if (buttonsRef.current) {
+          buttonsRef.current.classList.remove('opacity-0');
+          buttonsRef.current.classList.add('animate-fade-in');
+        }
+      }, 2500);
+    }, 300);
 
+    // Smooth role transition with purple gradient
     const roleInterval = setInterval(() => {
-      setIsChanging(true);
+      setIsRoleChanging(true);
       
       setTimeout(() => {
         setCurrentRole(prev => (prev + 1) % roles.length);
         setCurrentGradient(prev => (prev + 1) % gradients.length);
-        setIsChanging(false);
-      }, 400);
-    }, 3500);
+        setIsRoleChanging(false);
+      }, 300);
+    }, 4000);
 
     // Setup intersection observer to hide scroll prompt when user scrolls down
     const aboutSection = document.getElementById('about');
@@ -110,41 +133,62 @@ const HeroSection = () => {
       
       <div className="container mx-auto px-4 z-10">
         <div className="max-w-5xl ml-4 md:ml-8 lg:ml-12">
-          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {/* Main Title with Elegant Typography */}
+          <div className="space-y-6 md:space-y-8">
+            {/* Main Title with Side-by-Side Layout and Continuous Gradient for Asnake */}
             <h1 
               ref={titleRef}
-              className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6 md:mb-8 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
+              className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl opacity-0 text-left leading-tight"
             >
-              <span className="block">Simon</span>
-              <span className="block text-gradient-primary">Asnake</span>
+              <div className="flex flex-wrap items-baseline gap-4 md:gap-6">
+                <span className="text-white font-semibold">Simon</span>
+                <span 
+                  className="asnake-gradient font-bold"
+                  style={{
+                    background: 'linear-gradient(-45deg, #8A89FF, #7676FF, #9D8CFF, #6262FF, #8A89FF, #7676FF)',
+                    backgroundSize: '400% 400%',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    animation: 'continuousGradientFlow 8s ease-in-out infinite'
+                  }}
+                >
+                  Asnake
+                </span>
+              </div>
             </h1>
             
-            {/* Dynamic Role with Smooth Animation */}
-            <h2 className="hero-subtitle text-lg sm:text-xl md:text-2xl lg:text-3xl mb-8 md:mb-10 text-left">
+            {/* Dynamic Role with Subtle Purple Gradient Animation */}
+            <h2 className="hero-subtitle text-lg sm:text-xl md:text-2xl lg:text-3xl text-left">
               <span className="text-gray-300">I'm a </span>
               <span 
                 ref={roleRef}
-                className={`role-text bg-gradient-to-r ${gradients[currentGradient]} bg-clip-text text-transparent font-medium transition-all duration-800 ${isChanging ? 'fade-out' : 'fade-in'}`}
+                className={`role-text inline-block opacity-0 transition-all duration-700 ease-out ${isRoleChanging ? 'role-fade-out' : 'role-fade-in'}`}
                 style={{
+                  background: `linear-gradient(135deg, ${gradients[currentGradient].replace('from-', '').replace('via-', '').replace('to-', '').split(' ').join(', ')})`,
                   backgroundSize: '200% 200%',
-                  animation: isChanging ? 'none' : 'gradient-shift 3s ease-in-out infinite'
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  animation: isRoleChanging ? 'none' : 'subtleGradientShift 4s ease-in-out infinite'
                 }}
               >
                 {roles[currentRole]}
               </span>
             </h2>
             
-            {/* Description with Modern Typography */}
+            {/* Description with Staggered Word Animation */}
             <p 
               ref={textRef}
-              className="hero-description text-base sm:text-lg md:text-xl text-gray-300 mb-10 md:mb-14 max-w-full md:max-w-4xl text-left leading-relaxed proper-spacing"
+              className="hero-description text-base sm:text-lg md:text-xl text-gray-300 max-w-full md:max-w-4xl text-left leading-relaxed"
             >
-              {/* Text content will be dynamically populated with proper spacing */}
+              {/* Text content will be dynamically populated with staggered animation */}
             </p>
             
-            {/* Enhanced CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 md:gap-6 mb-12 md:mb-16 text-left">
+            {/* Enhanced CTA Buttons with Delayed Appearance */}
+            <div 
+              ref={buttonsRef}
+              className="flex flex-col sm:flex-row gap-4 md:gap-6 opacity-0"
+            >
               <Button
                 variant="outline"
                 className="button-slide-effect group bg-gradient-to-r from-[#8A89FF]/10 to-[#6262FF]/10 backdrop-blur-lg border-[#8A89FF]/20 hover:bg-gradient-to-r hover:from-[#8A89FF]/20 hover:to-[#6262FF]/20 hover:border-[#8A89FF]/40 transition-all duration-500 text-white px-6 md:px-8 py-3 md:py-4 font-medium text-base md:text-lg"
@@ -210,12 +254,76 @@ const HeroSection = () => {
       </motion.div>
 
       <style jsx>{`
-        @keyframes gradient-shift {
+        /* Continuous gradient animation for Asnake */
+        @keyframes continuousGradientFlow {
+          0% {
+            background-position: 0% 50%;
+          }
+          25% {
+            background-position: 100% 50%;
+          }
+          50% {
+            background-position: 100% 100%;
+          }
+          75% {
+            background-position: 0% 100%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        /* Subtle gradient shift for role text */
+        @keyframes subtleGradientShift {
           0%, 100% {
             background-position: 0% 50%;
           }
           50% {
             background-position: 100% 50%;
+          }
+        }
+
+        /* Role transition animations */
+        .role-fade-out {
+          opacity: 0;
+          transform: translateY(-8px) scale(0.98);
+        }
+
+        .role-fade-in {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+
+        /* Smooth fade-in animation */
+        .animate-fade-in {
+          animation: smoothFadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes smoothFadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+          .asnake-gradient {
+            animation: none !important;
+            background: linear-gradient(135deg, #8A89FF, #7676FF) !important;
+          }
+          
+          .role-text {
+            animation: none !important;
+          }
+          
+          .role-fade-out,
+          .role-fade-in {
+            transition: none !important;
           }
         }
       `}</style>
