@@ -21,6 +21,7 @@ const ProjectManager = () => {
   const { toast } = useToast();
 
   const { register, handleSubmit, reset, setValue, watch } = useForm<Project>();
+  const watchedCategory = watch('category');
 
   useEffect(() => {
     loadProjects();
@@ -69,6 +70,15 @@ const ProjectManager = () => {
   };
 
   const handleDeleteProject = async (id: number) => {
+    if (!id) {
+      toast({
+        title: "Error",
+        description: "Cannot delete project without ID",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       await dataService.deleteProject(id);
       setProjects(projects.filter(p => p.id !== id));
@@ -88,11 +98,24 @@ const ProjectManager = () => {
   const onSubmit = async (data: Project) => {
     setIsSaving(true);
     try {
-      const savedProject = await dataService.saveProject(data);
+      // Ensure required fields are present
+      const projectData: Project = {
+        ...data,
+        id: selectedProject?.id,
+        image: data.image || '/placeholder.svg',
+        technologies: data.technologies || [],
+        videoUrl: data.videoUrl || undefined,
+        liveUrl: data.liveUrl || undefined,
+        githubUrl: data.githubUrl || undefined,
+      };
+
+      const savedProject = await dataService.saveProject(projectData);
       
-      if (selectedProject) {
+      if (selectedProject?.id) {
+        // Update existing project in list
         setProjects(projects.map(p => p.id === selectedProject.id ? savedProject : p));
       } else {
+        // Add new project to list
         setProjects([savedProject, ...projects]);
       }
       
@@ -102,6 +125,7 @@ const ProjectManager = () => {
         description: selectedProject ? "Project updated successfully" : "Project created successfully",
       });
     } catch (error) {
+      console.error('Error saving project:', error);
       toast({
         title: "Error",
         description: "Failed to save project",
@@ -142,9 +166,11 @@ const ProjectManager = () => {
                   <Button size="sm" variant="ghost" onClick={() => handleEditProject(project)}>
                     <Edit className="w-4 h-4" />
                   </Button>
-                  <Button size="sm" variant="ghost" onClick={() => handleDeleteProject(project.id)}>
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
+                  {project.id && (
+                    <Button size="sm" variant="ghost" onClick={() => handleDeleteProject(project.id!)}>
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  )}
                 </div>
               </div>
             </CardHeader>
@@ -188,7 +214,10 @@ const ProjectManager = () => {
               </div>
               <div>
                 <Label htmlFor="category">Category</Label>
-                <Select onValueChange={(value) => setValue('category', value as any)}>
+                <Select 
+                  value={watchedCategory} 
+                  onValueChange={(value) => setValue('category', value as Project['category'])}
+                >
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
@@ -207,6 +236,7 @@ const ProjectManager = () => {
                 id="description" 
                 {...register('description', { required: true })}
                 className="bg-white/5 border-white/10 text-white"
+                rows={3}
               />
             </div>
 
@@ -216,6 +246,7 @@ const ProjectManager = () => {
                 id="challenge" 
                 {...register('challenge', { required: true })}
                 className="bg-white/5 border-white/10 text-white"
+                rows={3}
               />
             </div>
 
@@ -225,6 +256,7 @@ const ProjectManager = () => {
                 id="solution" 
                 {...register('solution', { required: true })}
                 className="bg-white/5 border-white/10 text-white"
+                rows={3}
               />
             </div>
 
@@ -234,10 +266,21 @@ const ProjectManager = () => {
                 id="impact" 
                 {...register('impact', { required: true })}
                 className="bg-white/5 border-white/10 text-white"
+                rows={3}
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="image">Image URL</Label>
+              <Input 
+                id="image" 
+                {...register('image')}
+                className="bg-white/5 border-white/10 text-white"
+                placeholder="/placeholder.svg"
+              />
+            </div>
+
+            <div className="grid grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="liveUrl">Live URL (optional)</Label>
                 <Input 
@@ -254,6 +297,15 @@ const ProjectManager = () => {
                   {...register('videoUrl')}
                   className="bg-white/5 border-white/10 text-white"
                   placeholder="https://..."
+                />
+              </div>
+              <div>
+                <Label htmlFor="githubUrl">GitHub URL (optional)</Label>
+                <Input 
+                  id="githubUrl" 
+                  {...register('githubUrl')}
+                  className="bg-white/5 border-white/10 text-white"
+                  placeholder="https://github.com/..."
                 />
               </div>
             </div>

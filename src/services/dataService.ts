@@ -3,7 +3,7 @@ import { supabase } from '@/lib/supabase';
 import { Experience } from '@/components/experience/types';
 
 export interface Project {
-  id: number;
+  id?: number; // Make id optional for new projects
   title: string;
   description: string;
   challenge: string;
@@ -146,19 +146,10 @@ class DataService {
     }
   }
 
-  async saveProjects(projects: Project[]): Promise<void> {
-    if (!this.isSupabaseConfigured()) {
-      console.warn('Supabase not configured. Changes will not be persisted.');
-      return;
-    }
-    // This method is kept for compatibility but individual project operations are preferred
-    console.warn('saveProjects is deprecated. Use saveProject for individual operations.');
-  }
-
   async saveProject(project: Project): Promise<Project> {
     if (!this.isSupabaseConfigured()) {
       console.warn('Supabase not configured. Changes will not be persisted.');
-      return project;
+      return { ...project, id: project.id || Date.now() };
     }
 
     try {
@@ -169,7 +160,7 @@ class DataService {
         solution: project.solution,
         impact: project.impact,
         technologies: project.technologies,
-        image: project.image,
+        image: project.image || '/placeholder.svg',
         category: project.category,
         video_url: project.videoUrl || null,
         live_url: project.liveUrl || null,

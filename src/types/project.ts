@@ -1,6 +1,5 @@
-
 export interface Project {
-  id: number;
+  id?: number; // Make id optional for new projects
   title: string;
   description: string;
   challenge: string;
