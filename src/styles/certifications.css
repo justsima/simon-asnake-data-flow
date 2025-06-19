@@ -24,7 +24,7 @@
 .horizontal-scroll-content {
   display: flex;
   width: fit-content;
-  animation: infiniteScroll 40s linear infinite; /* Increased from 20s to 40s - 50% slower */
+  animation: infiniteScroll 60s linear infinite; /* Increased from 40s to 60s - even slower */
   will-change: transform;
   transform: translateZ(0); /* GPU acceleration */
 }
@@ -163,7 +163,7 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .horizontal-scroll-content {
-    animation-duration: 50s; /* Increased from 25s to 50s - slower on mobile too */
+    animation-duration: 75s; /* Increased from 50s to 75s - much slower on mobile */
   }
   
   .certification-card {

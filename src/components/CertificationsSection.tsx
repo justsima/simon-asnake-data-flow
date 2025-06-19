@@ -206,18 +206,6 @@ const CertificationsSection = () => {
             </div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-center mt-8"
-        >
-          <p className="text-sm font-inter" style={{ color: 'var(--color-text-muted)' }}>
-            Hover to pause • Continuous scroll
-          </p>
-        </motion.div>
       </div>
     </section>
   );
