@@ -1,44 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { dataService } from '@/services/dataService';
+import { dataService, type MediaFile } from '@/services/dataService';
 import { Upload, Image, FileText, Trash2, Copy, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-interface MediaFile {
-  id: string;
-  name: string;
-  url: string;
-  type: 'image' | 'document';
-  size: string;
-  uploadDate: string;
-}
-
 const MediaManager = () => {
-  const [mediaFiles, setMediaFiles] = useState<MediaFile[]>([
-    {
-      id: '1',
-      name: 'profile-photo.jpg',
-      url: '/placeholder.svg',
-      type: 'image',
-      size: '2.4 MB',
-      uploadDate: '2024-01-15'
-    },
-    {
-      id: '2',
-      name: 'resume.pdf',
-      url: '/resume.pdf',
-      type: 'document',
-      size: '1.2 MB',
-      uploadDate: '2024-01-10'
-    }
-  ]);
+  const [mediaFiles, setMediaFiles] = useState<MediaFile[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    loadMedia();
+  }, []);
+
+  const loadMedia = async () => {
+    try {
+      const data = await dataService.getMedia();
+      setMediaFiles(data);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to load media files",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -48,15 +41,8 @@ const MediaManager = () => {
     try {
       for (const file of Array.from(files)) {
         const url = await dataService.uploadMedia(file);
-        const newFile: MediaFile = {
-          id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-          name: file.name,
-          url,
-          type: file.type.startsWith('image/') ? 'image' : 'document',
-          size: `${(file.size / 1024 / 1024).toFixed(1)} MB`,
-          uploadDate: new Date().toISOString().split('T')[0]
-        };
-        setMediaFiles(prev => [...prev, newFile]);
+        // Reload media list to get the new file with its database ID
+        await loadMedia();
       }
       toast({
         title: "Success",
@@ -73,12 +59,21 @@ const MediaManager = () => {
     }
   };
 
-  const handleDeleteFile = (id: string) => {
-    setMediaFiles(prev => prev.filter(file => file.id !== id));
-    toast({
-      title: "Success",
-      description: "File deleted successfully",
-    });
+  const handleDeleteFile = async (id: string) => {
+    try {
+      await dataService.deleteMedia(id);
+      setMediaFiles(prev => prev.filter(file => file.id !== id));
+      toast({
+        title: "Success",
+        description: "File deleted successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete file",
+        variant: "destructive",
+      });
+    }
   };
 
   const copyToClipboard = async (url: string, id: string) => {
@@ -102,6 +97,10 @@ const MediaManager = () => {
   const getFileIcon = (type: string) => {
     return type === 'image' ? Image : FileText;
   };
+
+  if (isLoading) {
+    return <div className="text-white">Loading media files...</div>;
+  }
 
   return (
     <div className="space-y-6">

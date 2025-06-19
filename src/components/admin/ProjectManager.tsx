@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { dataService, type Project } from '@/services/dataService';
 import { Plus, Edit, Trash2, Eye } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -17,6 +17,7 @@ const ProjectManager = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
 
   const { register, handleSubmit, reset, setValue, watch } = useForm<Project>();
@@ -42,38 +43,59 @@ const ProjectManager = () => {
 
   const handleCreateProject = () => {
     setSelectedProject(null);
-    reset();
+    reset({
+      title: '',
+      description: '',
+      challenge: '',
+      solution: '',
+      impact: '',
+      technologies: [],
+      image: '/placeholder.svg',
+      category: 'Power BI',
+      videoUrl: '',
+      liveUrl: '',
+      githubUrl: '',
+    });
     setIsDialogOpen(true);
   };
 
   const handleEditProject = (project: Project) => {
     setSelectedProject(project);
-    reset(project);
+    reset({
+      ...project,
+      technologies: project.technologies || []
+    });
     setIsDialogOpen(true);
   };
 
   const handleDeleteProject = async (id: number) => {
-    const updatedProjects = projects.filter(p => p.id !== id);
-    setProjects(updatedProjects);
-    await dataService.saveProjects(updatedProjects);
-    toast({
-      title: "Success",
-      description: "Project deleted successfully",
-    });
+    try {
+      await dataService.deleteProject(id);
+      setProjects(projects.filter(p => p.id !== id));
+      toast({
+        title: "Success",
+        description: "Project deleted successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete project",
+        variant: "destructive",
+      });
+    }
   };
 
   const onSubmit = async (data: Project) => {
+    setIsSaving(true);
     try {
-      let updatedProjects;
+      const savedProject = await dataService.saveProject(data);
+      
       if (selectedProject) {
-        updatedProjects = projects.map(p => p.id === selectedProject.id ? { ...data, id: selectedProject.id } : p);
+        setProjects(projects.map(p => p.id === selectedProject.id ? savedProject : p));
       } else {
-        const newId = Math.max(...projects.map(p => p.id), 0) + 1;
-        updatedProjects = [...projects, { ...data, id: newId }];
+        setProjects([savedProject, ...projects]);
       }
       
-      setProjects(updatedProjects);
-      await dataService.saveProjects(updatedProjects);
       setIsDialogOpen(false);
       toast({
         title: "Success",
@@ -85,6 +107,8 @@ const ProjectManager = () => {
         description: "Failed to save project",
         variant: "destructive",
       });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -238,19 +262,23 @@ const ProjectManager = () => {
               <Label htmlFor="technologies">Technologies (comma-separated)</Label>
               <Input 
                 id="technologies" 
-                {...register('technologies')}
                 className="bg-white/5 border-white/10 text-white"
                 placeholder="Python, SQL, Power BI"
                 onChange={(e) => {
                   const techs = e.target.value.split(',').map(t => t.trim()).filter(t => t);
                   setValue('technologies', techs);
                 }}
+                defaultValue={selectedProject?.technologies.join(', ') || ''}
               />
             </div>
 
             <div className="flex gap-2 pt-4">
-              <Button type="submit" className="bg-portfolio-accent1 hover:bg-portfolio-accent1/80">
-                {selectedProject ? 'Update Project' : 'Create Project'}
+              <Button 
+                type="submit" 
+                disabled={isSaving}
+                className="bg-portfolio-accent1 hover:bg-portfolio-accent1/80"
+              >
+                {isSaving ? 'Saving...' : selectedProject ? 'Update Project' : 'Create Project'}
               </Button>
               <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
                 Cancel

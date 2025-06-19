@@ -1,73 +1,166 @@
-# Welcome to your Lovable project
+# Portfolio Management System with Supabase
 
-## Project info
+This is a modern portfolio website with a complete backend management system built with React, TypeScript, Tailwind CSS, and Supabase.
 
-**URL**: https://lovable.dev/projects/515f24e0-1f81-4174-815b-d23da36b4d6c
+## Features
 
-## How can I edit this code?
+### Frontend Portfolio
+- **Responsive Design**: Mobile-first approach with beautiful animations
+- **Modern UI**: Glassmorphism effects and smooth transitions
+- **Dynamic Content**: All content is dynamically loaded from Supabase
+- **Project Showcase**: Interactive project cards with detailed modals
+- **Skills Visualization**: Animated progress bars and skill categories
+- **Experience Timeline**: Professional work experience display
+- **Certifications**: Education and professional certifications
+- **Contact Form**: Functional contact form with validation
 
-There are several ways of editing your application.
+### Admin Management System
+- **Dashboard**: Overview of all portfolio content with statistics
+- **Project Manager**: Create, edit, and delete portfolio projects
+- **Experience Manager**: Manage work experience entries
+- **Certification Manager**: Handle education and certifications
+- **Skills Manager**: Organize skills into categories with percentages
+- **Personal Info Manager**: Update personal details and social links
+- **Media Manager**: Upload and manage images and documents
+- **Real-time Updates**: Changes reflect immediately on the portfolio
 
-**Use Lovable**
+### Backend (Supabase)
+- **PostgreSQL Database**: Robust relational database
+- **Row Level Security**: Secure data access policies
+- **File Storage**: Cloud storage for images and documents
+- **Real-time Subscriptions**: Live updates across clients
+- **Authentication Ready**: Built-in user management system
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/515f24e0-1f81-4174-815b-d23da36b4d6c) and start prompting.
+## Setup Instructions
 
-Changes made via Lovable will be committed automatically to this repo.
+### 1. Supabase Setup
 
-**Use your preferred IDE**
+1. **Create a Supabase Project**
+   - Go to [supabase.com](https://supabase.com)
+   - Create a new project
+   - Wait for the project to be ready
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. **Get Your Credentials**
+   - Go to Settings > API
+   - Copy your Project URL and anon public key
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+3. **Update Environment Variables**
+   - Update the `.env` file with your Supabase credentials:
+   ```
+   VITE_SUPABASE_URL="your-project-url"
+   VITE_SUPABASE_ANON_KEY="your-anon-key"
+   ```
 
-Follow these steps:
+4. **Run Database Migrations**
+   - In your Supabase dashboard, go to SQL Editor
+   - Copy and run the contents of `supabase/migrations/create_portfolio_tables.sql`
+   - Then run `supabase/migrations/seed_initial_data.sql` to populate with sample data
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+5. **Set Up Storage**
+   - Go to Storage in your Supabase dashboard
+   - Create a new bucket called `portfolio-media`
+   - Set it to public access for file uploads
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### 2. Local Development
 
-# Step 3: Install the necessary dependencies.
-npm i
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+2. **Start Development Server**
+   ```bash
+   npm run dev
+   ```
 
-**Edit a file directly in GitHub**
+3. **Access the Application**
+   - Portfolio: `http://localhost:8080`
+   - Admin Panel: `http://localhost:8080/admin`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Database Schema
 
-**Use GitHub Codespaces**
+### Tables Created
+- `projects`: Portfolio projects with technologies, links, and details
+- `certifications`: Education and professional certifications
+- `experiences`: Work experience with responsibilities and achievements
+- `skill_categories`: Organized skills with proficiency percentages
+- `personal_info`: Personal details, bio, and social links
+- `media`: Uploaded files with metadata
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Security
+- Row Level Security (RLS) enabled on all tables
+- Public read access for portfolio display
+- Authenticated write access for admin management
+- Secure file upload and storage
 
-## What technologies are used for this project?
+## Key Features
 
-This project is built with:
+### Data Management
+- **CRUD Operations**: Full create, read, update, delete functionality
+- **File Uploads**: Secure file storage with Supabase Storage
+- **Data Validation**: Form validation and error handling
+- **Real-time Updates**: Changes reflect immediately
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### User Experience
+- **Responsive Design**: Works perfectly on all devices
+- **Loading States**: Smooth loading indicators
+- **Error Handling**: User-friendly error messages
+- **Toast Notifications**: Success and error feedback
 
-## How can I deploy this project?
+### Performance
+- **Optimized Queries**: Efficient database queries
+- **Image Optimization**: Proper image handling and display
+- **Lazy Loading**: Components load as needed
+- **Caching**: Efficient data caching strategies
 
-Simply open [Lovable](https://lovable.dev/projects/515f24e0-1f81-4174-815b-d23da36b4d6c) and click on Share -> Publish.
+## Customization
 
-## Can I connect a custom domain to my Lovable project?
+### Adding New Sections
+1. Create the database table in Supabase
+2. Add the interface to `src/services/dataService.ts`
+3. Create the admin manager component
+4. Add the frontend display component
+5. Update the navigation and routing
 
-Yes, you can!
+### Styling
+- Modify `src/index.css` for global styles
+- Update `tailwind.config.ts` for theme customization
+- Customize components in `src/components/`
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Content Management
+- Use the admin panel at `/admin` to manage all content
+- Upload media files through the Media Manager
+- Update personal information and social links
+- Add new projects, experiences, and certifications
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Deployment
+
+### Frontend Deployment
+- Build the project: `npm run build`
+- Deploy to Netlify, Vercel, or any static hosting service
+- Ensure environment variables are set in your hosting platform
+
+### Database
+- Your Supabase database is already hosted and managed
+- No additional deployment needed for the backend
+- Monitor usage in your Supabase dashboard
+
+## Support
+
+For issues or questions:
+1. Check the Supabase documentation
+2. Review the code comments and structure
+3. Test the admin panel functionality
+4. Verify environment variables are correct
+
+## Technologies Used
+
+- **Frontend**: React 18, TypeScript, Tailwind CSS
+- **Backend**: Supabase (PostgreSQL, Storage, Auth)
+- **UI Components**: Radix UI, shadcn/ui
+- **Forms**: React Hook Form with validation
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Build Tool**: Vite
+
+This portfolio system provides a complete solution for showcasing professional work with an easy-to-use management interface.
