@@ -1,0 +1,305 @@
+/* Unique Cursive Logo Styles */
+
+.unique-logo {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.logo-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cursive S Container */
+.cursive-s-container {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* SVG Cursive S */
+.cursive-s-svg {
+  filter: drop-shadow(0 2px 8px rgba(138, 137, 255, 0.3));
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.unique-logo:hover .cursive-s-svg {
+  filter: drop-shadow(0 4px 16px rgba(138, 137, 255, 0.5));
+}
+
+/* Animated Path */
+.cursive-path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: drawPath 2s ease-in-out forwards;
+}
+
+.flourish-top,
+.flourish-bottom {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: drawFlourish 1s ease-in-out 1.5s forwards;
+}
+
+/* Animated Dots */
+.logo-dots {
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  animation: fadeInDots 0.5s ease-in-out 2.5s forwards;
+}
+
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-primary-500);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+.dot-1 {
+  animation-delay: 0s;
+}
+
+.dot-2 {
+  animation-delay: 0.3s;
+}
+
+.dot-3 {
+  animation-delay: 0.6s;
+}
+
+/* Subtle Underline */
+.logo-underline {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-primary-500), transparent);
+  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.unique-logo:hover .logo-underline {
+  width: 40px;
+}
+
+/* Brand Text Animation */
+.brand-text {
+  white-space: nowrap;
+  transform: translateX(-10px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.unique-logo:hover .brand-text {
+  transform: translateX(0);
+}
+
+/* Scrolled State */
+.logo-scrolled .cursive-s-svg {
+  transform: scale(0.9);
+}
+
+.logo-scrolled .brand-text {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+/* Keyframe Animations */
+@keyframes drawPath {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes drawFlourish {
+  0% {
+    stroke-dashoffset: 20;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.8;
+  }
+}
+
+@keyframes fadeInDots {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Hover Effects */
+.unique-logo:hover .cursive-path {
+  stroke-width: 3.5;
+  filter: url(#glow);
+}
+
+.unique-logo:hover .flourish-top,
+.unique-logo:hover .flourish-bottom {
+  opacity: 1;
+  stroke-width: 2.5;
+}
+
+.unique-logo:hover .dot {
+  animation-duration: 1s;
+  background: var(--color-primary-400);
+}
+
+/* Active/Focus States */
+.unique-logo:active .cursive-s-svg {
+  transform: scale(0.95);
+}
+
+.unique-logo:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .cursive-s-container {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .cursive-s-svg {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .brand-text {
+    display: none;
+  }
+  
+  .logo-underline {
+    display: none;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .cursive-path,
+  .flourish-top,
+  .flourish-bottom {
+    animation: none;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  
+  .logo-dots {
+    animation: none;
+    opacity: 1;
+  }
+  
+  .dot {
+    animation: none;
+  }
+  
+  .unique-logo:hover .cursive-s-svg {
+    transform: none;
+  }
+  
+  .brand-text {
+    transition: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .cursive-s-svg {
+    filter: none;
+  }
+  
+  .cursive-path,
+  .flourish-top,
+  .flourish-bottom {
+    stroke: #ffffff;
+  }
+  
+  .dot {
+    background: #ffffff;
+  }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  .cursive-s-svg {
+    filter: drop-shadow(0 2px 8px rgba(138, 137, 255, 0.4));
+  }
+  
+  .unique-logo:hover .cursive-s-svg {
+    filter: drop-shadow(0 4px 16px rgba(138, 137, 255, 0.6));
+  }
+}
+
+/* Print Styles */
+@media print {
+  .unique-logo {
+    filter: grayscale(1);
+  }
+  
+  .logo-dots,
+  .logo-underline {
+    display: none;
+  }
+}
+
+/* Performance Optimizations */
+.cursive-s-svg,
+.brand-text,
+.logo-underline {
+  will-change: transform;
+}
+
+.unique-logo:not(:hover) .cursive-s-svg,
+.unique-logo:not(:hover) .brand-text,
+.unique-logo:not(:hover) .logo-underline {
+  will-change: auto;
+}
+
+/* Browser-Specific Fixes */
+@supports (-webkit-backdrop-filter: blur(10px)) {
+  .unique-logo {
+    -webkit-transform: translateZ(0);
+  }
+}
+
+/* Firefox Optimizations */
+@-moz-document url-prefix() {
+  .cursive-s-svg {
+    transform: translateZ(0);
+  }
+}

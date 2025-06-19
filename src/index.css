@@ -3,9 +3,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-/* Import unified color system */
+/* Import unified color system and logo styles */
 @import './styles/colors.css';
 @import './styles/certifications.css';
+@import './styles/logo.css';
 
 @tailwind base;
 @tailwind components;

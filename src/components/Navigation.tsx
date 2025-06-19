@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -74,26 +73,103 @@ const Navigation = ({ sections }: NavigationProps) => {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
         isScrolled 
-          ? 'py-3 backdrop-blur-xl bg-black/40 border-b border-white/5 shadow-lg'
+          ? 'py-3 backdrop-blur-xl border-b shadow-lg'
           : 'py-6 bg-transparent'
       )}
+      style={{
+        background: isScrolled ? 'rgba(8, 8, 13, 0.8)' : 'transparent',
+        borderColor: isScrolled ? 'var(--color-border-primary)' : 'transparent'
+      }}
     >
-      <div className="container mx-auto px-4 flex justify-between items-center">
+      <div className="mobile-container flex justify-between items-center">
+        {/* Unique Cursive Logo */}
         <a 
           ref={logoRef}
           href="#hero" 
-          className="logo font-raleway font-bold text-3xl transition-all duration-500 hover:opacity-90"
+          className="unique-logo group relative transition-all duration-700 hover:scale-105"
           onClick={(e) => {
             e.preventDefault();
             handleNavigation('hero');
           }}
         >
-          <div className="logo-container relative inline-block">
-            <span className="logo-letter text-[#8A89FF]">S</span>
-            <span className="logo-dot absolute"></span>
+          <div className="logo-container relative">
+            {/* Main S Letter with Cursive Design */}
+            <div className="cursive-s-container relative">
+              <svg 
+                width="48" 
+                height="48" 
+                viewBox="0 0 48 48" 
+                className="cursive-s-svg transition-all duration-700 group-hover:scale-110"
+              >
+                {/* Gradient Definition */}
+                <defs>
+                  <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="var(--color-primary-400)" />
+                    <stop offset="50%" stopColor="var(--color-primary-500)" />
+                    <stop offset="100%" stopColor="var(--color-primary-700)" />
+                  </linearGradient>
+                  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feMerge> 
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+                
+                {/* Cursive S Path */}
+                <path 
+                  d="M32 12c-4-2-8-1-12 2-3 2-4 6-2 9 1 2 3 3 5 3 3 1 6 2 7 5 1 3-1 6-4 7-4 2-8 1-11-1"
+                  stroke="url(#logoGradient)"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                  filter="url(#glow)"
+                  className="cursive-path"
+                />
+                
+                {/* Decorative Flourish */}
+                <path 
+                  d="M35 10c2-1 3 0 3 2-1 1-2 1-3 0"
+                  stroke="url(#logoGradient)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  fill="none"
+                  className="flourish-top opacity-80"
+                />
+                
+                <path 
+                  d="M13 36c-2 1-3 0-3-2 1-1 2-1 3 0"
+                  stroke="url(#logoGradient)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  fill="none"
+                  className="flourish-bottom opacity-80"
+                />
+              </svg>
+              
+              {/* Animated Dots */}
+              <div className="logo-dots absolute -top-1 -right-1">
+                <div className="dot dot-1"></div>
+                <div className="dot dot-2"></div>
+                <div className="dot dot-3"></div>
+              </div>
+              
+              {/* Subtle Underline */}
+              <div className="logo-underline absolute -bottom-2 left-1/2 transform -translate-x-1/2"></div>
+            </div>
+            
+            {/* Brand Text */}
+            <div className="brand-text absolute left-14 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-500">
+              <span className="text-sm font-medium tracking-wider" style={{ color: 'var(--color-primary-500)' }}>
+                Simon
+              </span>
+            </div>
           </div>
         </a>
 
+        {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-4">
           {sections.map(section => (
             <button
@@ -103,51 +179,72 @@ const Navigation = ({ sections }: NavigationProps) => {
                 'nav-link px-5 py-2 rounded-lg text-sm font-medium transition-all duration-500 relative overflow-hidden',
                 activeSection === section.id
                   ? 'text-white'
-                  : 'text-gray-400 hover:text-white'
+                  : 'hover:text-white'
               )}
+              style={{ 
+                color: activeSection === section.id 
+                  ? 'var(--color-text-primary)' 
+                  : 'var(--color-text-muted)' 
+              }}
               onMouseEnter={() => handleHoverEnter(section.id)}
               onMouseLeave={handleHoverExit}
             >
               {section.title}
               <span 
                 className={cn(
-                  "absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#8A89FF]/80 to-[#5A5AFF]/40 transform scale-x-0 transition-transform duration-500 origin-left",
+                  "absolute bottom-0 left-0 w-full h-0.5 transform scale-x-0 transition-transform duration-500 origin-left",
                   activeSection === section.id && "scale-x-100"
                 )}
+                style={{ background: 'linear-gradient(90deg, var(--color-primary-500), var(--color-primary-700))' }}
               />
               {hoveredItem === section.id && (
                 <span className="absolute inset-0 bg-white/5 animate-pulse rounded-lg backdrop-blur-sm -z-10"></span>
               )}
-              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#8A89FF] rounded-full opacity-0 transition-all duration-300" 
-                style={{ opacity: hoveredItem === section.id ? 1 : 0 }} 
+              <span 
+                className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full transition-all duration-300" 
+                style={{ 
+                  background: 'var(--color-primary-500)',
+                  opacity: hoveredItem === section.id ? 1 : 0 
+                }} 
               />
             </button>
           ))}
         </div>
 
+        {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-gray-400 hover:text-white transition-colors bg-white/5 backdrop-blur-lg p-2 rounded-lg"
+          className="md:hidden text-gray-400 hover:text-white transition-colors bg-white/5 backdrop-blur-lg p-2 rounded-lg touch-target"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
+      {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-black/80 backdrop-blur-xl py-4 px-4 flex flex-col space-y-4 border-t border-white/5">
+        <div className="md:hidden absolute top-full left-0 right-0 py-4 px-4 flex flex-col space-y-4 border-t"
+             style={{ 
+               background: 'rgba(8, 8, 13, 0.95)',
+               backdropFilter: 'blur(12px)',
+               borderColor: 'var(--color-border-primary)'
+             }}>
           {sections.map(section => (
             <button
               key={section.id}
               onClick={() => handleNavigation(section.id)}
               className={cn(
-                'px-4 py-2 text-left transition-all duration-500 rounded-lg',
+                'px-4 py-2 text-left transition-all duration-500 rounded-lg touch-target',
                 activeSection === section.id
-                  ? 'text-white bg-white/5 backdrop-blur-lg'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-white/5 backdrop-blur-lg'
+                  : 'hover:bg-white/5'
               )}
+              style={{ 
+                color: activeSection === section.id 
+                  ? 'var(--color-text-primary)' 
+                  : 'var(--color-text-muted)' 
+              }}
             >
               {section.title}
-              <span className="absolute inset-0 rounded-lg bg-white/5 backdrop-blur-sm opacity-0 transition-opacity duration-500 hover:opacity-100"></span>
             </button>
           ))}
         </div>
