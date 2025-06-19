@@ -1,268 +1,230 @@
-/* Unique Cursive Logo Styles */
+/* Minimalistic Elegant Logo Styles */
 
 .unique-logo {
   position: relative;
   cursor: pointer;
   user-select: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .logo-container {
   position: relative;
   display: flex;
   align-items: center;
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Cursive S Container */
-.cursive-s-container {
+/* Minimalistic S Container */
+.minimalistic-s-container {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* SVG Cursive S */
-.cursive-s-svg {
-  filter: drop-shadow(0 2px 8px rgba(138, 137, 255, 0.3));
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+/* Elegant S Letter */
+.elegant-s {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-primary-500);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -0.02em;
+  transform: translateZ(0);
 }
 
-.unique-logo:hover .cursive-s-svg {
-  filter: drop-shadow(0 4px 16px rgba(138, 137, 255, 0.5));
-}
-
-/* Animated Path */
-.cursive-path {
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-  animation: drawPath 2s ease-in-out forwards;
-}
-
-.flourish-top,
-.flourish-bottom {
-  stroke-dasharray: 20;
-  stroke-dashoffset: 20;
-  animation: drawFlourish 1s ease-in-out 1.5s forwards;
-}
-
-/* Animated Dots */
-.logo-dots {
-  display: flex;
-  gap: 2px;
+/* Subtle Glow Effect */
+.elegant-s::before {
+  content: 'S';
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--color-primary-500);
+  filter: blur(8px);
   opacity: 0;
-  animation: fadeInDots 0.5s ease-in-out 2.5s forwards;
+  transition: opacity 0.4s ease;
+  z-index: -1;
 }
 
-.dot {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
+.unique-logo:hover .elegant-s::before {
+  opacity: 0.6;
+}
+
+/* Minimalistic Dot Accent */
+.logo-dot {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+  width: 4px;
+  height: 4px;
   background: var(--color-primary-500);
-  animation: pulseDot 2s ease-in-out infinite;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.dot-1 {
-  animation-delay: 0s;
+.unique-logo:hover .logo-dot {
+  opacity: 1;
+  transform: scale(1);
 }
 
-.dot-2 {
-  animation-delay: 0.3s;
-}
-
-.dot-3 {
-  animation-delay: 0.6s;
-}
-
-/* Subtle Underline */
-.logo-underline {
+/* Elegant Underline */
+.elegant-underline {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-primary-500), transparent);
-  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.unique-logo:hover .logo-underline {
-  width: 40px;
+.unique-logo:hover .elegant-underline {
+  width: 32px;
 }
 
-/* Brand Text Animation */
+/* Brand Text - Minimalistic */
 .brand-text {
-  white-space: nowrap;
-  transform: translateX(-10px);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary-500);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.02em;
 }
 
 .unique-logo:hover .brand-text {
+  opacity: 1;
   transform: translateX(0);
 }
 
-/* Scrolled State */
-.logo-scrolled .cursive-s-svg {
-  transform: scale(0.9);
+/* Scrolled State - More Compact */
+.logo-scrolled .minimalistic-s-container {
+  width: 36px;
+  height: 36px;
+}
+
+.logo-scrolled .elegant-s {
+  font-size: 24px;
 }
 
 .logo-scrolled .brand-text {
   opacity: 0;
-  transform: translateX(-20px);
+  transform: translateX(-12px);
 }
 
-/* Keyframe Animations */
-@keyframes drawPath {
-  0% {
-    stroke-dashoffset: 100;
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-}
-
-@keyframes drawFlourish {
-  0% {
-    stroke-dashoffset: 20;
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 0.8;
-  }
-}
-
-@keyframes fadeInDots {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes pulseDot {
+/* Subtle Pulse Animation */
+@keyframes subtlePulse {
   0%, 100% {
-    opacity: 0.6;
     transform: scale(1);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.2);
+    transform: scale(1.02);
   }
 }
 
-/* Hover Effects */
-.unique-logo:hover .cursive-path {
-  stroke-width: 3.5;
-  filter: url(#glow);
+.unique-logo:hover .elegant-s {
+  animation: subtlePulse 2s ease-in-out infinite;
 }
 
-.unique-logo:hover .flourish-top,
-.unique-logo:hover .flourish-bottom {
-  opacity: 1;
-  stroke-width: 2.5;
+/* Active State */
+.unique-logo:active .elegant-s {
+  transform: scale(0.98);
 }
 
-.unique-logo:hover .dot {
-  animation-duration: 1s;
-  background: var(--color-primary-400);
-}
-
-/* Active/Focus States */
-.unique-logo:active .cursive-s-svg {
-  transform: scale(0.95);
-}
-
+/* Focus State for Accessibility */
 .unique-logo:focus-visible {
   outline: 2px solid var(--color-primary-500);
   outline-offset: 4px;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 /* Mobile Optimizations */
 @media (max-width: 768px) {
-  .cursive-s-container {
-    width: 40px;
-    height: 40px;
+  .minimalistic-s-container {
+    width: 36px;
+    height: 36px;
   }
   
-  .cursive-s-svg {
-    width: 40px;
-    height: 40px;
+  .elegant-s {
+    font-size: 24px;
   }
   
   .brand-text {
     display: none;
   }
   
-  .logo-underline {
+  .elegant-underline {
     display: none;
+  }
+  
+  .logo-dot {
+    width: 3px;
+    height: 3px;
+    top: 6px;
+    right: 4px;
   }
 }
 
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
-  .cursive-path,
-  .flourish-top,
-  .flourish-bottom {
-    animation: none;
-    stroke-dasharray: none;
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-  
-  .logo-dots {
-    animation: none;
-    opacity: 1;
-  }
-  
-  .dot {
-    animation: none;
-  }
-  
-  .unique-logo:hover .cursive-s-svg {
-    transform: none;
-  }
-  
+  .unique-logo,
+  .logo-container,
+  .elegant-s,
+  .logo-dot,
+  .elegant-underline,
   .brand-text {
     transition: none;
+    animation: none;
+  }
+  
+  .elegant-s::before {
+    display: none;
   }
 }
 
 /* High Contrast Mode */
 @media (prefers-contrast: high) {
-  .cursive-s-svg {
-    filter: none;
+  .elegant-s {
+    color: #ffffff;
+    font-weight: 700;
   }
   
-  .cursive-path,
-  .flourish-top,
-  .flourish-bottom {
-    stroke: #ffffff;
-  }
-  
-  .dot {
+  .logo-dot {
     background: #ffffff;
+  }
+  
+  .elegant-s::before {
+    display: none;
   }
 }
 
 /* Dark Mode Enhancements */
 @media (prefers-color-scheme: dark) {
-  .cursive-s-svg {
-    filter: drop-shadow(0 2px 8px rgba(138, 137, 255, 0.4));
+  .elegant-s::before {
+    filter: blur(6px);
   }
-  
-  .unique-logo:hover .cursive-s-svg {
-    filter: drop-shadow(0 4px 16px rgba(138, 137, 255, 0.6));
-  }
+}
+
+/* Performance Optimizations */
+.elegant-s,
+.brand-text,
+.elegant-underline {
+  will-change: transform;
+}
+
+.unique-logo:not(:hover) .elegant-s,
+.unique-logo:not(:hover) .brand-text,
+.unique-logo:not(:hover) .elegant-underline {
+  will-change: auto;
 }
 
 /* Print Styles */
@@ -271,35 +233,12 @@
     filter: grayscale(1);
   }
   
-  .logo-dots,
-  .logo-underline {
+  .logo-dot,
+  .elegant-underline {
     display: none;
   }
-}
-
-/* Performance Optimizations */
-.cursive-s-svg,
-.brand-text,
-.logo-underline {
-  will-change: transform;
-}
-
-.unique-logo:not(:hover) .cursive-s-svg,
-.unique-logo:not(:hover) .brand-text,
-.unique-logo:not(:hover) .logo-underline {
-  will-change: auto;
-}
-
-/* Browser-Specific Fixes */
-@supports (-webkit-backdrop-filter: blur(10px)) {
-  .unique-logo {
-    -webkit-transform: translateZ(0);
-  }
-}
-
-/* Firefox Optimizations */
-@-moz-document url-prefix() {
-  .cursive-s-svg {
-    transform: translateZ(0);
+  
+  .elegant-s::before {
+    display: none;
   }
 }

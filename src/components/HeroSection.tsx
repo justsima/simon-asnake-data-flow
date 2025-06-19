@@ -12,7 +12,7 @@ const roles = [
   "Data Engineer"
 ];
 
-// Changed to purple color scheme for text gradients
+// Enhanced gradients for the new typography
 const gradients = [
   "from-[#8A89FF] via-[#7676FF] to-[#6262FF]",
   "from-[#7676FF] via-[#8A89FF] to-[#7676FF]", 
@@ -102,16 +102,19 @@ const HeroSection = () => {
       <GradientBackground />
       
       <div className="container mx-auto px-4 z-10">
-        <div className="max-w-3xl ml-4 md:ml-8 lg:ml-12">
+        <div className="max-w-4xl ml-4 md:ml-8 lg:ml-12">
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* Main Title with Trendy Typography */}
             <h1 
               ref={titleRef}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-playfair font-bold mb-4 md:mb-6 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
+              className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-8xl mb-6 md:mb-8 opacity-0 transition-all duration-1000 text-left text-white animate-fade-in"
             >
-              Simon Asnake
+              <span className="block">Simon</span>
+              <span className="block text-gradient-primary">Asnake</span>
             </h1>
             
-            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6 md:mb-8 font-inter text-left">
+            {/* Dynamic Role with Enhanced Typography */}
+            <h2 className="hero-subtitle text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-8 md:mb-10 text-left">
               <span className="text-gray-300">I'm a </span>
               <span 
                 className={`animate-text-shimmer bg-gradient-to-r ${gradients[currentGradient]} bg-clip-text text-transparent font-bold transition-all duration-700`}
@@ -122,27 +125,29 @@ const HeroSection = () => {
               </span>
             </h2>
             
+            {/* Description with Modern Typography */}
             <p 
               ref={textRef}
-              className="text-sm sm:text-base md:text-lg text-gray-300 mb-8 md:mb-12 font-raleway max-w-full md:max-w-2xl text-left leading-relaxed proper-spacing"
+              className="hero-description text-base sm:text-lg md:text-xl text-gray-300 mb-10 md:mb-14 max-w-full md:max-w-3xl text-left leading-relaxed proper-spacing"
             >
               {/* Text content will be dynamically populated with proper spacing */}
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-12 md:mb-16 text-left">
+            {/* Enhanced CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 md:gap-6 mb-12 md:mb-16 text-left">
               <Button
                 variant="outline"
-                className="button-slide-effect group bg-gradient-to-r from-[#8A89FF]/10 to-[#6262FF]/10 backdrop-blur-lg border-[#8A89FF]/20 hover:bg-gradient-to-r hover:from-[#8A89FF]/20 hover:to-[#6262FF]/20 hover:border-[#8A89FF]/40 transition-all duration-500 text-white px-4 md:px-6 py-2.5 md:py-3 font-montserrat text-sm md:text-base"
+                className="button-slide-effect group bg-gradient-to-r from-[#8A89FF]/10 to-[#6262FF]/10 backdrop-blur-lg border-[#8A89FF]/20 hover:bg-gradient-to-r hover:from-[#8A89FF]/20 hover:to-[#6262FF]/20 hover:border-[#8A89FF]/40 transition-all duration-500 text-white px-6 md:px-8 py-3 md:py-4 font-medium text-base md:text-lg"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, projects: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, projects: false}))}
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <span className="relative z-10 flex items-center gap-2">
+                <span className="relative z-10 flex items-center gap-3">
                   View Projects
-                  <span className="arrow-container overflow-hidden w-4 md:w-5">
+                  <span className="arrow-container overflow-hidden w-5 md:w-6">
                     <ArrowRight 
                       className={`transition-all duration-300 transform ${showArrow.projects ? 'translate-x-0' : '-translate-x-full'}`}
-                      size={16} 
+                      size={20} 
                     />
                   </span>
                 </span>
@@ -150,17 +155,17 @@ const HeroSection = () => {
               
               <Button
                 variant="outline"
-                className="button-slide-effect group bg-gradient-to-r from-[#7676FF]/10 to-[#8A89FF]/10 backdrop-blur-lg border-[#7676FF]/20 hover:bg-gradient-to-r hover:from-[#7676FF]/20 hover:to-[#8A89FF]/20 hover:border-[#7676FF]/40 transition-all duration-500 text-white px-4 md:px-6 py-2.5 md:py-3 font-montserrat text-sm md:text-base"
+                className="button-slide-effect group bg-gradient-to-r from-[#7676FF]/10 to-[#8A89FF]/10 backdrop-blur-lg border-[#7676FF]/20 hover:bg-gradient-to-r hover:from-[#7676FF]/20 hover:to-[#8A89FF]/20 hover:border-[#7676FF]/40 transition-all duration-500 text-white px-6 md:px-8 py-3 md:py-4 font-medium text-base md:text-lg"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, contact: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, contact: false}))}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <span className="relative z-10 flex items-center gap-2">
+                <span className="relative z-10 flex items-center gap-3">
                   Get in touch
-                  <span className="arrow-container overflow-hidden w-4 md:w-5">
+                  <span className="arrow-container overflow-hidden w-5 md:w-6">
                     <ArrowRight 
                       className={`transition-all duration-300 transform ${showArrow.contact ? 'translate-x-0' : '-translate-x-full'}`}
-                      size={16} 
+                      size={20} 
                     />
                   </span>
                 </span>
@@ -170,7 +175,7 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Scroll to explore animation with permanent visibility */}
+      {/* Enhanced Scroll Prompt */}
       <motion.div 
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-400"
         initial={{ opacity: 0, y: 10 }}
@@ -180,7 +185,7 @@ const HeroSection = () => {
         }}
         transition={{ duration: 0.5 }}
       >
-        <p className="text-sm mb-2 font-montserrat font-medium tracking-wide">Scroll to explore</p>
+        <p className="text-sm mb-3 font-medium tracking-wide hero-description">Scroll to explore</p>
         <motion.div 
           className="w-6 h-10 rounded-full border-2 border-gray-400 flex items-start justify-center p-1"
           animate={{ y: [0, 5, 0] }}

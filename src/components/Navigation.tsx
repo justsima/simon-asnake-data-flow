@@ -82,89 +82,27 @@ const Navigation = ({ sections }: NavigationProps) => {
       }}
     >
       <div className="mobile-container flex justify-between items-center">
-        {/* Unique Cursive Logo */}
+        {/* Minimalistic Elegant Logo */}
         <a 
           ref={logoRef}
           href="#hero" 
-          className="unique-logo group relative transition-all duration-700 hover:scale-105"
+          className="unique-logo group relative"
           onClick={(e) => {
             e.preventDefault();
             handleNavigation('hero');
           }}
         >
-          <div className="logo-container relative">
-            {/* Main S Letter with Cursive Design */}
-            <div className="cursive-s-container relative">
-              <svg 
-                width="48" 
-                height="48" 
-                viewBox="0 0 48 48" 
-                className="cursive-s-svg transition-all duration-700 group-hover:scale-110"
-              >
-                {/* Gradient Definition */}
-                <defs>
-                  <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="var(--color-primary-400)" />
-                    <stop offset="50%" stopColor="var(--color-primary-500)" />
-                    <stop offset="100%" stopColor="var(--color-primary-700)" />
-                  </linearGradient>
-                  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                    <feMerge> 
-                      <feMergeNode in="coloredBlur"/>
-                      <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                  </filter>
-                </defs>
-                
-                {/* Cursive S Path */}
-                <path 
-                  d="M32 12c-4-2-8-1-12 2-3 2-4 6-2 9 1 2 3 3 5 3 3 1 6 2 7 5 1 3-1 6-4 7-4 2-8 1-11-1"
-                  stroke="url(#logoGradient)"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                  filter="url(#glow)"
-                  className="cursive-path"
-                />
-                
-                {/* Decorative Flourish */}
-                <path 
-                  d="M35 10c2-1 3 0 3 2-1 1-2 1-3 0"
-                  stroke="url(#logoGradient)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  fill="none"
-                  className="flourish-top opacity-80"
-                />
-                
-                <path 
-                  d="M13 36c-2 1-3 0-3-2 1-1 2-1 3 0"
-                  stroke="url(#logoGradient)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  fill="none"
-                  className="flourish-bottom opacity-80"
-                />
-              </svg>
-              
-              {/* Animated Dots */}
-              <div className="logo-dots absolute -top-1 -right-1">
-                <div className="dot dot-1"></div>
-                <div className="dot dot-2"></div>
-                <div className="dot dot-3"></div>
-              </div>
-              
-              {/* Subtle Underline */}
-              <div className="logo-underline absolute -bottom-2 left-1/2 transform -translate-x-1/2"></div>
+          <div className="logo-container">
+            {/* Minimalistic S Letter */}
+            <div className="minimalistic-s-container">
+              <span className="elegant-s">S</span>
+              <div className="logo-dot"></div>
+              <div className="elegant-underline"></div>
             </div>
             
             {/* Brand Text */}
-            <div className="brand-text absolute left-14 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-500">
-              <span className="text-sm font-medium tracking-wider" style={{ color: 'var(--color-primary-500)' }}>
-                Simon
-              </span>
+            <div className="brand-text">
+              Simon
             </div>
           </div>
         </a>

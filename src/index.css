@@ -3,7 +3,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-/* Import unified color system and logo styles */
+/* Trendy Statement Fonts for Hero Section */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=General+Sans:wght@200;300;400;500;600;700;800&display=swap');
+
+/* Import unified color system and component styles */
 @import './styles/colors.css';
 @import './styles/certifications.css';
 @import './styles/logo.css';
@@ -79,6 +85,28 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* Trendy Hero Typography Classes */
+  .hero-title {
+    font-family: 'Outfit', 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+  }
+
+  .hero-subtitle {
+    font-family: 'Space Grotesk', 'General Sans', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .hero-description {
+    font-family: 'General Sans', 'Inter', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
   }
 }
 
