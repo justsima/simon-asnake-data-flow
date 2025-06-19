@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Executive Sales Intelligence Dashboard",
+    "description": "Interactive Power BI dashboard providing executive insights on sales trends, store performance, and inventory management across 200+ retail locations.",
+    "challenge": "Fortune 500 retailer needed real-time sales performance visibility across 200+ stores",
+    "solution": "Developed interactive Power BI dashboard integrating multiple data sources with advanced DAX measures to provide executive insights on sales trends, store performance, and inventory management.",
+    "impact": "32% reduction in reporting time, $1.2M identified in revenue opportunities, and improved decision-making across regional management teams.",
+    "technologies": ["Power BI", "SQL", "DAX", "Azure Data Factory"],
+    "image": "/placeholder.svg",
+    "category": "Power BI",
+    "liveUrl": "https://app.powerbi.com/links/sample-executive-dashboard"
+  },
+  {
+    "id": 2,
+    "title": "Customer Churn Prediction Model",
+    "description": "Machine learning model predicting customer churn 60 days in advance using random forest algorithm with 24% reduction in churn rate.",
+    "challenge": "Financial services company experiencing unexpected customer attrition",
+    "solution": "Developed ML model predicting likely churners 60 days in advance using random forest algorithm with feature engineering on transactional and demographic data points.",
+    "impact": "24% reduction in churn rate, $850K annual savings in retention costs, and improved customer satisfaction metrics across targeted segments.",
+    "technologies": ["Python", "scikit-learn", "Azure ML", "SQL"],
+    "image": "/placeholder.svg",
+    "category": "Machine Learning",
+    "videoUrl": "https://www.example.com/demos/churn-prediction"
+  },
+  {
+    "id": 3,
+    "title": "Healthcare Claims ETL Pipeline",
+    "description": "Automated ETL pipeline with data quality frameworks integrating 12 healthcare systems, reducing claim processing time from 72 hours to 4 hours.",
+    "challenge": "Healthcare provider struggling with data integration from 12 systems",
+    "solution": "Designed automated ETL pipeline with validation rules and data quality frameworks to standardize inputs from disparate healthcare systems.",
+    "impact": "95% reduction in manual data processing, 99.8% data accuracy achievement, and reduced claim processing time from 72 hours to 4 hours.",
+    "technologies": ["Azure Data Factory", "SQL", "Python", "Power BI"],
+    "image": "/placeholder.svg",
+    "category": "Data Engineering",
+    "videoUrl": "https://www.example.com/demos/healthcare-pipeline"
+  }
+]
