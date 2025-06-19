@@ -1,4 +1,4 @@
-/* Horizontal Scrolling Certifications Styles */
+/* Ultra-Smooth Horizontal Scrolling Certifications Styles */
 
 /* Container styles */
 .horizontal-scroll-container {
@@ -20,50 +20,54 @@
   );
 }
 
-/* Scrolling content */
+/* Ultra-smooth scrolling content */
 .horizontal-scroll-content {
   display: flex;
   width: fit-content;
-  animation: infiniteScroll 60s linear infinite; /* Increased from 40s to 60s - even slower */
+  animation: ultraSmoothScroll 60s linear infinite;
   will-change: transform;
   transform: translateZ(0); /* GPU acceleration */
+  backface-visibility: hidden; /* Prevent flickering */
+  perspective: 1000px; /* 3D acceleration */
 }
 
 .horizontal-scroll-content.paused {
   animation-play-state: paused;
 }
 
-/* Infinite scroll animation */
-@keyframes infiniteScroll {
+/* Ultra-smooth infinite scroll animation with easing */
+@keyframes ultraSmoothScroll {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 /* Certification card styles */
 .certification-card {
   flex-shrink: 0;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateZ(0); /* Individual GPU acceleration */
 }
 
 .certification-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translate3d(0, -8px, 0) scale(1.02);
 }
 
-/* Glassmorphism card */
+/* Enhanced glassmorphism card */
 .glass-cert-card {
   position: relative;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   opacity: 0.9;
+  transform: translateZ(0);
 }
 
 .glass-cert-card:hover {
@@ -75,15 +79,16 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Glass background */
+/* Smooth glass background */
 .glass-background {
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 15px;
+  transition: all 0.4s ease;
 }
 
-/* Hover overlay */
+/* Smooth hover overlay */
 .hover-overlay {
   background: linear-gradient(
     135deg,
@@ -91,9 +96,10 @@
     rgba(98, 98, 255, 0.05) 100%
   );
   border-radius: 15px;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Icon container */
+/* Icon container with smooth animations */
 .cert-icon-container {
   width: 48px;
   height: 48px;
@@ -105,51 +111,61 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateZ(0);
 }
 
 .cert-icon {
   font-size: 24px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
 }
 
 .glass-cert-card:hover .cert-icon-container {
   background: rgba(138, 137, 255, 0.25);
   border-color: rgba(138, 137, 255, 0.4);
-  transform: scale(1.05);
+  transform: scale(1.05) translateZ(0);
 }
 
-/* Text styles */
+.glass-cert-card:hover .cert-icon {
+  transform: scale(1.1);
+}
+
+/* Smooth text styles */
 .cert-title {
   color: var(--color-text-primary);
   line-height: 1.3;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  transition: color 0.3s ease;
 }
 
 .cert-organization {
   color: var(--color-primary-500);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: color 0.3s ease;
 }
 
 .cert-date {
   color: var(--color-text-muted);
+  transition: color 0.3s ease;
 }
 
-/* Skill badges */
+/* Smooth skill badges */
 .cert-skill-badge {
   background: rgba(138, 137, 255, 0.2);
   color: var(--color-primary-500);
   border: 1px solid rgba(138, 137, 255, 0.3);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   font-weight: 500;
+  transform: translateZ(0);
 }
 
 .cert-skill-badge:hover {
   background: rgba(138, 137, 255, 0.3);
   border-color: rgba(138, 137, 255, 0.5);
-  transform: translateY(-1px);
+  transform: translateY(-1px) translateZ(0);
 }
 
 /* Line clamp utility */
@@ -160,10 +176,10 @@
   overflow: hidden;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments with smooth scaling */
 @media (max-width: 768px) {
   .horizontal-scroll-content {
-    animation-duration: 75s; /* Increased from 50s to 75s - much slower on mobile */
+    animation-duration: 75s;
   }
   
   .certification-card {
@@ -181,6 +197,15 @@
   }
 }
 
+/* Performance optimizations */
+.horizontal-scroll-content * {
+  will-change: auto; /* Reset will-change after animations */
+}
+
+.horizontal-scroll-content:hover * {
+  will-change: transform; /* Enable during interactions */
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   .horizontal-scroll-content {
@@ -193,6 +218,10 @@
   
   .glass-cert-card:hover .cert-icon-container {
     transform: none;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
   }
 }
 
@@ -209,24 +238,34 @@
   }
 }
 
-/* Safari-specific fixes */
-@supports (-webkit-backdrop-filter: blur(10px)) {
+/* Browser-specific optimizations */
+@supports (-webkit-backdrop-filter: blur(12px)) {
   .glass-cert-card {
-    -webkit-backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(12px);
   }
   
   .glass-background {
-    -webkit-backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(12px);
   }
 }
 
-/* Firefox fallback */
+/* Firefox fallback with smooth degradation */
 @-moz-document url-prefix() {
   .glass-cert-card {
     background: rgba(22, 27, 34, 0.85);
+    transition: background 0.4s ease;
   }
   
   .glass-background {
     background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Safari-specific smooth scrolling */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .horizontal-scroll-content {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000px;
   }
 }
