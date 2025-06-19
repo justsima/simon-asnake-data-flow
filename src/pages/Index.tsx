@@ -1,5 +1,8 @@
 
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Settings } from 'lucide-react';
 
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
@@ -57,6 +60,19 @@ const Index = () => {
       </main>
       
       <Footer />
+      
+      {/* Portfolio Management Access */}
+      <div className="fixed bottom-4 right-4 z-50">
+        <Link to="/admin">
+          <Button 
+            size="sm" 
+            className="bg-portfolio-accent1 hover:bg-portfolio-accent1/80 text-white shadow-lg"
+          >
+            <Settings className="w-4 h-4 mr-2" />
+            Manage Portfolio
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 };
