@@ -1,4 +1,6 @@
 // Data service for managing portfolio content
+import { Experience } from '@/components/experience/types';
+
 export interface Project {
   id: number;
   title: string;
@@ -34,16 +36,7 @@ export interface SkillCategory {
   skills: Skill[];
 }
 
-export interface Experience {
-  title: string;
-  company: string;
-  period: string;
-  location?: string;
-  description: string;
-  responsibilities: string[];
-  technologies: string[];
-  achievements: string[];
-}
+// Experience interface imported from types.ts
 
 export interface PersonalInfo {
   name: string;
