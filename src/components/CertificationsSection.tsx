@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from './ui/badge';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from './ui/button';
+import { dataService } from '@/services/dataService';
 
 interface Certification {
   title: string;
@@ -13,337 +12,212 @@ interface Certification {
   isEducation?: boolean;
 }
 
-const certifications: Certification[] = [
-  {
-    title: "Bachelor's in Computer Science",
-    organization: "Hilcoe School",
-    date: "2019",
-    skills: ["Data Structures", "Algorithms", "Database Systems"],
-    isEducation: true,
-  },
-  {
-    title: "IBM Certified Data Scientist",
-    organization: "IBM",
-    date: "November 2022",
-    skills: ["Machine Learning", "Statistical Analysis", "Python"],
-  },
-  {
-    title: "365 Data Science Certified Data Scientist",
-    organization: "365 Data Science",
-    date: "August 2022",
-    skills: ["Data Analysis", "Visualization", "Statistical Modeling"],
-  },
-  {
-    title: "365 Data Science Certified Data Analyst",
-    organization: "365 Data Science",
-    date: "May 2022",
-    skills: ["SQL", "Data Visualization", "Business Intelligence"],
-  },
-  {
-    title: "PwC Power BI Job Simulation",
-    organization: "PwC/Forage",
-    date: "March 2022",
-    skills: ["Dashboard Development", "Data Transformation", "DAX"],
-  },
-  {
-    title: "Microsoft Power BI Specialist",
-    organization: "Microsoft",
-    date: "January 2022",
-    skills: ["Power BI", "Data Modeling", "DAX Functions"],
-  },
-  {
-    title: "SQL Advanced Certification",
-    organization: "DataCamp",
-    date: "December 2021",
-    skills: ["Complex Queries", "Database Design", "Optimization"],
-  }
-];
-
 const CertificationCard = ({ 
   item,
-  isActive
+  index
 }: { 
   item: Certification;
-  isActive: boolean;
+  index: number;
 }) => {
   return (
     <motion.div 
-      className={`glass-card p-4 md:p-6 min-w-[280px] sm:min-w-[300px] max-w-[320px] md:max-w-[350px] transition-all duration-500 will-change-transform
-        ${isActive ? 'scale-105 md:scale-110 z-10' : 'hover:scale-[1.02]'}`}
+      className="certification-card flex-shrink-0 w-[320px] md:w-[350px] mx-4"
       initial={{ opacity: 0, y: 20 }}
-      animate={{ 
-        opacity: 1, 
-        y: 0,
-        scale: isActive ? (window.innerWidth < 768 ? 1.05 : 1.1) : 1
-      }}
-      transition={{ 
-        duration: 0.5,
-        scale: {
-          type: "spring",
-          stiffness: 100,
-          damping: 15
-        }
-      }}
-      style={{
-        borderColor: isActive ? 'var(--color-border-secondary)' : 'var(--color-border-muted)',
-        background: isActive ? 'rgba(22, 27, 34, 0.8)' : 'rgba(22, 27, 34, 0.6)'
-      }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
     >
-      <div className="flex items-start mb-3 md:mb-4">
-        <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center mr-3 md:mr-4 text-2xl`}
-             style={{ 
-               background: item.isEducation 
-                 ? 'rgba(138, 137, 255, 0.3)' 
-                 : 'rgba(138, 137, 255, 0.15)',
-               color: 'var(--color-primary-500)'
-             }}>
-          {item.isEducation ? '🎓' : '🏆'}
+      <div className="glass-cert-card h-full p-6 rounded-[15px] relative overflow-hidden group">
+        {/* Glassmorphism background */}
+        <div className="absolute inset-0 glass-background"></div>
+        
+        {/* Content */}
+        <div className="relative z-10">
+          {/* Header with icon */}
+          <div className="flex items-start mb-4">
+            <div className="cert-icon-container mr-4">
+              <div className="cert-icon">
+                {item.isEducation ? '🎓' : '🏆'}
+              </div>
+            </div>
+            <div className="flex-1">
+              <h3 className="cert-title font-semibold text-lg mb-1 line-clamp-2">
+                {item.title}
+              </h3>
+              <p className="cert-organization text-sm font-medium mb-1">
+                {item.organization}
+              </p>
+              <p className="cert-date text-xs opacity-80">
+                {item.date}
+              </p>
+            </div>
+          </div>
+          
+          {/* Skills section */}
+          <div className="mt-4">
+            <p className="text-xs font-medium mb-2 opacity-90">
+              {item.isEducation ? 'Focus Areas' : 'Skills Verified'}
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {item.skills.slice(0, 3).map((skill, skillIndex) => (
+                <Badge 
+                  key={skillIndex} 
+                  className="cert-skill-badge text-xs px-2 py-1"
+                >
+                  {skill}
+                </Badge>
+              ))}
+              {item.skills.length > 3 && (
+                <Badge className="cert-skill-badge text-xs px-2 py-1">
+                  +{item.skills.length - 3}
+                </Badge>
+              )}
+            </div>
+          </div>
         </div>
-        <div>
-          <h3 className="text-base md:text-lg font-medium font-montserrat" style={{ color: 'var(--color-text-primary)' }}>
-            {item.title}
-          </h3>
-          <p className="text-sm md:text-base font-inter" style={{ color: 'var(--color-primary-500)' }}>
-            {item.organization}
-          </p>
-        </div>
-      </div>
-      
-      <p className="text-xs md:text-sm mb-3 md:mb-4 font-inter" style={{ color: 'var(--color-text-muted)' }}>
-        {item.date}
-      </p>
-      
-      <div>
-        <p className="text-sm font-medium mb-2 font-montserrat" style={{ color: 'var(--color-text-secondary)' }}>
-          {item.isEducation ? 'Focus Areas' : 'Skills Verified'}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {item.skills.map((skill) => (
-            <Badge 
-              key={skill} 
-              className="font-inter transition-colors duration-200"
-              style={{ 
-                background: item.isEducation 
-                  ? 'rgba(138, 137, 255, 0.3)' 
-                  : 'rgba(138, 137, 255, 0.15)',
-                color: 'var(--color-primary-500)',
-                borderColor: 'rgba(138, 137, 255, 0.2)'
-              }}
-            >
-              {skill}
-            </Badge>
-          ))}
-        </div>
-      </div>
 
-      {isActive && (
-        <motion.div 
-          className="mt-4 pt-4 border-t"
-          style={{ borderColor: 'var(--color-border-muted)' }}
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          transition={{ duration: 0.3 }}
-        >
-          <p className="text-xs font-inter" style={{ color: 'var(--color-text-secondary)' }}>
-            {item.isEducation ? 'Graduation year: ' + item.date : 'Certification date: ' + item.date}
-          </p>
-        </motion.div>
-      )}
+        {/* Hover effect overlay */}
+        <div className="absolute inset-0 hover-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+      </div>
     </motion.div>
   );
 };
 
 const CertificationsSection = () => {
-  const [activeCert, setActiveCert] = useState<number>(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const autoScrollInterval = useRef<NodeJS.Timeout | null>(null);
-  const isManualInteraction = useRef<boolean>(false);
-  
-  const itemsPerView = {
-    mobile: 1,
-    tablet: 2,
-    desktop: 3
-  };
-
-  const getItemsPerView = () => {
-    if (typeof window === 'undefined') return itemsPerView.desktop;
-    if (window.innerWidth < 640) return itemsPerView.mobile;
-    if (window.innerWidth < 1024) return itemsPerView.tablet;
-    return itemsPerView.desktop;
-  };
-
-  const [itemsVisible, setItemsVisible] = useState(getItemsPerView());
+  const [certifications, setCertifications] = useState<Certification[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setItemsVisible(getItemsPerView());
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    loadCertifications();
   }, []);
 
-  const maxIndex = Math.max(0, certifications.length - itemsVisible);
-
-  // Auto-scroll functionality
-  useEffect(() => {
-    if (autoScrollInterval.current) {
-      clearInterval(autoScrollInterval.current);
+  const loadCertifications = async () => {
+    try {
+      const data = await dataService.getCertifications();
+      setCertifications(data);
+    } catch (error) {
+      console.error('Error loading certifications:', error);
+      // Fallback data
+      setCertifications([
+        {
+          title: "Bachelor's in Computer Science",
+          organization: "Hilcoe School",
+          date: "2019",
+          skills: ["Data Structures", "Algorithms", "Database Systems"],
+          isEducation: true,
+        },
+        {
+          title: "IBM Certified Data Scientist",
+          organization: "IBM",
+          date: "November 2022",
+          skills: ["Machine Learning", "Statistical Analysis", "Python"],
+        },
+        {
+          title: "365 Data Science Certified Data Scientist",
+          organization: "365 Data Science",
+          date: "August 2022",
+          skills: ["Data Analysis", "Visualization", "Statistical Modeling"],
+        },
+        {
+          title: "Microsoft Power BI Specialist",
+          organization: "Microsoft",
+          date: "January 2022",
+          skills: ["Power BI", "Data Modeling", "DAX Functions"],
+        },
+        {
+          title: "SQL Advanced Certification",
+          organization: "DataCamp",
+          date: "December 2021",
+          skills: ["Complex Queries", "Database Design", "Optimization"],
+        }
+      ]);
+    } finally {
+      setIsLoading(false);
     }
-    
-    autoScrollInterval.current = setInterval(() => {
-      if (!isManualInteraction.current) {
-        setCurrentIndex(prev => (prev + 1) % (maxIndex + 1));
-        setActiveCert(prev => (prev + 1) % certifications.length);
-      }
-    }, 4000);
-    
-    return () => {
-      if (autoScrollInterval.current) {
-        clearInterval(autoScrollInterval.current);
-      }
-    };
-  }, [maxIndex]);
-  
-  const handleManualInteraction = () => {
-    isManualInteraction.current = true;
-    
-    if (autoScrollInterval.current) {
-      clearInterval(autoScrollInterval.current);
-    }
-    
-    setTimeout(() => {
-      isManualInteraction.current = false;
-    }, 10000);
   };
 
-  const goToNext = () => {
-    handleManualInteraction();
-    setCurrentIndex(prev => Math.min(prev + 1, maxIndex));
-  };
+  // Create duplicated array for seamless infinite scroll
+  const duplicatedCertifications = [...certifications, ...certifications];
 
-  const goToPrev = () => {
-    handleManualInteraction();
-    setCurrentIndex(prev => Math.max(prev - 1, 0));
-  };
-
-  const goToSlide = (index: number) => {
-    handleManualInteraction();
-    setCurrentIndex(Math.min(index, maxIndex));
-    setActiveCert(index);
-  };
+  if (isLoading) {
+    return (
+      <section id="certifications" className="py-20 relative overflow-hidden">
+        <div className="mobile-container relative z-10">
+          <div className="text-center" style={{ color: 'var(--color-text-primary)' }}>
+            Loading certifications...
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="certifications" className="py-20 relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 opacity-90" style={{
-        background: `linear-gradient(to bottom, var(--color-surface-primary), var(--color-surface-secondary), var(--color-surface-primary))`
-      }}></div>
-      
-      {/* Glass backdrop */}
-      <div className="absolute inset-0 backdrop-blur-sm" style={{ background: 'rgba(0, 0, 0, 0.1)' }}></div>
+      {/* Background elements */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full blur-3xl"
+             style={{ background: 'radial-gradient(circle, var(--color-primary-500) 0%, transparent 70%)' }}></div>
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full blur-3xl"
+             style={{ background: 'radial-gradient(circle, var(--color-primary-700) 0%, transparent 70%)' }}></div>
+      </div>
       
       <div className="mobile-container relative z-10">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-3 md:mb-4 text-center font-playfair px-4">
-          <span className="text-gradient-primary">
-            Education & Certifications
-          </span>
-        </h2>
-        <p className="text-sm sm:text-base md:text-lg max-w-3xl mx-auto text-center mb-8 md:mb-12 font-inter px-4"
-           style={{ color: 'var(--color-text-secondary)' }}>
-          Professional qualifications and academic background
-        </p>
-        
-        {/* Mobile-optimized carousel */}
-        <div className="relative mt-6 max-w-6xl mx-auto">
-          {/* Navigation buttons - hidden on mobile */}
-          <div className="hidden md:flex absolute left-0 right-0 top-1/2 -translate-y-1/2 justify-between pointer-events-none z-10">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={goToPrev}
-              disabled={currentIndex === 0}
-              className="glass-button pointer-events-auto -ml-6 touch-target"
-              style={{ 
-                background: 'rgba(22, 27, 34, 0.8)',
-                borderColor: 'var(--color-border-secondary)'
-              }}
-            >
-              <ChevronLeft className="h-4 w-4" style={{ color: 'var(--color-text-primary)' }} />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={goToNext}
-              disabled={currentIndex >= maxIndex}
-              className="glass-button pointer-events-auto -mr-6 touch-target"
-              style={{ 
-                background: 'rgba(22, 27, 34, 0.8)',
-                borderColor: 'var(--color-border-secondary)'
-              }}
-            >
-              <ChevronRight className="h-4 w-4" style={{ color: 'var(--color-text-primary)' }} />
-            </Button>
-          </div>
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-playfair">
+            <span className="text-gradient-primary">
+              Education & Certifications
+            </span>
+          </h2>
+          <p className="text-lg max-w-2xl mx-auto font-inter"
+             style={{ color: 'var(--color-text-secondary)' }}>
+            Professional qualifications and academic achievements that drive my expertise
+          </p>
+        </motion.div>
 
-          {/* Carousel container */}
+        {/* Horizontal scrolling container */}
+        <div className="relative">
+          {/* Gradient overlays for fade effect */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[var(--color-surface-primary)] to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[var(--color-surface-primary)] to-transparent z-10 pointer-events-none"></div>
+          
+          {/* Scrolling container */}
           <div 
-            ref={containerRef}
-            className="overflow-hidden px-4 md:px-8"
-            onTouchStart={handleManualInteraction}
+            ref={scrollContainerRef}
+            className="horizontal-scroll-container overflow-hidden"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
-            <div 
-              className="flex transition-transform duration-500 ease-out gap-4 md:gap-6"
-              style={{ 
-                transform: `translateX(-${currentIndex * (100 / itemsVisible)}%)`,
-                width: `${(certifications.length / itemsVisible) * 100}%`
-              }}
-            >
-              {certifications.map((cert, index) => (
-                <div 
-                  key={cert.title} 
-                  className="flex-shrink-0"
-                  style={{ width: `${100 / certifications.length}%` }}
-                  onClick={() => goToSlide(index)}
-                >
-                  <CertificationCard 
-                    item={cert}
-                    isActive={activeCert === index}
-                  />
-                </div>
+            <div className={`horizontal-scroll-content ${isPaused ? 'paused' : ''}`}>
+              {duplicatedCertifications.map((cert, index) => (
+                <CertificationCard
+                  key={`${cert.title}-${index}`}
+                  item={cert}
+                  index={index}
+                />
               ))}
             </div>
           </div>
-          
-          {/* Mobile navigation dots */}
-          <div className="flex justify-center gap-2 mt-6">
-            {Array.from({ length: maxIndex + 1 }, (_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 touch-target ${
-                  currentIndex === index 
-                    ? 'w-6' 
-                    : 'hover:opacity-60'
-                }`}
-                style={{
-                  background: currentIndex === index 
-                    ? 'var(--color-primary-500)' 
-                    : 'rgba(255, 255, 255, 0.2)'
-                }}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
-
-          {/* Swipe indicator for mobile */}
-          <div className="md:hidden text-center mt-4">
-            <p className="text-xs font-inter" style={{ color: 'var(--color-text-muted)' }}>
-              Swipe or tap to navigate
-            </p>
-          </div>
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="text-center mt-8"
+        >
+          <p className="text-sm font-inter" style={{ color: 'var(--color-text-muted)' }}>
+            Hover to pause • Continuous scroll
+          </p>
+        </motion.div>
       </div>
     </section>
   );

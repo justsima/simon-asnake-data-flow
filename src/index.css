@@ -5,6 +5,7 @@
 
 /* Import unified color system */
 @import './styles/colors.css';
+@import './styles/certifications.css';
 
 @tailwind base;
 @tailwind components;
