@@ -63,9 +63,60 @@ export interface MediaFile {
   uploadDate: string;
 }
 
+// Fallback data for when Supabase is not configured
+const fallbackProjects: Project[] = [
+  {
+    id: 1,
+    title: "Executive Sales Intelligence Dashboard",
+    description: "Interactive Power BI dashboard providing executive insights on sales trends, store performance, and inventory management across 200+ retail locations.",
+    challenge: "Fortune 500 retailer needed real-time sales performance visibility across 200+ stores",
+    solution: "Developed interactive Power BI dashboard integrating multiple data sources with advanced DAX measures to provide executive insights on sales trends, store performance, and inventory management.",
+    impact: "32% reduction in reporting time, $1.2M identified in revenue opportunities, and improved decision-making across regional management teams.",
+    technologies: ["Power BI", "SQL", "DAX", "Azure Data Factory"],
+    image: "/placeholder.svg",
+    category: "Power BI",
+    liveUrl: "https://app.powerbi.com/links/sample-executive-dashboard",
+  },
+  {
+    id: 2,
+    title: "Customer Churn Prediction Model",
+    description: "Machine learning model predicting customer churn 60 days in advance using random forest algorithm with 24% reduction in churn rate.",
+    challenge: "Financial services company experiencing unexpected customer attrition",
+    solution: "Developed ML model predicting likely churners 60 days in advance using random forest algorithm with feature engineering on transactional and demographic data points.",
+    impact: "24% reduction in churn rate, $850K annual savings in retention costs, and improved customer satisfaction metrics across targeted segments.",
+    technologies: ["Python", "scikit-learn", "Azure ML", "SQL"],
+    image: "/placeholder.svg",
+    category: "Machine Learning",
+    videoUrl: "https://www.example.com/demos/churn-prediction",
+  },
+  {
+    id: 3,
+    title: "Healthcare Claims ETL Pipeline",
+    description: "Automated ETL pipeline with data quality frameworks integrating 12 healthcare systems, reducing claim processing time from 72 hours to 4 hours.",
+    challenge: "Healthcare provider struggling with data integration from 12 systems",
+    solution: "Designed automated ETL pipeline with validation rules and data quality frameworks to standardize inputs from disparate healthcare systems.",
+    impact: "95% reduction in manual data processing, 99.8% data accuracy achievement, and reduced claim processing time from 72 hours to 4 hours.",
+    technologies: ["Azure Data Factory", "SQL", "Python", "Power BI"],
+    image: "/placeholder.svg",
+    category: "Data Engineering",
+    videoUrl: "https://www.example.com/demos/healthcare-pipeline",
+  },
+];
+
 class DataService {
+  private isSupabaseConfigured(): boolean {
+    const url = import.meta.env.VITE_SUPABASE_URL;
+    const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    return !!(url && key && url !== 'your-supabase-project-url' && key !== 'your-supabase-anon-key');
+  }
+
   // Projects
   async getProjects(): Promise<Project[]> {
+    if (!this.isSupabaseConfigured()) {
+      console.warn('Using fallback data. Please configure Supabase to use the database.');
+      return fallbackProjects;
+    }
+
     try {
       const { data, error } = await supabase
         .from('projects')
@@ -90,16 +141,26 @@ class DataService {
       }));
     } catch (error) {
       console.error('Error fetching projects:', error);
-      throw error;
+      console.warn('Falling back to local data');
+      return fallbackProjects;
     }
   }
 
   async saveProjects(projects: Project[]): Promise<void> {
+    if (!this.isSupabaseConfigured()) {
+      console.warn('Supabase not configured. Changes will not be persisted.');
+      return;
+    }
     // This method is kept for compatibility but individual project operations are preferred
     console.warn('saveProjects is deprecated. Use saveProject for individual operations.');
   }
 
   async saveProject(project: Project): Promise<Project> {
+    if (!this.isSupabaseConfigured()) {
+      console.warn('Supabase not configured. Changes will not be persisted.');
+      return project;
+    }
+
     try {
       const projectData = {
         title: project.title,
@@ -160,6 +221,11 @@ class DataService {
   }
 
   async deleteProject(id: number): Promise<void> {
+    if (!this.isSupabaseConfigured()) {
+      console.warn('Supabase not configured. Changes will not be persisted.');
+      return;
+    }
+
     try {
       const { error } = await supabase
         .from('projects')
@@ -175,6 +241,17 @@ class DataService {
 
   // Certifications
   async getCertifications(): Promise<Certification[]> {
+    if (!this.isSupabaseConfigured()) {
+      // Return fallback data from local JSON
+      try {
+        const response = await fetch('/src/data/certifications.json');
+        const data = await response.json();
+        return data;
+      } catch {
+        return [];
+      }
+    }
+
     try {
       const { data, error } = await supabase
         .from('certifications')
@@ -193,11 +270,16 @@ class DataService {
       }));
     } catch (error) {
       console.error('Error fetching certifications:', error);
-      throw error;
+      return [];
     }
   }
 
   async saveCertifications(certifications: Certification[]): Promise<void> {
+    if (!this.isSupabaseConfigured()) {
+      console.warn('Supabase not configured. Changes will not be persisted.');
+      return;
+    }
+
     try {
       // Clear existing certifications and insert new ones
       const { error: deleteError } = await supabase
@@ -231,6 +313,17 @@ class DataService {
 
   // Skills
   async getSkills(): Promise<SkillCategory[]> {
+    if (!this.isSupabaseConfigured()) {
+      // Return fallback data from local JSON
+      try {
+        const response = await fetch('/src/data/skills.json');
+        const data = await response.json();
+        return data;
+      } catch {
+        return [];
+      }
+    }
+
     try {
       const { data, error } = await supabase
         .from('skill_categories')
@@ -246,11 +339,16 @@ class DataService {
       }));
     } catch (error) {
       console.error('Error fetching skills:', error);
-      throw error;
+      return [];
     }
   }
 
   async saveSkills(skills: SkillCategory[]): Promise<void> {
+    if (!this.isSupabaseConfigured()) {
+      console.warn('Supabase not configured. Changes will not be persisted.');
+      return;
+    }
+
     try {
       // Clear existing skills and insert new ones
       const { error: deleteError } = await supabase
@@ -281,6 +379,12 @@ class DataService {
 
   // Experience
   async getExperience(): Promise<Experience[]> {
+    if (!this.isSupabaseConfigured()) {
+      // Return existing experience data
+      const { experiences } = await import('@/components/experience/experienceData');
+      return experiences;
+    }
+
     try {
       const { data, error } = await supabase
         .from('experiences')
@@ -301,11 +405,17 @@ class DataService {
       }));
     } catch (error) {
       console.error('Error fetching experience:', error);
-      throw error;
+      const { experiences } = await import('@/components/experience/experienceData');
+      return experiences;
     }
   }
 
   async saveExperience(experience: Experience[]): Promise<void> {
+    if (!this.isSupabaseConfigured()) {
+      console.warn('Supabase not configured. Changes will not be persisted.');
+      return;
+    }
+
     try {
       // Clear existing experiences and insert new ones
       const { error: deleteError } = await supabase
@@ -341,6 +451,43 @@ class DataService {
 
   // Personal Info
   async getPersonalInfo(): Promise<PersonalInfo> {
+    if (!this.isSupabaseConfigured()) {
+      // Return fallback data from local JSON
+      try {
+        const response = await fetch('/src/data/personal.json');
+        const data = await response.json();
+        return {
+          name: data.name,
+          title: data.title,
+          email: data.email,
+          phone: data.phone,
+          location: data.location,
+          profileImage: data.profileImage,
+          bio: data.bio,
+          resume: data.resume,
+          social: data.social,
+          aboutDescription: data.aboutDescription,
+        };
+      } catch {
+        return {
+          name: "Simon Asnake",
+          title: "Data Scientist & Power BI Expert",
+          email: "simon.asnake@example.com",
+          phone: "+251 911 123 456",
+          location: "Addis Ababa, Ethiopia",
+          profileImage: "/placeholder.svg",
+          bio: "Passionate data scientist specializing in machine learning, business intelligence, and data-driven solutions.",
+          resume: "/simon-asnake-resume.pdf",
+          social: {
+            linkedin: "https://linkedin.com/in/simon-asnake",
+            github: "https://github.com/simon-asnake",
+            twitter: "https://twitter.com/simon_asnake"
+          },
+          aboutDescription: "I am a data scientist with extensive experience in developing machine learning models, creating interactive dashboards, and driving data-driven decision making across various industries."
+        };
+      }
+    }
+
     try {
       const { data, error } = await supabase
         .from('personal_info')
@@ -369,6 +516,11 @@ class DataService {
   }
 
   async savePersonalInfo(personal: PersonalInfo): Promise<void> {
+    if (!this.isSupabaseConfigured()) {
+      console.warn('Supabase not configured. Changes will not be persisted.');
+      return;
+    }
+
     try {
       const personalData = {
         name: personal.name,
@@ -414,6 +566,11 @@ class DataService {
 
   // Media Management
   async getMedia(): Promise<MediaFile[]> {
+    if (!this.isSupabaseConfigured()) {
+      console.warn('Supabase not configured. Media management requires database setup.');
+      return [];
+    }
+
     try {
       const { data, error } = await supabase
         .from('media')
@@ -432,11 +589,16 @@ class DataService {
       }));
     } catch (error) {
       console.error('Error fetching media:', error);
-      throw error;
+      return [];
     }
   }
 
   async uploadMedia(file: File): Promise<string> {
+    if (!this.isSupabaseConfigured()) {
+      console.warn('Supabase not configured. Media upload requires database setup.');
+      throw new Error('Supabase not configured');
+    }
+
     try {
       // Upload file to Supabase Storage
       const fileExt = file.name.split('.').pop();
@@ -479,6 +641,11 @@ class DataService {
   }
 
   async deleteMedia(id: string): Promise<void> {
+    if (!this.isSupabaseConfigured()) {
+      console.warn('Supabase not configured. Media management requires database setup.');
+      return;
+    }
+
     try {
       // Get media info first
       const { data: media, error: fetchError } = await supabase

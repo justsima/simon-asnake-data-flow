@@ -1,0 +1,16 @@
+{
+  "name": "Simon Asnake",
+  "title": "Data Scientist & Power BI Expert",
+  "email": "simon.asnake@example.com",
+  "phone": "+251 911 123 456",
+  "location": "Addis Ababa, Ethiopia",
+  "profileImage": "/placeholder.svg",
+  "bio": "Passionate data scientist specializing in machine learning, business intelligence, and data-driven solutions. Expert in Power BI development and advanced analytics.",
+  "resume": "/simon-asnake-resume.pdf",
+  "social": {
+    "linkedin": "https://linkedin.com/in/simon-asnake",
+    "github": "https://github.com/simon-asnake",
+    "twitter": "https://twitter.com/simon_asnake"
+  },
+  "aboutDescription": "I am a data scientist with extensive experience in developing machine learning models, creating interactive dashboards, and driving data-driven decision making across various industries."
+}
