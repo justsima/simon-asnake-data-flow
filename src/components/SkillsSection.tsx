@@ -1,5 +1,5 @@
-
 import { useEffect, useRef, useState } from 'react';
+import { dataService } from '@/services/dataService';
 
 interface SkillCardProps {
   title: string;
@@ -22,9 +22,9 @@ const SkillCard = ({ title, icon, skills, delay }: SkillCardProps) => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    // Calculate tilt values (smaller for more subtle effect)
-    const tiltX = (y - centerY) / 20;
-    const tiltY = (centerX - x) / 20;
+    // Subtle tilt for modern effect
+    const tiltX = (y - centerY) / 25;
+    const tiltY = (centerX - x) / 25;
     
     setTilt({ x: tiltX, y: tiltY });
   };
@@ -71,34 +71,24 @@ const SkillCard = ({ title, icon, skills, delay }: SkillCardProps) => {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={resetTilt}
-      className="rounded-lg p-4 md:p-6 transition-all duration-500 transform translate-y-10 opacity-0 hover:shadow-lg"
+      className="modern-glass-card p-4 md:p-6 transition-all duration-500 transform translate-y-10 opacity-0"
       style={{ 
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(${tilt.x !== 0 ? '-5px' : '-10px'})`,
-        transformStyle: 'preserve-3d',
-        background: 'rgba(22, 27, 34, 0.5)',
-        backdropFilter: 'blur(12px)',
-        border: '1px solid rgba(48, 54, 61, 0.6)',
+        transformStyle: 'preserve-3d'
       }}
     >
       <div className="flex items-center mb-4 md:mb-6">
-        <div 
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center mr-3 md:mr-4 transform transition-transform hover:scale-110"
-          style={{
-            background: 'rgba(138, 137, 255, 0.1)',
-            backdropFilter: 'blur(8px)',
-            border: '1px solid rgba(138, 137, 255, 0.3)',
-          }}
-        >
+        <div className="modern-glass-card w-10 h-10 md:w-12 md:h-12 flex items-center justify-center mr-3 md:mr-4 transform transition-transform hover:scale-110">
           <span className="text-lg md:text-2xl">{icon}</span>
         </div>
-        <h3 className="text-lg md:text-xl font-medium text-white font-montserrat">{title}</h3>
+        <h3 className="text-lg md:text-xl font-medium text-white hero-subtitle">{title}</h3>
       </div>
       
       <div className="space-y-3 md:space-y-4">
         {skills.map((skill) => (
           <div key={skill.name} className="mb-2">
             <div className="flex justify-between mb-1">
-              <p className="text-xs md:text-sm font-medium text-gray-300">{skill.name}</p>
+              <p className="text-xs md:text-sm font-medium text-gray-300 hero-description">{skill.name}</p>
               <p className="text-xs md:text-sm font-medium text-[#8A89FF]">{skill.percentage}%</p>
             </div>
             <div className="progress-bar">
@@ -116,8 +106,7 @@ const SkillCard = ({ title, icon, skills, delay }: SkillCardProps) => {
 
 const SkillsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  
-  const skillCategories = [
+  const [skillCategories, setSkillCategories] = useState([
     {
       title: "Data Analysis",
       icon: "📊",
@@ -159,7 +148,23 @@ const SkillsSection = () => {
         { name: "JavaScript", percentage: 75 },
       ],
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    // Load skills from database if available
+    const loadSkills = async () => {
+      try {
+        const data = await dataService.getSkills();
+        if (data && data.length > 0) {
+          setSkillCategories(data);
+        }
+      } catch (error) {
+        console.log('Using fallback skills data');
+      }
+    };
+
+    loadSkills();
+  }, []);
 
   return (
     <section 
@@ -168,8 +173,10 @@ const SkillsSection = () => {
       className="py-20 relative"
     >
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-3 md:mb-4 text-center font-playfair">Skills & Expertise</h2>
-        <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-3xl mx-auto text-center mb-8 md:mb-12 font-inter px-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 text-center hero-title">
+          Skills & Expertise
+        </h2>
+        <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-3xl mx-auto text-center mb-8 md:mb-12 px-4 hero-description">
           My technical toolkit for delivering data-driven solutions across industries
         </p>
         
