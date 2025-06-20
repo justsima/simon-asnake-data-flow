@@ -99,9 +99,9 @@ const HeroSection = () => {
           setCurrentRole(prev => (prev + 1) % roles.length);
           setCurrentGradient(prev => (prev + 1) % gradients.length);
           setIsRoleChanging(false);
-        }, 300);
+        }, 400);
       }
-    }, 4000);
+    }, 3000);
 
     // Setup intersection observer to hide scroll prompt when user scrolls down
     const aboutSection = document.getElementById('about');
@@ -161,27 +161,26 @@ const HeroSection = () => {
               </div>
             </h1>
             
-            {/* Dynamic Role with Visible Text and Strong Contrast */}
+            {/* Dynamic Role with Clear Visibility and Smooth Animation */}
             <h2 className="hero-subtitle text-xl sm:text-2xl md:text-3xl lg:text-4xl text-left mb-6">
               <span className="text-gray-300 font-medium">I'm a </span>
               <span 
                 ref={roleRef}
-                className="role-text inline-block opacity-0 transition-all duration-700 ease-out font-semibold"
+                className="role-text inline-block opacity-0 font-semibold"
                 style={{
-                  color: '#FFFFFF', // Fallback solid white color
-                  background: `linear-gradient(135deg, ${gradients[currentGradient].replace('from-', '').replace('via-', '').replace('to-', '').split(' ').join(', ')})`,
-                  backgroundSize: '200% 200%',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  animation: isRoleChanging ? 'none' : 'subtleGradientShift 4s ease-in-out infinite',
-                  display: 'inline-block',
-                  visibility: 'visible',
-                  zIndex: 10,
-                  position: 'relative',
-                  textShadow: '0 0 10px rgba(138, 137, 255, 0.5)',
-                  minWidth: '200px', // Prevent layout shift
-                  textAlign: 'left'
+                  color: isRoleChanging ? 'transparent' : '#8A89FF',
+                  background: isRoleChanging ? 'none' : `linear-gradient(45deg, #8A89FF, #7676FF, #9D8CFF)`,
+                  backgroundSize: '300% 300%',
+                  WebkitBackgroundClip: isRoleChanging ? 'unset' : 'text',
+                  WebkitTextFillColor: isRoleChanging ? 'transparent' : 'transparent',
+                  backgroundClip: isRoleChanging ? 'unset' : 'text',
+                  animation: isRoleChanging ? 'none' : 'smoothGradientShift 3s ease-in-out infinite',
+                  transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  transform: isRoleChanging ? 'translateY(-5px) scale(0.95)' : 'translateY(0) scale(1)',
+                  opacity: isRoleChanging ? 0.3 : 1,
+                  textShadow: '0 2px 8px rgba(138, 137, 255, 0.3)',
+                  minWidth: '250px',
+                  display: 'inline-block'
                 }}
               >
                 {roles[currentRole]}
@@ -285,25 +284,14 @@ const HeroSection = () => {
           }
         }
 
-        /* Subtle gradient shift for role text */
-        @keyframes subtleGradientShift {
+        /* Smooth gradient shift for role text */
+        @keyframes smoothGradientShift {
           0%, 100% {
             background-position: 0% 50%;
           }
           50% {
             background-position: 100% 50%;
           }
-        }
-
-        /* Role transition animations with stronger visibility */
-        .role-fade-out {
-          opacity: 0 !important;
-          transform: translateY(-8px) scale(0.98) !important;
-        }
-
-        .role-fade-in {
-          opacity: 1 !important;
-          transform: translateY(0) scale(1) !important;
         }
 
         /* Smooth fade-in animation */
@@ -322,12 +310,11 @@ const HeroSection = () => {
           }
         }
 
-        /* Enhanced role text visibility */
+        /* Enhanced role text visibility and smoothness */
         .role-text {
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
           text-rendering: optimizeLegibility;
-          font-feature-settings: "kern" 1;
           backface-visibility: hidden;
           transform: translateZ(0);
         }
@@ -338,16 +325,6 @@ const HeroSection = () => {
             color: #8A89FF !important;
             background: none !important;
             -webkit-text-fill-color: unset !important;
-          }
-        }
-
-        /* High contrast mode support */
-        @media (prefers-contrast: high) {
-          .role-text {
-            color: #FFFFFF !important;
-            background: none !important;
-            -webkit-text-fill-color: unset !important;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
           }
         }
 
@@ -362,8 +339,7 @@ const HeroSection = () => {
             animation: none !important;
           }
           
-          .role-fade-out,
-          .role-fade-in {
+          * {
             transition: none !important;
           }
         }
