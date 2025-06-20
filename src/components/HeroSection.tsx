@@ -195,46 +195,64 @@ const HeroSection = () => {
               {/* Text content will be dynamically populated with staggered animation */}
             </p>
             
-            {/* Enhanced CTA Buttons with Delayed Appearance */}
+            {/* Enhanced CTA Buttons with Glass Effect and Rounded Corners */}
             <div 
               ref={buttonsRef}
               className="flex flex-col sm:flex-row gap-4 md:gap-6 opacity-0 mt-8"
             >
-              <Button
-                variant="outline"
-                className="button-slide-effect group bg-gradient-to-r from-[#8A89FF]/10 to-[#6262FF]/10 backdrop-blur-lg border-[#8A89FF]/20 hover:bg-gradient-to-r hover:from-[#8A89FF]/20 hover:to-[#6262FF]/20 hover:border-[#8A89FF]/40 transition-all duration-500 text-white px-6 md:px-8 py-3 md:py-4 font-medium text-base md:text-lg"
+              <button
+                className="glass-button-primary group relative overflow-hidden px-8 py-4 rounded-2xl font-medium text-lg transition-all duration-700 ease-out transform hover:scale-105 hover:-translate-y-1"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, projects: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, projects: false}))}
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <span className="relative z-10 flex items-center gap-3">
+                {/* Glass background layer */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#8A89FF]/15 via-[#7676FF]/10 to-[#6262FF]/15 backdrop-blur-md border border-[#8A89FF]/25 rounded-2xl"></div>
+                
+                {/* Hover gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#8A89FF]/25 via-[#7676FF]/20 to-[#6262FF]/25 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
+                
+                {/* Subtle shimmer effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-2xl"></div>
+                
+                {/* Content */}
+                <span className="relative z-10 flex items-center justify-center gap-3 text-white">
                   View Projects
-                  <span className="arrow-container overflow-hidden w-5 md:w-6">
+                  <span className="arrow-container overflow-hidden w-6">
                     <ArrowRight 
-                      className={`transition-all duration-300 transform ${showArrow.projects ? 'translate-x-0' : '-translate-x-full'}`}
+                      className={`transition-all duration-500 transform ${showArrow.projects ? 'translate-x-0 rotate-0' : '-translate-x-full rotate-12'}`}
                       size={20} 
                     />
                   </span>
                 </span>
-              </Button>
+              </button>
               
-              <Button
-                variant="outline"
-                className="button-slide-effect group bg-gradient-to-r from-[#7676FF]/10 to-[#8A89FF]/10 backdrop-blur-lg border-[#7676FF]/20 hover:bg-gradient-to-r hover:from-[#7676FF]/20 hover:to-[#8A89FF]/20 hover:border-[#7676FF]/40 transition-all duration-500 text-white px-6 md:px-8 py-3 md:py-4 font-medium text-base md:text-lg"
+              <button
+                className="glass-button-secondary group relative overflow-hidden px-8 py-4 rounded-2xl font-medium text-lg transition-all duration-700 ease-out transform hover:scale-105 hover:-translate-y-1"
                 onMouseEnter={() => setShowArrow(prev => ({...prev, contact: true}))}
                 onMouseLeave={() => setShowArrow(prev => ({...prev, contact: false}))}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <span className="relative z-10 flex items-center gap-3">
+                {/* Glass background layer */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#7676FF]/15 via-[#9D8CFF]/10 to-[#8A89FF]/15 backdrop-blur-md border border-[#7676FF]/25 rounded-2xl"></div>
+                
+                {/* Hover gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#7676FF]/25 via-[#9D8CFF]/20 to-[#8A89FF]/25 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
+                
+                {/* Subtle shimmer effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-2xl"></div>
+                
+                {/* Content */}
+                <span className="relative z-10 flex items-center justify-center gap-3 text-white">
                   Get in touch
-                  <span className="arrow-container overflow-hidden w-5 md:w-6">
+                  <span className="arrow-container overflow-hidden w-6">
                     <ArrowRight 
-                      className={`transition-all duration-300 transform ${showArrow.contact ? 'translate-x-0' : '-translate-x-full'}`}
+                      className={`transition-all duration-500 transform ${showArrow.contact ? 'translate-x-0 rotate-0' : '-translate-x-full rotate-12'}`}
                       size={20} 
                     />
                   </span>
                 </span>
-              </Button>
+              </button>
             </div>
           </div>
         </div>
@@ -319,6 +337,28 @@ const HeroSection = () => {
           transform: translateZ(0);
         }
 
+        /* Glass button styles */
+        .glass-button-primary,
+        .glass-button-secondary {
+          position: relative;
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          box-shadow: 
+            0 8px 32px rgba(138, 137, 255, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 1px 0 rgba(255, 255, 255, 0.05);
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+          will-change: transform, box-shadow;
+        }
+
+        .glass-button-primary:hover,
+        .glass-button-secondary:hover {
+          box-shadow: 
+            0 12px 40px rgba(138, 137, 255, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
         /* Fallback for browsers that don't support background-clip */
         @supports not (-webkit-background-clip: text) {
           .role-text {
@@ -339,8 +379,28 @@ const HeroSection = () => {
             animation: none !important;
           }
           
+          .glass-button-primary,
+          .glass-button-secondary {
+            transition: none !important;
+          }
+          
+          .glass-button-primary:hover,
+          .glass-button-secondary:hover {
+            transform: none !important;
+          }
+          
           * {
             transition: none !important;
+          }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+          .glass-button-primary,
+          .glass-button-secondary {
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 16px;
           }
         }
       `}</style>
