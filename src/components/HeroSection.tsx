@@ -44,16 +44,16 @@ const HeroSection = () => {
         titleRef.current.classList.add('animate-fade-in');
       }
       
-      // 2. Second: Role text appears (after 600ms)
+      // 2. Second: Role text appears (after 800ms - increased delay)
       setTimeout(() => {
         setRoleVisible(true);
         if (roleRef.current) {
           roleRef.current.classList.remove('opacity-0');
           roleRef.current.classList.add('animate-fade-in');
         }
-      }, 600);
+      }, 800);
       
-      // 3. Third: Description appears word by word (after 1200ms)
+      // 3. Third: Description appears word by word (after 1400ms)
       setTimeout(() => {
         if (textRef.current) {
           const text = "Empowering businesses with data-driven insights through advanced visualization and analytics, transforming complex datasets into strategic business intelligence.";
@@ -79,15 +79,15 @@ const HeroSection = () => {
             }
           });
         }
-      }, 1200);
+      }, 1400);
       
-      // 4. Fourth: Buttons appear (after 2500ms)
+      // 4. Fourth: Buttons appear (after 2800ms)
       setTimeout(() => {
         if (buttonsRef.current) {
           buttonsRef.current.classList.remove('opacity-0');
           buttonsRef.current.classList.add('animate-fade-in');
         }
-      }, 2500);
+      }, 2800);
     }, 300);
 
     // Start role transition after role becomes visible
@@ -161,21 +161,27 @@ const HeroSection = () => {
               </div>
             </h1>
             
-            {/* Dynamic Role with Subtle Purple Gradient Animation */}
+            {/* Dynamic Role with Visible Text and Strong Contrast */}
             <h2 className="hero-subtitle text-xl sm:text-2xl md:text-3xl lg:text-4xl text-left mb-6">
-              <span className="text-gray-300">I'm a </span>
+              <span className="text-gray-300 font-medium">I'm a </span>
               <span 
                 ref={roleRef}
-                className={`role-text inline-block opacity-0 transition-all duration-700 ease-out ${isRoleChanging ? 'role-fade-out' : 'role-fade-in'}`}
+                className="role-text inline-block opacity-0 transition-all duration-700 ease-out font-semibold"
                 style={{
+                  color: '#FFFFFF', // Fallback solid white color
                   background: `linear-gradient(135deg, ${gradients[currentGradient].replace('from-', '').replace('via-', '').replace('to-', '').split(' ').join(', ')})`,
                   backgroundSize: '200% 200%',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
                   animation: isRoleChanging ? 'none' : 'subtleGradientShift 4s ease-in-out infinite',
-                  opacity: roleVisible && !isRoleChanging ? 1 : 0,
-                  transform: roleVisible && !isRoleChanging ? 'translateY(0) scale(1)' : 'translateY(-8px) scale(0.98)'
+                  display: 'inline-block',
+                  visibility: 'visible',
+                  zIndex: 10,
+                  position: 'relative',
+                  textShadow: '0 0 10px rgba(138, 137, 255, 0.5)',
+                  minWidth: '200px', // Prevent layout shift
+                  textAlign: 'left'
                 }}
               >
                 {roles[currentRole]}
@@ -289,7 +295,7 @@ const HeroSection = () => {
           }
         }
 
-        /* Role transition animations */
+        /* Role transition animations with stronger visibility */
         .role-fade-out {
           opacity: 0 !important;
           transform: translateY(-8px) scale(0.98) !important;
@@ -313,6 +319,35 @@ const HeroSection = () => {
           to {
             opacity: 1;
             transform: translateY(0);
+          }
+        }
+
+        /* Enhanced role text visibility */
+        .role-text {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          text-rendering: optimizeLegibility;
+          font-feature-settings: "kern" 1;
+          backface-visibility: hidden;
+          transform: translateZ(0);
+        }
+
+        /* Fallback for browsers that don't support background-clip */
+        @supports not (-webkit-background-clip: text) {
+          .role-text {
+            color: #8A89FF !important;
+            background: none !important;
+            -webkit-text-fill-color: unset !important;
+          }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+          .role-text {
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-text-fill-color: unset !important;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
           }
         }
 
