@@ -258,9 +258,9 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Enhanced Scroll Prompt */}
+      {/* Enhanced Scroll Prompt - Fixed Centering */}
       <motion.div 
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-400"
+        className="fixed bottom-8 left-0 right-0 flex flex-col items-center justify-center text-gray-400 z-20"
         initial={{ opacity: 0, y: 10 }}
         animate={{ 
           opacity: scrollPromptVisible ? 1 : 0,
@@ -268,9 +268,9 @@ const HeroSection = () => {
         }}
         transition={{ duration: 0.5 }}
       >
-        <p className="text-sm mb-3 font-medium tracking-wide hero-description">Scroll to explore</p>
+        <p className="text-sm mb-3 font-medium tracking-wide hero-description text-center">Scroll to explore</p>
         <motion.div 
-          className="w-6 h-10 rounded-full border-2 border-gray-400 flex items-start justify-center p-1"
+          className="w-6 h-10 rounded-full border-2 border-gray-400 flex items-start justify-center p-1 mx-auto"
           animate={{ y: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
