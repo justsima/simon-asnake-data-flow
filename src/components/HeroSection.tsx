@@ -133,11 +133,11 @@ const HeroSection = () => {
       
       <div className="container mx-auto px-4 z-10">
         <div className="max-w-5xl ml-4 md:ml-8 lg:ml-12">
-          <div className="space-y-6 md:space-y-8">
+          <div className="space-y-8 md:space-y-10">
             {/* Main Title with Side-by-Side Layout and Continuous Gradient for Asnake */}
             <h1 
               ref={titleRef}
-              className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl opacity-0 text-left leading-tight"
+              className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl opacity-0 text-left leading-tight mb-8"
             >
               <div className="flex flex-wrap items-baseline gap-4 md:gap-6">
                 <span className="text-white font-semibold">Simon</span>
@@ -158,7 +158,7 @@ const HeroSection = () => {
             </h1>
             
             {/* Dynamic Role with Subtle Purple Gradient Animation */}
-            <h2 className="hero-subtitle text-lg sm:text-xl md:text-2xl lg:text-3xl text-left">
+            <h2 className="hero-subtitle text-xl sm:text-2xl md:text-3xl lg:text-4xl text-left mb-6">
               <span className="text-gray-300">I'm a </span>
               <span 
                 ref={roleRef}
@@ -179,7 +179,7 @@ const HeroSection = () => {
             {/* Description with Staggered Word Animation */}
             <p 
               ref={textRef}
-              className="hero-description text-base sm:text-lg md:text-xl text-gray-300 max-w-full md:max-w-4xl text-left leading-relaxed"
+              className="hero-description text-lg sm:text-xl md:text-2xl text-gray-300 max-w-full md:max-w-4xl text-left leading-relaxed mb-8"
             >
               {/* Text content will be dynamically populated with staggered animation */}
             </p>
@@ -187,7 +187,7 @@ const HeroSection = () => {
             {/* Enhanced CTA Buttons with Delayed Appearance */}
             <div 
               ref={buttonsRef}
-              className="flex flex-col sm:flex-row gap-4 md:gap-6 opacity-0"
+              className="flex flex-col sm:flex-row gap-4 md:gap-6 opacity-0 mt-8"
             >
               <Button
                 variant="outline"
