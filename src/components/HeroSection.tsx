@@ -27,6 +27,7 @@ const HeroSection = () => {
   const [showArrow, setShowArrow] = useState({ projects: false, contact: false });
   const [scrollPromptVisible, setScrollPromptVisible] = useState(true);
   const [isRoleChanging, setIsRoleChanging] = useState(false);
+  const [roleVisible, setRoleVisible] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
   const roleRef = useRef<HTMLSpanElement>(null);
@@ -45,6 +46,7 @@ const HeroSection = () => {
       
       // 2. Second: Role text appears (after 600ms)
       setTimeout(() => {
+        setRoleVisible(true);
         if (roleRef.current) {
           roleRef.current.classList.remove('opacity-0');
           roleRef.current.classList.add('animate-fade-in');
@@ -88,15 +90,17 @@ const HeroSection = () => {
       }, 2500);
     }, 300);
 
-    // Smooth role transition with purple gradient
+    // Start role transition after role becomes visible
     const roleInterval = setInterval(() => {
-      setIsRoleChanging(true);
-      
-      setTimeout(() => {
-        setCurrentRole(prev => (prev + 1) % roles.length);
-        setCurrentGradient(prev => (prev + 1) % gradients.length);
-        setIsRoleChanging(false);
-      }, 300);
+      if (roleVisible) {
+        setIsRoleChanging(true);
+        
+        setTimeout(() => {
+          setCurrentRole(prev => (prev + 1) % roles.length);
+          setCurrentGradient(prev => (prev + 1) % gradients.length);
+          setIsRoleChanging(false);
+        }, 300);
+      }
     }, 4000);
 
     // Setup intersection observer to hide scroll prompt when user scrolls down
@@ -125,7 +129,7 @@ const HeroSection = () => {
       clearTimeout(timer);
       clearInterval(roleInterval);
     };
-  }, []);
+  }, [roleVisible]);
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center">
@@ -169,7 +173,9 @@ const HeroSection = () => {
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                  animation: isRoleChanging ? 'none' : 'subtleGradientShift 4s ease-in-out infinite'
+                  animation: isRoleChanging ? 'none' : 'subtleGradientShift 4s ease-in-out infinite',
+                  opacity: roleVisible && !isRoleChanging ? 1 : 0,
+                  transform: roleVisible && !isRoleChanging ? 'translateY(0) scale(1)' : 'translateY(-8px) scale(0.98)'
                 }}
               >
                 {roles[currentRole]}
@@ -285,13 +291,13 @@ const HeroSection = () => {
 
         /* Role transition animations */
         .role-fade-out {
-          opacity: 0;
-          transform: translateY(-8px) scale(0.98);
+          opacity: 0 !important;
+          transform: translateY(-8px) scale(0.98) !important;
         }
 
         .role-fade-in {
-          opacity: 1;
-          transform: translateY(0) scale(1);
+          opacity: 1 !important;
+          transform: translateY(0) scale(1) !important;
         }
 
         /* Smooth fade-in animation */
