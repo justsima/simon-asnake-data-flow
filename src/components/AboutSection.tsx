@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 
@@ -149,48 +148,55 @@ const AboutSection = () => {
       className="py-20 relative"
     >
       <div className="container mx-auto px-4 relative z-10">
-        <div className="rounded-xl overflow-hidden" style={{
-          background: 'rgba(32, 30, 67, 0.4)', // Main theme: #201E43
-          backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(50, 48, 90, 0.6)',
-        }}>
-          {/* Main content container */}
-          <div className="flex flex-col lg:flex-row">
-            {/* Left column - Image and main text */}
+        {/* Section Title */}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-playfair">
+            <span className="text-gradient-primary">
+              About Me
+            </span>
+          </h2>
+          <p className="text-lg max-w-2xl mx-auto font-inter"
+             style={{ color: 'var(--color-text-secondary)' }}>
+            Transforming data into strategic insights that drive business growth
+          </p>
+        </div>
+
+        {/* Main Content Container */}
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            
+            {/* Left Column - Image and Introduction */}
             <div 
               ref={imageContainerRef}
               onMouseMove={handleImageContainerMouseMove}
               onMouseLeave={resetImageTilt}
-              className="w-full lg:w-1/2 p-4 md:p-6 lg:p-8 transition-all duration-700 transform translate-y-10 opacity-0"
+              className="transition-all duration-700 transform translate-y-10 opacity-0"
               style={{ 
                 transform: `perspective(1000px) rotateX(${imageTilt.x}deg) rotateY(${imageTilt.y}deg) translateY(-10px)`,
                 transformStyle: 'preserve-3d'
               }}
             >
-              {/* Image with simplified 3D layered glass effect - mobile optimized */}
-              <div className="rounded-lg overflow-hidden relative mb-4 md:mb-6 shadow-xl transform transition-all duration-500 hover:scale-[1.01] max-w-[200px] sm:max-w-[250px] md:max-w-xs mx-auto lg:mx-0">
+              {/* Professional Image */}
+              <div className="rounded-xl overflow-hidden relative mb-8 shadow-xl transform transition-all duration-500 hover:scale-[1.02] max-w-sm mx-auto lg:mx-0">
                 <div style={{
-                  background: 'rgba(40, 38, 70, 0.7)', // Second layer: lighter than main theme
-                  backdropFilter: 'blur(8px)',
-                  border: '1px solid rgba(60, 58, 100, 0.6)',
-                }} className="p-1 rounded-lg">
+                  background: 'rgba(138, 137, 255, 0.1)',
+                  backdropFilter: 'blur(12px)',
+                  border: '1px solid rgba(138, 137, 255, 0.2)',
+                }} className="p-1 rounded-xl">
                   <div className="bg-[#302E53]/70 rounded-lg aspect-[3/4] flex items-center justify-center">
-                    <p className="text-gray-400 text-center text-xs sm:text-sm px-2 md:px-4">Professional headshot placeholder</p>
+                    <p className="text-gray-400 text-center text-sm px-4">Professional headshot placeholder</p>
                   </div>
                 </div>
               </div>
               
-              {/* Main introduction text - mobile optimized */}
-              <div ref={contentRef} className="space-y-3 md:space-y-4">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-playfair font-semibold text-white transition-all duration-500 transform translate-y-10 opacity-0 text-center lg:text-left">
-                  About Me
-                </h2>
-                
-                <p className="text-sm sm:text-base md:text-lg transition-all duration-500 transform translate-y-10 opacity-0 text-gray-300 font-inter text-center lg:text-left">
+              {/* Introduction Text */}
+              <div ref={contentRef} className="space-y-6">
+                <p className="text-lg leading-relaxed transition-all duration-500 transform translate-y-10 opacity-0 text-gray-300 font-inter">
                   As a Data Scientist and Power BI Expert, I specialize in transforming complex data into strategic business insights. With extensive experience across multiple industries, I've helped organizations leverage their data for informed decision-making.
                 </p>
 
-                <div className="flex flex-wrap gap-2 md:gap-4 pt-2 justify-center lg:justify-start">
+                {/* Key Skills Icons */}
+                <div className="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
                   <Icon3D 
                     icon="📊" 
                     title="Data Visualization" 
@@ -210,64 +216,99 @@ const AboutSection = () => {
               </div>
             </div>
             
-            {/* Right column - Bullet points */}
-            <div className="w-full lg:w-1/2 backdrop-blur-lg p-4 md:p-6 lg:p-8" style={{
-              background: 'rgba(32, 30, 67, 0.3)', // Main theme with lower opacity
-              backdropFilter: 'blur(10px)',
-            }}>
-              <h3 className="text-lg sm:text-xl font-medium text-[#8A89FF] mb-4 md:mb-6 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat text-center lg:text-left">
-                Core Focus Areas
-              </h3>
-              
-              <ul className="space-y-3 md:space-y-4 lg:space-y-6">
-                <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-1.5 md:mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] mr-2 md:mr-3 flex-shrink-0"></span>
-                  <div style={{
-                    background: 'rgba(40, 38, 70, 0.5)', // Second layer
-                    backdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(50, 48, 90, 0.6)',
-                  }} className="p-3 md:p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
-                    <p className="font-medium text-white font-montserrat text-sm md:text-base">Data Visualization</p>
-                    <p className="text-gray-300 font-inter text-xs md:text-sm">Creating intuitive, interactive dashboards that translate complex data into actionable insights. Specializing in Power BI, Tableau, and custom visualization libraries.</p>
-                  </div>
-                </li>
+            {/* Right Column - Core Focus Areas */}
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-2xl font-semibold text-[#8A89FF] mb-8 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat">
+                  Core Focus Areas
+                </h3>
                 
-                <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-1.5 md:mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] mr-2 md:mr-3 flex-shrink-0"></span>
-                  <div style={{
-                    background: 'rgba(40, 38, 70, 0.5)', // Second layer
-                    backdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(50, 48, 90, 0.6)',
-                  }} className="p-3 md:p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
-                    <p className="font-medium text-white font-montserrat text-sm md:text-base">Predictive Analytics</p>
-                    <p className="text-gray-300 font-inter text-xs md:text-sm">Building machine learning models that anticipate business trends and customer behaviors. Using advanced algorithms to forecast market changes and identify opportunities.</p>
+                <div className="space-y-6">
+                  {/* Data Visualization */}
+                  <div className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0">
+                    <div style={{
+                      background: 'rgba(138, 137, 255, 0.1)',
+                      backdropFilter: 'blur(12px)',
+                      border: '1px solid rgba(138, 137, 255, 0.2)',
+                    }} className="p-6 rounded-xl transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                      <div className="flex items-start space-x-4">
+                        <div className="w-3 h-3 mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] flex-shrink-0"></div>
+                        <div>
+                          <h4 className="font-semibold text-white font-montserrat text-lg mb-2 group-hover:text-[#8A89FF] transition-colors">
+                            Data Visualization
+                          </h4>
+                          <p className="text-gray-300 font-inter leading-relaxed">
+                            Creating intuitive, interactive dashboards that translate complex data into actionable insights. Specializing in Power BI, Tableau, and custom visualization libraries.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </li>
-                
-                <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-1.5 md:mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] mr-2 md:mr-3 flex-shrink-0"></span>
-                  <div style={{
-                    background: 'rgba(40, 38, 70, 0.5)', // Second layer
-                    backdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(50, 48, 90, 0.6)',
-                  }} className="p-3 md:p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
-                    <p className="font-medium text-white font-montserrat text-sm md:text-base">Data Pipeline Development</p>
-                    <p className="text-gray-300 font-inter text-xs md:text-sm">Streamlining data flow from diverse sources to enable real-time analytics. Creating robust ETL processes that ensure data quality and accessibility.</p>
+
+                  {/* Predictive Analytics */}
+                  <div className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0">
+                    <div style={{
+                      background: 'rgba(138, 137, 255, 0.1)',
+                      backdropFilter: 'blur(12px)',
+                      border: '1px solid rgba(138, 137, 255, 0.2)',
+                    }} className="p-6 rounded-xl transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                      <div className="flex items-start space-x-4">
+                        <div className="w-3 h-3 mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] flex-shrink-0"></div>
+                        <div>
+                          <h4 className="font-semibold text-white font-montserrat text-lg mb-2 group-hover:text-[#8A89FF] transition-colors">
+                            Predictive Analytics
+                          </h4>
+                          <p className="text-gray-300 font-inter leading-relaxed">
+                            Building machine learning models that anticipate business trends and customer behaviors. Using advanced algorithms to forecast market changes and identify opportunities.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </li>
-                
-                <li className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0 flex items-start">
-                  <span className="w-2 h-2 mt-1.5 md:mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] mr-2 md:mr-3 flex-shrink-0"></span>
-                  <div style={{
-                    background: 'rgba(40, 38, 70, 0.5)', // Second layer
-                    backdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(50, 48, 90, 0.6)',
-                  }} className="p-3 md:p-4 rounded-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full">
-                    <p className="font-medium text-white font-montserrat text-sm md:text-base">Strategic Data Consulting</p>
-                    <p className="text-gray-300 font-inter text-xs md:text-sm">Advising organizations on data strategy and governance. Helping teams implement best practices for data management and derive maximum value from their information assets.</p>
+
+                  {/* Data Pipeline Development */}
+                  <div className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0">
+                    <div style={{
+                      background: 'rgba(138, 137, 255, 0.1)',
+                      backdropFilter: 'blur(12px)',
+                      border: '1px solid rgba(138, 137, 255, 0.2)',
+                    }} className="p-6 rounded-xl transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                      <div className="flex items-start space-x-4">
+                        <div className="w-3 h-3 mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] flex-shrink-0"></div>
+                        <div>
+                          <h4 className="font-semibold text-white font-montserrat text-lg mb-2 group-hover:text-[#8A89FF] transition-colors">
+                            Data Pipeline Development
+                          </h4>
+                          <p className="text-gray-300 font-inter leading-relaxed">
+                            Streamlining data flow from diverse sources to enable real-time analytics. Creating robust ETL processes that ensure data quality and accessibility.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </li>
-              </ul>
+
+                  {/* Strategic Data Consulting */}
+                  <div className="about-list-item transition-all duration-500 transform translate-x-10 opacity-0">
+                    <div style={{
+                      background: 'rgba(138, 137, 255, 0.1)',
+                      backdropFilter: 'blur(12px)',
+                      border: '1px solid rgba(138, 137, 255, 0.2)',
+                    }} className="p-6 rounded-xl transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                      <div className="flex items-start space-x-4">
+                        <div className="w-3 h-3 mt-2 rounded-full bg-gradient-to-r from-[#8A89FF] to-[#6262FF] flex-shrink-0"></div>
+                        <div>
+                          <h4 className="font-semibold text-white font-montserrat text-lg mb-2 group-hover:text-[#8A89FF] transition-colors">
+                            Strategic Data Consulting
+                          </h4>
+                          <p className="text-gray-300 font-inter leading-relaxed">
+                            Advising organizations on data strategy and governance. Helping teams implement best practices for data management and derive maximum value from their information assets.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
