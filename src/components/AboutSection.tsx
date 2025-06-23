@@ -148,7 +148,7 @@ const AboutSection = () => {
       className="py-20 relative"
     >
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section Title */}
+        {/* Section Title - Moved to top for better symmetry */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 font-playfair">
             <span className="text-gradient-primary">
@@ -161,30 +161,32 @@ const AboutSection = () => {
           </p>
         </div>
 
-        {/* Main Content Container */}
+        {/* Main Content Container - Removed background for cleaner look */}
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             
-            {/* Left Column - Image and Introduction */}
+            {/* Left Column - Circular Image and Introduction */}
             <div 
               ref={imageContainerRef}
               onMouseMove={handleImageContainerMouseMove}
               onMouseLeave={resetImageTilt}
-              className="transition-all duration-700 transform translate-y-10 opacity-0"
+              className="transition-all duration-700 transform translate-y-10 opacity-0 text-center lg:text-left"
               style={{ 
                 transform: `perspective(1000px) rotateX(${imageTilt.x}deg) rotateY(${imageTilt.y}deg) translateY(-10px)`,
                 transformStyle: 'preserve-3d'
               }}
             >
-              {/* Professional Image */}
-              <div className="rounded-xl overflow-hidden relative mb-8 shadow-xl transform transition-all duration-500 hover:scale-[1.02] max-w-sm mx-auto lg:mx-0">
-                <div style={{
-                  background: 'rgba(138, 137, 255, 0.1)',
-                  backdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(138, 137, 255, 0.2)',
-                }} className="p-1 rounded-xl">
-                  <div className="bg-[#302E53]/70 rounded-lg aspect-[3/4] flex items-center justify-center">
-                    <p className="text-gray-400 text-center text-sm px-4">Professional headshot placeholder</p>
+              {/* Circular Professional Image - Fixed sizing */}
+              <div className="mb-8 flex justify-center lg:justify-start">
+                <div className="w-48 h-48 rounded-full overflow-hidden relative shadow-xl transform transition-all duration-500 hover:scale-105">
+                  <div style={{
+                    background: 'rgba(138, 137, 255, 0.1)',
+                    backdropFilter: 'blur(12px)',
+                    border: '2px solid rgba(138, 137, 255, 0.3)',
+                  }} className="w-full h-full rounded-full p-1">
+                    <div className="w-full h-full bg-[#302E53]/70 rounded-full flex items-center justify-center">
+                      <p className="text-gray-400 text-center text-sm px-4">Professional Photo</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -216,10 +218,10 @@ const AboutSection = () => {
               </div>
             </div>
             
-            {/* Right Column - Core Focus Areas */}
+            {/* Right Column - Core Focus Areas - Removed background */}
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-semibold text-[#8A89FF] mb-8 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat">
+                <h3 className="text-2xl font-semibold text-[#8A89FF] mb-8 transition-all duration-500 transform translate-y-10 opacity-0 font-montserrat text-center lg:text-left">
                   Core Focus Areas
                 </h3>
                 
