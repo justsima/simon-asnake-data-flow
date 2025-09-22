@@ -1,5 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react';
+import skillsData from '@/data/skills.json';
 
 interface SkillCardProps {
   title: string;
@@ -116,50 +117,7 @@ const SkillCard = ({ title, icon, skills, delay }: SkillCardProps) => {
 
 const SkillsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  
-  const skillCategories = [
-    {
-      title: "Data Analysis",
-      icon: "📊",
-      skills: [
-        { name: "Power BI Dashboard Development", percentage: 95 },
-        { name: "Exploratory Data Analysis", percentage: 90 },
-        { name: "KPI Tracking Systems", percentage: 92 },
-        { name: "Executive-Level Reporting", percentage: 88 },
-      ],
-    },
-    {
-      title: "Data Science",
-      icon: "🧠",
-      skills: [
-        { name: "Machine Learning Model Development", percentage: 85 },
-        { name: "Predictive Analytics", percentage: 88 },
-        { name: "Feature Engineering", percentage: 82 },
-        { name: "Statistical Analysis", percentage: 90 },
-      ],
-    },
-    {
-      title: "Data Engineering",
-      icon: "⚙️",
-      skills: [
-        { name: "ETL Pipeline Optimization", percentage: 87 },
-        { name: "Data Warehousing on Azure", percentage: 84 },
-        { name: "Data Governance and Validation", percentage: 80 },
-        { name: "Database Design & Management", percentage: 83 },
-      ],
-    },
-    {
-      title: "Programming",
-      icon: "💻",
-      skills: [
-        { name: "Python", percentage: 92 },
-        { name: "SQL", percentage: 95 },
-        { name: "R", percentage: 78 },
-        { name: "DAX", percentage: 90 },
-        { name: "JavaScript", percentage: 75 },
-      ],
-    },
-  ];
+  const skillCategories = skillsData;
 
   return (
     <section 

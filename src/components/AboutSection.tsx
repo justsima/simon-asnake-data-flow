@@ -1,6 +1,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import personalData from '@/data/personal.json';
 
 // Simplified icon component with subtle 3D effect
 const Icon3D = ({ icon, title, description }: { icon: string, title: string, description: string }) => {
@@ -174,8 +175,20 @@ const AboutSection = () => {
                   backdropFilter: 'blur(8px)',
                   border: '1px solid rgba(60, 58, 100, 0.6)',
                 }} className="p-1 rounded-lg">
-                  <div className="bg-[#302E53]/70 rounded-lg aspect-[3/4] flex items-center justify-center">
-                    <p className="text-gray-400 text-center text-xs sm:text-sm px-2 md:px-4">Professional headshot placeholder</p>
+                  <div className="bg-[#302E53]/70 rounded-lg aspect-[3/4] flex items-center justify-center overflow-hidden">
+                    <img 
+                      src={personalData.profileImage} 
+                      alt={personalData.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.innerHTML = '<p class="text-gray-400 text-center text-xs sm:text-sm px-2 md:px-4">Professional headshot</p>';
+                        }
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -187,7 +200,7 @@ const AboutSection = () => {
                 </h2>
                 
                 <p className="text-sm sm:text-base md:text-lg transition-all duration-500 transform translate-y-10 opacity-0 text-gray-300 font-inter text-center lg:text-left">
-                  As a Data Scientist and Power BI Expert, I specialize in transforming complex data into strategic business insights. With extensive experience across multiple industries, I've helped organizations leverage their data for informed decision-making.
+                  {personalData.aboutDescription}
                 </p>
 
                 <div className="flex flex-wrap gap-2 md:gap-4 pt-2 justify-center lg:justify-start">

@@ -1,9 +1,9 @@
 
 import { useState, useEffect, useRef, FormEvent } from 'react';
 import { Github, Linkedin, Mail, Send, User, AtSign, MessageSquare } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
 import { motion } from 'framer-motion';
 import { Badge } from './ui/badge';
+import personalData from '@/data/personal.json';
 
 interface FormState {
   name: string;
@@ -27,7 +27,6 @@ const ContactSection = () => {
   const [activeField, setActiveField] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  const { toast } = useToast();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -47,22 +46,14 @@ const ContactSection = () => {
     
     // Form validation
     if (!formState.name || !formState.email || !formState.subject || !formState.message) {
-      toast({
-        title: "Please complete all fields",
-        description: "All fields are required to submit the form.",
-        variant: "destructive",
-      });
+      alert("Please complete all fields. All fields are required to submit the form.");
       return;
     }
     
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formState.email)) {
-      toast({
-        title: "Invalid email",
-        description: "Please enter a valid email address.",
-        variant: "destructive",
-      });
+      alert("Please enter a valid email address.");
       return;
     }
     
@@ -80,10 +71,7 @@ const ContactSection = () => {
         isSuccess: true,
       });
       
-      toast({
-        title: "Message sent successfully!",
-        description: "Thanks for reaching out. I'll get back to you soon.",
-      });
+      alert("Message sent successfully! Thanks for reaching out. I'll get back to you soon.");
       
       // Reset success state after some time
       setTimeout(() => {
@@ -192,7 +180,7 @@ const ContactSection = () => {
                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#8A89FF]/10 flex items-center justify-center mr-3 md:mr-4">
                       <Mail className="text-[#8A89FF]" size={16} />
                     </div>
-                    <p className="text-gray-300 text-sm md:text-base">simon.asnake@example.com</p>
+                    <p className="text-gray-300 text-sm md:text-base">{personalData.email}</p>
                   </div>
                   
                   <div className="flex items-center">
@@ -206,10 +194,10 @@ const ContactSection = () => {
                 <div>
                   <h4 className="text-white font-medium mb-2 text-sm md:text-base">Connect with me</h4>
                   <div className="flex space-x-3 md:space-x-4">
-                    <a href="#" aria-label="LinkedIn" className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#8A89FF]/10 hover:bg-[#8A89FF]/20 text-[#8A89FF] flex items-center justify-center transition-colors duration-300">
+                    <a href={personalData.social.linkedin} aria-label="LinkedIn" className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#8A89FF]/10 hover:bg-[#8A89FF]/20 text-[#8A89FF] flex items-center justify-center transition-colors duration-300">
                       <Linkedin size={16} />
                     </a>
-                    <a href="#" aria-label="GitHub" className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#8A89FF]/10 hover:bg-[#8A89FF]/20 text-[#8A89FF] flex items-center justify-center transition-colors duration-300">
+                    <a href={personalData.social.github} aria-label="GitHub" className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#8A89FF]/10 hover:bg-[#8A89FF]/20 text-[#8A89FF] flex items-center justify-center transition-colors duration-300">
                       <Github size={16} />
                     </a>
                   </div>

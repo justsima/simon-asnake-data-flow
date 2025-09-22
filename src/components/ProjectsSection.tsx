@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import ProjectCard from './projects/ProjectCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
@@ -15,7 +15,7 @@ import GradientBackground from './GradientBackground';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
 import { ArrowRight } from 'lucide-react';
-import { dataService } from '@/services/dataService';
+import projectsData from '@/data/projects.json';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -29,19 +29,10 @@ const ProjectsSection = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    loadProjects();
+    // Load projects from local data
+    setProjects(projectsData);
+    setIsLoading(false);
   }, []);
-
-  const loadProjects = async () => {
-    try {
-      const data = await dataService.getProjects();
-      setProjects(data);
-    } catch (error) {
-      console.error('Error loading projects:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   // Filter projects based on selected category
   const filteredProjects = projects.filter(

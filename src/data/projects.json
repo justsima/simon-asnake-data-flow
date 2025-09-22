@@ -7,7 +7,7 @@
     "solution": "Developed interactive Power BI dashboard integrating multiple data sources with advanced DAX measures to provide executive insights on sales trends, store performance, and inventory management.",
     "impact": "32% reduction in reporting time, $1.2M identified in revenue opportunities, and improved decision-making across regional management teams.",
     "technologies": ["Power BI", "SQL", "DAX", "Azure Data Factory"],
-    "image": "/placeholder.svg",
+    "image": "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800",
     "category": "Power BI",
     "liveUrl": "https://app.powerbi.com/links/sample-executive-dashboard"
   },
@@ -19,7 +19,7 @@
     "solution": "Developed ML model predicting likely churners 60 days in advance using random forest algorithm with feature engineering on transactional and demographic data points.",
     "impact": "24% reduction in churn rate, $850K annual savings in retention costs, and improved customer satisfaction metrics across targeted segments.",
     "technologies": ["Python", "scikit-learn", "Azure ML", "SQL"],
-    "image": "/placeholder.svg",
+    "image": "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800",
     "category": "Machine Learning",
     "videoUrl": "https://www.example.com/demos/churn-prediction"
   },
@@ -31,8 +31,44 @@
     "solution": "Designed automated ETL pipeline with validation rules and data quality frameworks to standardize inputs from disparate healthcare systems.",
     "impact": "95% reduction in manual data processing, 99.8% data accuracy achievement, and reduced claim processing time from 72 hours to 4 hours.",
     "technologies": ["Azure Data Factory", "SQL", "Python", "Power BI"],
-    "image": "/placeholder.svg",
+    "image": "https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=800",
     "category": "Data Engineering",
     "videoUrl": "https://www.example.com/demos/healthcare-pipeline"
+  },
+  {
+    "id": 4,
+    "title": "Retail Inventory Optimization System",
+    "description": "Predictive inventory model with seasonal adjustments and ML algorithms optimizing stock levels across 50+ locations.",
+    "challenge": "Eliminating overstock while preventing stockouts across 50+ locations",
+    "solution": "Created predictive inventory model with seasonal adjustments and machine learning algorithms to optimize stock levels based on historical sales patterns.",
+    "impact": "18% reduction in carrying costs, 35% fewer stockouts, and improved cash flow by reducing unnecessary inventory investments.",
+    "technologies": ["Python", "Power BI", "Azure", "SQL"],
+    "image": "https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "category": "Machine Learning",
+    "liveUrl": "https://app.powerbi.com/links/inventory-optimization"
+  },
+  {
+    "id": 5,
+    "title": "Marketing Campaign Analytics Platform",
+    "description": "End-to-end marketing analytics platform with custom attribution models tracking customer journey across digital channels.",
+    "challenge": "Marketing team needed advanced attribution modeling for digital campaigns",
+    "solution": "Built end-to-end marketing analytics platform with custom attribution models to track customer journey touchpoints across channels.",
+    "impact": "42% improvement in campaign ROI by optimizing channel mix based on analytical insights.",
+    "technologies": ["Python", "R", "Power BI", "Google Analytics API"],
+    "image": "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "category": "Machine Learning",
+    "videoUrl": "https://www.example.com/demos/marketing-analytics"
+  },
+  {
+    "id": 6,
+    "title": "Supply Chain Visibility Dashboard",
+    "description": "Interactive Power BI dashboard integrating supplier, logistics, and inventory data with real-time alerts for potential disruptions.",
+    "challenge": "Global manufacturer lacked visibility into multi-tier supply chain",
+    "solution": "Created interactive Power BI dashboard integrating supplier, logistics, and inventory data with real-time alerts for potential disruptions.",
+    "impact": "28% reduction in stockouts, 15% improvement in on-time delivery, and $2.2M in savings from optimized inventory levels.",
+    "technologies": ["Power BI", "DAX", "Python", "SQL"],
+    "image": "https://images.pexels.com/photos/4386370/pexels-photo-4386370.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "category": "Power BI",
+    "liveUrl": "https://app.powerbi.com/links/supply-chain-dashboard"
   }
 ]

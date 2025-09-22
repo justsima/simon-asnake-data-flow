@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useNavigationDelay } from '@/hooks/useNavigationDelay';
 
 interface NavigationProps {
   sections: { id: string; title: string }[];
@@ -13,7 +12,6 @@ const Navigation = ({ sections }: NavigationProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
-  const { delayedNavigate } = useNavigationDelay(150);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,10 +52,10 @@ const Navigation = ({ sections }: NavigationProps) => {
   }, [sections]);
 
   const handleNavigation = (sectionId: string) => {
-    delayedNavigate(() => {
+    setTimeout(() => {
       document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
       if (isMobileMenuOpen) setIsMobileMenuOpen(false);
-    });
+    }, 150);
   };
 
   const handleHoverEnter = (id: string) => {

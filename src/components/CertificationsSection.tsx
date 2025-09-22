@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from './ui/badge';
-import { dataService } from '@/services/dataService';
+import certificationsData from '@/data/certifications.json';
 
 interface Certification {
   title: string;
@@ -89,53 +89,10 @@ const CertificationsSection = () => {
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    loadCertifications();
+    // Load certifications from local data
+    setCertifications(certificationsData);
+    setIsLoading(false);
   }, []);
-
-  const loadCertifications = async () => {
-    try {
-      const data = await dataService.getCertifications();
-      setCertifications(data);
-    } catch (error) {
-      console.error('Error loading certifications:', error);
-      // Fallback data
-      setCertifications([
-        {
-          title: "Bachelor's in Computer Science",
-          organization: "Hilcoe School",
-          date: "2019",
-          skills: ["Data Structures", "Algorithms", "Database Systems"],
-          isEducation: true,
-        },
-        {
-          title: "IBM Certified Data Scientist",
-          organization: "IBM",
-          date: "November 2022",
-          skills: ["Machine Learning", "Statistical Analysis", "Python"],
-        },
-        {
-          title: "365 Data Science Certified Data Scientist",
-          organization: "365 Data Science",
-          date: "August 2022",
-          skills: ["Data Analysis", "Visualization", "Statistical Modeling"],
-        },
-        {
-          title: "Microsoft Power BI Specialist",
-          organization: "Microsoft",
-          date: "January 2022",
-          skills: ["Power BI", "Data Modeling", "DAX Functions"],
-        },
-        {
-          title: "SQL Advanced Certification",
-          organization: "DataCamp",
-          date: "December 2021",
-          skills: ["Complex Queries", "Database Design", "Optimization"],
-        }
-      ]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   // Create duplicated array for seamless infinite scroll
   const duplicatedCertifications = [...certifications, ...certifications];
